@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Shore Book">
+<meta name="theme-color" content="#ECE8DF">
+<title>Shore Book · Galápagos 2026</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{
+  --stone:#ECE8DF;
+  --sand:#FBF9F4;
+  --ink:#171A1C;          /* basalt */
+  --sea:#135B6B;
+  --sea-tint:#D8E6E7;
+  --rosso:#B4472A;        /* Sally Lightfoot */
+  --reel:#8A6B1F;         /* lava-lizard ochre */
+  --olio:#4C6A3A;         /* opuntia */
+  --booby:#2C7AA3;
+  --rule:#CAC5B8;
+  --mute:#686D70;
+  --display:"Didot","Bodoni 72",Didot LT STD,"Hoefler Text",Georgia,serif;
+  --body:"Avenir Next",Avenir,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"Menlo","SF Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--stone);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.5;
+  padding-bottom:env(safe-area-inset-bottom);
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:620px;margin:0 auto;padding:0 18px 72px}
+button{font:inherit;color:inherit}
+.hidden{display:none !important}
+
+/* ---------- brand strip ---------- */
+.brand{
+  display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;
+  padding:14px 0 12px;border-bottom:1px solid var(--rule);
+}
+.brand img{width:38px;height:38px;display:block;flex:0 0 auto}
+.brand-name{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mute);line-height:1.35;
+}
+.brand-name b{display:block;font-weight:400;color:var(--ink)}
+.net{margin-left:auto;font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:6px}
+.net i{width:7px;height:7px;border-radius:50%;background:var(--rule);display:block}
+.net.on i{background:var(--olio)}
+
+/* ---------- masthead ---------- */
+header{padding:18px 0 0}
+.kicker{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mute);display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+}
+h1{
+  font-family:var(--display);font-weight:400;font-size:42px;line-height:.98;
+  margin:8px 0 4px;letter-spacing:-.01em;
+}
+.sub{font-size:13px;color:var(--mute);margin:0 0 14px}
+
+/* ---------- day rail ---------- */
+.ports{display:flex;gap:6px;overflow-x:auto;padding:0 0 12px;margin:0 -18px;
+  padding-left:18px;padding-right:18px;scrollbar-width:none}
+.ports::-webkit-scrollbar{display:none}
+.port-btn{
+  flex:0 0 auto;background:transparent;border:1px solid var(--rule);
+  border-radius:2px;padding:6px 10px 5px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--mute);cursor:pointer;
+  text-align:left;line-height:1.25;
+}
+.port-btn small{display:block;font-size:9px;letter-spacing:.1em;opacity:.8}
+.port-btn.now{border-color:var(--rosso);color:var(--rosso)}
+.port-btn[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--stone)}
+.port-btn:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+
+/* ---------- tide bar (signature) — here it counts down to the panga ---------- */
+.tide{border:1px solid var(--ink);background:var(--sand);padding:12px 13px 11px;margin:2px 0 18px}
+.tide-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.tide-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.tide-clock{font-family:var(--display);font-size:30px;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tide-clock.warn{color:var(--rosso)}
+.tide-track{
+  position:relative;height:16px;margin:10px 0 8px;border:1px solid var(--rule);
+  background:repeating-linear-gradient(-45deg,transparent 0 4px,var(--rule) 4px 5px);
+}
+.tide-fill{position:absolute;inset:0 auto 0 0;background:var(--sea-tint);
+  border-right:2px solid var(--sea);transition:width .6s ease}
+@media (prefers-reduced-motion:reduce){.tide-fill{transition:none}}
+.tide-foot{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--mute);flex-wrap:wrap}
+.tide-foot input{
+  font-family:var(--mono);font-size:12px;border:0;border-bottom:1px solid var(--rule);
+  background:transparent;color:var(--ink);padding:1px 0;
+}
+.tide-foot input:focus{outline:none;border-bottom-color:var(--sea)}
+.tide-what{font-size:13px;color:var(--ink);margin:2px 0 0}
+
+/* ---------- dock strip ---------- */
+.dock{border-left:3px solid var(--sea);padding:2px 0 2px 12px;margin:0 0 20px;font-size:14px}
+.dock b{font-weight:600}
+.dock span{display:block;color:var(--mute);font-size:13px;margin-top:2px}
+.dock.warn{border-left-color:var(--rosso)}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);margin:0 -6px 18px;position:sticky;top:0;
+  background:var(--stone);z-index:5;padding-top:env(safe-area-inset-top)}
+.tab{
+  flex:1 1 0;min-width:0;background:none;border:0;border-bottom:2px solid transparent;
+  margin-bottom:-1px;padding:10px 0 9px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:0;text-transform:uppercase;color:var(--mute);cursor:pointer;position:relative;
+}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--rosso)}
+.tab:focus-visible{outline:2px solid var(--sea);outline-offset:-2px}
+.tab .badge{position:absolute;top:4px;right:2px;min-width:14px;height:14px;padding:0 3px;border-radius:7px;
+  background:var(--rosso);color:#fff;font-size:9px;line-height:14px;letter-spacing:0}
+
+/* ---------- section heads & notes ---------- */
+h2{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.05;margin:26px 0 8px}
+h3{font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--mute);margin:22px 0 10px}
+.note{font-size:14px;color:var(--mute);margin:0 0 14px}
+.lede{font-family:var(--display);font-size:19px;line-height:1.35;margin:0 0 14px}
+p{margin:0 0 10px}
+
+/* ---------- briefing card ---------- */
+.brief{background:var(--sand);border:1px solid var(--rule);padding:14px 14px 6px;margin:0 0 20px}
+.brief .kick{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--rosso);margin:0 0 6px}
+.brief p{font-size:15px}
+.brief ul{margin:4px 0 10px;padding-left:18px;font-size:14px}
+.brief li{margin:0 0 4px}
+
+/* ---------- sounding rail (activities) ---------- */
+.rail{position:relative;margin:0;padding:0 0 0 34px;list-style:none}
+.rail::before{content:"";position:absolute;left:9px;top:10px;bottom:26px;width:1px;background:var(--rule)}
+.stop{position:relative;padding:0 0 22px}
+.dot{
+  position:absolute;left:-34px;top:2px;width:19px;height:19px;border-radius:50%;
+  border:1px solid var(--ink);background:var(--sand);font-family:var(--mono);font-size:10px;
+  display:flex;align-items:center;justify-content:center;
+}
+.stop.live .dot{background:var(--rosso);border-color:var(--rosso);color:#fff}
+.stop.past .dot{background:var(--rule);border-color:var(--rule);color:var(--sand)}
+.stop-time{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.stop-name{font-family:var(--display);font-size:23px;line-height:1.1;margin:2px 0 4px}
+.stop-name small{font-family:var(--body);font-size:13px;color:var(--mute);display:block;margin-top:2px}
+.how{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:2px;padding:1px 5px;margin:0 4px 4px 0;color:var(--sea)}
+.how.wet{color:var(--booby)} .how.dry{color:var(--reel)} .how.snorkel,.how.kayak{color:var(--sea)}
+.how.flag{color:var(--rosso)}
+.stop p{font-size:15px}
+.stop .look{font-size:14px;color:var(--ink);border-left:2px solid var(--olio);padding-left:10px;margin:8px 0}
+.stop .x{font-size:13px;color:var(--mute)}
+.more{background:none;border:0;padding:0;font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--sea);cursor:pointer;margin:2px 0 0}
+
+/* ---------- chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.chip{border:1px solid var(--rule);background:var(--sand);border-radius:14px;padding:4px 10px;font-size:13px;
+  cursor:pointer;line-height:1.3;display:inline-flex;align-items:center;gap:6px}
+.chip.seen{border-color:var(--olio);color:var(--olio)}
+.chip.seen::before{content:"✓";font-size:11px}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--stone)}
+.chip.k{border-color:var(--rosso)}
+.chip .sw{width:10px;height:10px;border-radius:50%;border:1px solid rgba(0,0,0,.25)}
+
+/* ---------- cards ---------- */
+.card{background:var(--sand);border:1px solid var(--rule);padding:12px 13px;margin:0 0 10px;position:relative}
+.card h4{font-family:var(--display);font-weight:400;font-size:21px;line-height:1.1;margin:0 0 2px}
+.card .t{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.card p{font-size:14px;margin:6px 0 0}
+.card .x{font-size:13px;color:var(--mute)}
+.card.tap{cursor:pointer}
+.card.hi{border-color:var(--ink)}
+
+/* ---------- species rows ---------- */
+.sp{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+.sp:last-child{border-bottom:0}
+.sp-mark{flex:0 0 auto;width:22px;height:22px;border:1px solid var(--ink);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:12px;background:var(--sand);cursor:pointer;padding:0}
+.sp-mark.on{background:var(--olio);border-color:var(--olio);color:#fff}
+.sp-body{flex:1 1 auto;min-width:0}
+.sp-n{font-size:16px;line-height:1.25}
+.sp-s{font-size:12px;color:var(--mute);font-style:italic}
+.sp-m{font-size:12px;color:var(--mute);margin-top:2px}
+.st{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;
+  padding:1px 4px;margin-left:6px;vertical-align:2px;border:1px solid var(--rule);color:var(--mute);font-style:normal}
+.st.E{border-color:var(--rosso);color:var(--rosso)}
+.st.e{border-color:var(--reel);color:var(--reel)}
+.today-tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sea)}
+
+/* ---------- progress ---------- */
+.prog{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+.prog b{font-family:var(--display);font-weight:400;font-size:44px;line-height:1}
+.prog span{color:var(--mute);font-size:14px}
+.bar{height:8px;border:1px solid var(--rule);background:var(--sand);margin:0 0 16px}
+.bar i{display:block;height:100%;background:var(--olio)}
+
+/* ---------- search & key ---------- */
+.search{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--rule);background:var(--sand);
+  border-radius:2px;color:var(--ink)}
+.search:focus{outline:none;border-color:var(--sea)}
+.keyrow{margin:10px 0 0}
+.keyrow .lab{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mute);margin:10px 0 0}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--ink);
+  background:var(--ink);color:var(--stone);padding:10px 14px;border-radius:2px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.big{width:100%;padding:16px 14px;font-size:12px}
+.btn:disabled{opacity:.45;cursor:default}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+textarea,.field{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--rule);
+  background:var(--sand);border-radius:2px;color:var(--ink)}
+textarea{min-height:110px;resize:vertical}
+textarea:focus,.field:focus{outline:none;border-color:var(--sea)}
+
+/* ---------- camera ---------- */
+.drop{border:1px dashed var(--ink);background:var(--sand);padding:18px 14px;text-align:center;margin:0 0 12px}
+.drop p{font-size:13px;color:var(--mute);margin:8px 0 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 16px}
+.ph{position:relative;aspect-ratio:1;background:var(--rule);overflow:hidden;cursor:pointer;border:0;padding:0}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .pst{position:absolute;left:4px;bottom:4px;right:4px;font-family:var(--mono);font-size:9px;letter-spacing:.06em;
+  text-transform:uppercase;background:rgba(23,26,28,.78);color:#fff;padding:2px 4px;border-radius:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+.ph .pst.ok{background:rgba(76,106,58,.9)}
+.ph .pst.q{background:rgba(138,107,31,.9)}
+.ph.sel{outline:3px solid var(--rosso);outline-offset:-3px}
+.result{background:var(--sand);border:1px solid var(--ink);margin:0 0 18px}
+.result img{width:100%;display:block;max-height:58vh;object-fit:contain;background:#111}
+.result .in{padding:12px 13px}
+.verdict{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 4px}
+.verdict.confident{color:var(--olio)} .verdict.possible{color:var(--reel)} .verdict.cannot_tell,.verdict.no_wildlife{color:var(--rosso)}
+.cand{border-top:1px solid var(--rule);padding:10px 0}
+.cand:first-of-type{border-top:0}
+.cand .cn{font-family:var(--display);font-size:21px;line-height:1.1}
+.conf{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-left:6px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.split div{font-size:13px;border-top:2px solid var(--ink);padding-top:6px}
+.split div.inf{border-top-color:var(--reel)}
+.split b{display:block;font-family:var(--mono);font-weight:400;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.when{font-size:12px;color:var(--mute)}
+.when select{font:inherit;font-size:12px;border:0;border-bottom:1px solid var(--rule);background:transparent;color:var(--ink);max-width:100%}
+
+/* ---------- sheet (species) ---------- */
+.veil{position:fixed;inset:0;background:rgba(23,26,28,.42);z-index:40}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:88vh;overflow:auto;z-index:41;background:var(--stone);
+  border-top:1px solid var(--ink);padding:16px 18px calc(28px + env(safe-area-inset-bottom));
+  -webkit-overflow-scrolling:touch}
+.sheet-in{max-width:620px;margin:0 auto}
+.sheet .close{position:sticky;top:0;float:right;background:var(--sand);border:1px solid var(--rule);border-radius:50%;
+  width:32px;height:32px;cursor:pointer;font-size:18px;line-height:1;z-index:2}
+.sheet h2{margin:2px 0 2px;font-size:32px}
+.facts{font-size:15px}
+.facts dt{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:14px 0 2px}
+.facts dd{margin:0}
+
+/* ---------- chart ---------- */
+.chartwrap{position:relative;border:1px solid var(--ink);background:#DCE7E8;height:62vh;min-height:340px;
+  overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.chartwrap svg{display:block;width:100%;height:100%}
+.chart-ctl{display:flex;gap:6px;margin:0 0 8px}
+.chart-ctl button{flex:0 0 auto;min-width:40px;height:36px;border:1px solid var(--ink);background:var(--sand);border-radius:2px;
+  font-family:var(--mono);font-size:14px;cursor:pointer;padding:0}
+.chart-ctl button.wide{flex:1 1 0;padding:0 8px;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.attrib{position:absolute;left:6px;bottom:4px;font-size:9px;color:var(--mute);background:rgba(251,249,244,.7);padding:0 4px}
+.locbar{font-size:13px;color:var(--mute);margin:8px 0 12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* ---------- journal ---------- */
+.jday{border-top:1px solid var(--ink);padding:14px 0 6px;margin:0 0 6px}
+.jday .t{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.jday h4{font-family:var(--display);font-weight:400;font-size:26px;margin:2px 0 6px;line-height:1.1}
+.jday .ai{font-family:var(--display);font-size:17px;line-height:1.45;margin:6px 0 10px}
+.thumbs{display:flex;gap:4px;flex-wrap:wrap;margin:6px 0 10px}
+.thumbs img{width:62px;height:62px;object-fit:cover;display:block}
+.learned{font-size:14px;padding-left:18px;margin:4px 0 10px}
+
+/* ---------- know ---------- */
+.know{list-style:none;padding:0;margin:0}
+.know li{padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.know li:last-child{border-bottom:0}
+.set{display:grid;gap:4px;margin:0 0 14px}
+.set label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.set select{font:inherit;font-size:16px;padding:8px 10px;border:1px solid var(--rule);background:var(--sand);border-radius:2px;color:var(--ink)}
+table.cmp{width:100%;border-collapse:collapse;font-size:13px;margin:4px 0 12px}
+table.cmp th,table.cmp td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.cmp th{font-family:var(--mono);font-weight:400;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+
+/* ---------- toast & hail ---------- */
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  background:var(--ink);color:var(--stone);padding:10px 14px;font-size:14px;border-radius:2px;z-index:60;
+  max-width:calc(100% - 36px);box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.haptic-switch{position:fixed;left:-200px;top:0;opacity:0;pointer-events:none}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--rule);margin-top:30px;padding-top:12px;display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+
+/* ---------- print: the journal and nothing else ---------- */
+#print{display:none}
+@media print{
+  @page{margin:16mm 14mm}
+  body{background:#fff}
+  .wrap,.toast,.veil,.sheet{display:none !important}
+  #print{display:block;font-family:var(--body);color:#111}
+  #print h1{font-size:40px;margin:0 0 4px}
+  #print .pday{break-inside:avoid-page;border-top:1px solid #111;padding-top:10px;margin-top:18px}
+  #print .pday h2{margin:2px 0 6px}
+  #print .pimgs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:8px 0}
+  #print .pimgs img{width:100%;aspect-ratio:1;object-fit:cover}
+  #print .cover{height:92vh;display:flex;flex-direction:column;justify-content:flex-end;break-after:page}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a class="brand" href="https://aspentraveladvisors.com" target="_blank" rel="noopener">
+  <img src="ata-logo.png" width="38" height="38" alt="Aspen Travel Advisors">
+  <span class="brand-name"><b>Aspen Travel Advisors</b>Aspen, Colorado</span>
+  <span class="net" id="net"><i></i><span>—</span></span>
+</a>
+
+<header>
+  <div class="kicker"><span id="kick">Shore Book · Galápagos</span><span id="today">—</span></div>
+  <h1 id="dayName">—</h1>
+  <p class="sub" id="daySub">—</p>
+</header>
+
+<div class="ports" role="tablist" aria-label="Days" id="dayRail"></div>
+
+<section class="tide" aria-live="polite" id="tide">
+  <div class="tide-top">
+    <span class="tide-label" id="tideLabel">—</span>
+    <span class="tide-clock" id="tideClock">—</span>
+  </div>
+  <p class="tide-what" id="tideWhat"></p>
+  <div class="tide-track"><div class="tide-fill" id="tideFill" style="width:0%"></div></div>
+  <div class="tide-foot" id="tideFoot"></div>
+</section>
+
+<div class="tabs" role="tablist" aria-label="Sections">
+  <button class="tab" role="tab" data-tab="day" aria-selected="true">Day</button>
+  <button class="tab" role="tab" data-tab="wild" aria-selected="false">Wildlife</button>
+  <button class="tab" role="tab" data-tab="cam" aria-selected="false">Camera</button>
+  <button class="tab" role="tab" data-tab="log" aria-selected="false">Log</button>
+  <button class="tab" role="tab" data-tab="chart" aria-selected="false">Chart</button>
+  <button class="tab" role="tab" data-tab="journal" aria-selected="false">Journal</button>
+  <button class="tab" role="tab" data-tab="know" aria-selected="false">Know</button>
+</div>
+
+<main id="panel"></main>
+
+<footer>
+  <span>Galápagos · November 2026</span>
+  <span>Shore Book</span>
+</footer>
+
+</div>
+
+<input type="file" id="pick" accept="image/*" multiple class="hidden">
+<input type="file" id="pickBackup" accept="application/json,.json" class="hidden">
+<div id="print"></div>
+
+<script>
+/* ============================================================
+   DATA — the voyage. HX, MS Santa Cruz II, "Nine of the Best Isles",
+   Western & Northern route, 24 November – 4 December 2026.
+
+   What HX printed is marked p:1 and is not to be argued with. Everything
+   else — the hour of a landing, wet or dry, how long — is how this route is
+   normally run, and the ship's daily programme overrides it. Every time can
+   be changed on the phone, and the evening briefing can be pasted in to
+   rewrite tomorrow.
+
+   Coordinates are "lat,lon" and good to the landing beach, not the boot.
+   Galápagos keeps UTC−6, an hour behind Quito (UTC−5).
+   ============================================================ */
+const TRIP = {
+  title: "Galápagos",
+  ship: "MS Santa Cruz II",
+  line: "HX · Nine of the Best Isles · Western & Northern",
+  start: "2026-11-24", end: "2026-12-04"
+};
+
+const SITES = {
+/* ---------------- mainland ---------------- */
+quito: {
+  n:"Quito", isl:"Ecuador · 2,850 m", c:"-0.1990,-78.4890", how:"walk", diff:"Easy, but at altitude",
+  d:"The second-highest capital in the world and, with Kraków, the first city ever put on the UNESCO list (1978). The Old Town is the largest and least altered colonial centre in the Americas — churches built on Inca foundations by Indigenous craftsmen who slipped their own symbols into the carving.",
+  l:"Breathlessness on the first flight of stairs. It is the altitude, not you, and it passes in a day.",
+  x:"The JW Marriott is on Av. Francisco de Orellana in the new town. The Old Town is 15 minutes by taxi — never walk between the two after dark.",
+  see:[],
+  walk:[
+    {n:"Plaza Grande (Plaza de la Independencia)", c:"-0.2201,-78.5124",
+     w:"The working heart of the city: presidential palace on one side, cathedral on another, shoeshine men and retired generals on the benches.",
+     l:"The changing of the guard at the Carondelet Palace, Monday mornings at 11:00. Not your day, but the balcony is the one presidents still wave from."},
+    {n:"La Compañía de Jesús", c:"-0.2206,-78.5140",
+     w:"A Jesuit church covered inside — walls, columns, ceiling — in gold leaf. It took 160 years to finish and it is the single most extravagant interior in South America.",
+     l:"The twisted Solomonic columns at the altar, and the native fruits and plants carved in among the European saints."},
+    {n:"San Francisco church & plaza", c:"-0.2203,-78.5153",
+     w:"The oldest large church in the Americas, begun in 1535 on the site of an Inca palace. The plaza in front is the size of the Inca one it replaced.",
+     l:"The sun motif on the main altar — an Inca sun god, given a Christian job."},
+    {n:"Basílica del Voto Nacional", c:"-0.2147,-78.5072",
+     w:"A neo-Gothic basilica begun in 1892 and, by local tradition, never quite finished. It is the reason to look up in Quito.",
+     l:"The gargoyles. They are not dragons — they are Ecuadorian animals: giant tortoises, iguanas, boobies, armadillos, condors. Your expedition has started already."},
+    {n:"Mitad del Mundo", c:"-0.0022,-78.4558",
+     w:"A 30-metre monument on the equator line surveyed by the French Geodesic Mission in 1736 — the expedition that settled the shape of the Earth.",
+     l:"Your phone. GPS puts the true equator about 240 m north of the painted yellow line. The 18th-century survey was astonishingly close, and still wrong.",
+     x:"Everyone photographs themselves straddling the line. Do it anyway, then look at the GPS readout on the Chart tab."}
+  ],
+  eat:[
+    {n:"Heladería San Agustín", t:"Ice cream", d:"Old Town, two blocks from Plaza Grande, making helado de paila since 1858 — fruit sorbet spun by hand in a copper pan on a bed of ice. Order the mora (blackberry) or naranjilla.", c:"-0.2195,-78.5110"},
+    {n:"Casa Gangotena", t:"Sit-down", d:"The restaurant of the hotel on Plaza San Francisco. Modern Ecuadorian cooking in a restored mansion, and the terrace for a drink over the plaza at dusk. Book.", c:"-0.2206,-78.5150"},
+    {n:"Zazu", t:"Dinner", d:"Fifteen minutes' walk from the JW Marriott in La Floresta. The best-known serious kitchen in the city — Ecuadorian ingredients, coastal fish, an unhurried tasting menu. Book, and go on the first night if you are not feeling the altitude.", c:"-0.2032,-78.4870"},
+    {n:"Café Mosaico", t:"Views", d:"On the Itchimbía hillside above the Old Town. Mosaic-tiled terrace, ordinary food, extraordinary view at sunset. Taxi there and back.", c:"-0.2228,-78.5040"}
+  ]
+},
+
+/* ---------------- Santa Cruz & Baltra ---------------- */
+baltra: {
+  n:"Baltra", isl:"Seymour airport & the ship", c:"-0.4500,-90.2700", how:"other", diff:"",
+  d:"A flat, dry island that was a US airbase in the Second World War, guarding the Panama Canal. The runway is still the main way in, and since 2012 the terminal is a wind- and sun-powered building that claims to be the first green airport in the world.",
+  l:"Land iguanas at the roadside on the drive to the dock — the Baltra population was wiped out in the war years and rebuilt from animals that had been moved to North Seymour in the 1930s.",
+  x:"Your bags go to the ship separately. Keep a hat, sunscreen and the camera in hand luggage: there is an afternoon landing before you see the cabin properly.",
+  see:["landiguana","magfrig","pelican","sealion","mockingbird"]
+},
+dragon: {
+  n:"Cerro Dragón", isl:"Santa Cruz · north-west", c:"-0.5390,-90.4930", how:"dry", diff:"Moderate · 2 km on lava",
+  d:"Dragon Hill is named for its land iguanas, and it nearly lost them: feral dogs had reduced the colony to a handful by the 1970s. The Darwin Station bred them in captivity and put them back. Every iguana you see here is a conservation result.",
+  l:"Iguana burrows under the palo santo, the lagoon behind the beach (flamingos if you are lucky), and cactus finches working the opuntia flowers.",
+  x:"First landing of the trip: short, hot, open. The trail climbs a low hill — take water. A gentle introduction to the rules: 2 metres, stay on the trail, nothing leaves the island.",
+  see:["landiguana","flamingo","pintail","stilt","lavalizard","mockingbird","groundfinch","cactusfinch","flycatcher","yellowwarbler","gbheron","opuntia","palosanto","candelabra"]
+},
+ayora: {
+  n:"Puerto Ayora", isl:"Santa Cruz · the town", c:"-0.7470,-90.3130", how:"dry", diff:"Easy",
+  d:"The largest town in the islands, about 12,000 people, and the only stop on this route with a pavement. It exists because of the Darwin Station and the boats, and it knows it.",
+  l:"The fish market on the waterfront: sea lions under the cutting table and pelicans waiting on the scales for scraps. It is pure theatre and it happens every afternoon the boats come in.",
+  x:"US dollars. Cards in the better shops and restaurants; cash for the kiosks. All aboard time comes from the ship — the last panga back from the pier will not wait.",
+  see:["sealion","pelican","lavagull","lavaheron","marineiguana","sallylightfoot","yellowwarbler","groundfinch","mockingbird"],
+  eat:[
+    {n:"Calle Charles Binford — the kioskos", t:"Street food", d:"A side street that becomes a row of open-air grills at night. Plastic chairs, whole lobster in season, encocado (fish in coconut sauce), cold Pilsener. This is where Puerto Ayora eats.", c:"-0.7445,-90.3150"},
+    {n:"The fish market (Muelle de Pescadores)", t:"Look, not eat", d:"Not a restaurant — the pier where the day's catch is cleaned. Afternoon, when the boats are in. Watch the sea lion who thinks it works there.", c:"-0.7466,-90.3125"},
+    {n:"Galápagos Deli", t:"Lunch", d:"Inland on Tomás de Berlanga. Sandwiches, pizza by the slice, real coffee, ice cream. Quick and reliable, which is what the day needs.", c:"-0.7430,-90.3145"}
+  ],
+  buy:[
+    {n:"Highland coffee", d:"Santa Cruz grows its own coffee in the highlands, at sea level by mainland standards — the cold Humboldt water makes the climate behave like altitude. Buy beans, not souvenirs with coffee printed on them."},
+    {n:"What not to buy", d:"Anything made from black coral, shells, sea-lion teeth, turtle shell or volcanic rock. Most of it is illegal to take off the islands and all of it is inspected at Baltra."},
+    {n:"Charity shops", d:"The Darwin Station and the National Park both sell through shops in town; money there goes back into the work you have just watched."}
+  ]
+},
+cdrs: {
+  n:"Charles Darwin Research Station", isl:"Santa Cruz · Puerto Ayora", c:"-0.7420,-90.3030", how:"dry", diff:"Easy · paved paths",
+  d:"The science station founded in 1959 and the Park's Fausto Llerena tortoise centre beside it. The breeding programmes here have returned thousands of young tortoises to the islands they came from.",
+  l:"Lonesome George — the last Pinta Island tortoise, who died here in 2012 — preserved and on display in a climate-controlled room. And the corrals of yearlings, each with a painted number and an island of origin.",
+  x:"Morning, before it heats up. The visit is on foot from the town pier, about 20 minutes' walk.",
+  see:["tortoise","landiguana","marineiguana","lavalizard","yellowwarbler","groundfinch","mockingbird","opuntia","lavaheron"]
+},
+highlands: {
+  n:"Santa Cruz highlands", isl:"Tortoise reserve · El Chato area", c:"-0.6650,-90.4150", how:"coach", diff:"Easy · muddy in garúa",
+  d:"Up from the coast the island turns green, wet and cool. Wild giant tortoises graze the pastures here in the season — Santa Cruz has two species, separated in 2015 when DNA showed the eastern animals were their own lineage.",
+  l:"Tortoises in the ponds, the lava tunnels, and Scalesia forest — trees that are really giant daisies. Listen for the vermilion flycatcher; it has become rare here.",
+  x:"Rubber boots are usually lent at the farm. It can be 10 °C cooler than the coast and drizzling in November. Layers.",
+  see:["tortoise","scalesia","woodpeckerfinch","warblerfinch","vermilion","flycatcher","groundfinch","yellowwarbler","pintail","mockingbird"]
+},
+itabaca: {
+  n:"Itabaca Channel", isl:"Between Santa Cruz and Baltra", c:"-0.4830,-90.2780", how:"panga", diff:"Easy", flag:1,
+  d:"A narrow strait lined with mangrove, where the ferry crosses from Baltra to Santa Cruz. Calm, shallow water — a last look before the airport.",
+  l:"Whitetip reef sharks resting on the bottom, golden rays in the shallows, pelicans on the mangrove.",
+  x:"HX lists it on the last morning. How much of it you see depends on the disembarkation plan: the ship is due alongside at 08:30.",
+  see:["whitetip","goldenray","pelican","mangrove","lavaheron","sealion"]
+},
+
+/* ---------------- the west: Isabela & Fernandina ---------------- */
+vicente: {
+  n:"Punta Vicente Roca", isl:"Isabela · north-west", c:"-0.0550,-91.5560", how:"panga", diff:"Easy · from the panga",
+  d:"There is no landing here. The site is the sea: half of Ecuador volcano collapsed into the ocean, leaving a cliff-walled bay at the mouth of the Bolívar Channel, where a cold current comes up from the deep and feeds everything. It is the richest water on the route.",
+  l:"Penguins and flightless cormorants on the ledges, and green turtles grazing algae on the rock. Snorkel the cliff wall — if a huge flat disc drifts up from the dark, it is a Mola mola.",
+  x:"The coldest water of the trip — around 19–22 °C. Take the wetsuit the ship offers, the thick one if there is a choice. Panga rides here are often rough on the way out.",
+  water:"Cold · 19–22 °C",
+  see:["penguin","cormorant","greenturtle","mola","bfbooby","noddy","shearwater","marineiguana","sealion","furseal","bottlenose","kingangel","surgeon","sergeant","eagleray"]
+},
+espinoza: {
+  n:"Punta Espinoza", isl:"Fernandina", c:"-0.2650,-91.4430", how:"dry", diff:"Moderate · uneven lava",
+  d:"Fernandina is the youngest island and one of the most volcanically active places on Earth — it last erupted in 2024. No introduced mammal has ever taken hold here. It is the closest you will get to the Galápagos as it was before anyone arrived.",
+  l:"The densest marine iguana colony in the islands, piled like logs on the lava. Flightless cormorants drying their stub wings at the tip. Pāhoehoe — ropy lava — so fresh it looks wet.",
+  x:"Step only where the naturalist steps: iguanas lie on the trail and their nests are in the sand. Dry landing on a slippery dock. Hot and shadeless by mid-afternoon.",
+  see:["marineiguana","cormorant","penguin","racer","hawk","sealion","lavaheron","lavalizard","sallylightfoot","mangrove","lavacactus","dove","mockingbird"]
+},
+
+/* ---------------- Floreana ---------------- */
+postoffice: {
+  n:"Post Office Bay", isl:"Floreana · north", c:"-1.2380,-90.4440", how:"wet", diff:"Easy",
+  d:"Whalers in the 1790s left a barrel here so that ships going home could carry letters for each other. It is still in use. You leave an unstamped postcard; you go through the pile and take any you could deliver by hand.",
+  l:"Your own home town in the pile. Then the lava tube behind the barrel, and the rusting remains of a 1920s Norwegian fish cannery.",
+  x:"Bring a postcard, addressed, no stamp. Wet landing on a sandy beach — sea lions often on it.",
+  see:["sealion","greenturtle","lavaheron","mockingbird","groundfinch","yellowwarbler","sallylightfoot","flamingo"]
+},
+champion: {
+  n:"Champion Islet", isl:"off Floreana", c:"-1.2370,-90.3870", how:"snorkel", diff:"Moderate · open water, current",
+  d:"A small crater islet that holds one of the rarest birds in the world. The Floreana mockingbird — the one that made Darwin first wonder whether species could change — vanished from Floreana itself in the 1880s, and survives on this rock and one other. No one lands. You look from the panga.",
+  l:"The mockingbird, from the water, with binoculars. Then in the water: sea lions that will play, schooling fish, eagle rays, sometimes whitetip sharks along the wall.",
+  x:"One of the best snorkels on the route, but in open water with some current — stay with the group and the panga driver.",
+  water:"Warm · 22–24 °C",
+  see:["floreanamock","sealion","whitetip","eagleray","kingangel","surgeon","parrotfish","moorish","puffer","sergeant","greenturtle","bfbooby","nazca","swgull","chocchip"]
+},
+cormorant: {
+  n:"Punta Cormorant", isl:"Floreana · north", c:"-1.2230,-90.4230", how:"wet", diff:"Easy · 1.5 km",
+  d:"Two beaches back to back across a narrow neck. You land on sand glittering green with olivine crystals, cross past a brackish lagoon, and come out on Flour Beach, white and fine as the name.",
+  l:"Flamingos in the lagoon. On Flour Beach, stingrays in the shallows at the waterline and green turtle tracks up the sand — November is when they start to come ashore.",
+  x:"No swimming on Flour Beach — it is a turtle-nesting beach. Shuffle your feet in the shallows at the landing: rays bury themselves in the sand.",
+  see:["flamingo","pintail","stilt","greenturtle","stingray","goldenray","sealion","bfbooby","pelican","lavalizard","groundfinch","yellowwarbler","palosanto"]
+},
+
+/* ---------------- Seymour & Las Bachas ---------------- */
+seymour: {
+  n:"North Seymour", isl:"off Baltra", c:"-0.3960,-90.2880", how:"dry", diff:"Easy–moderate · 2 km, rocky",
+  d:"A flat slab of seabed lifted out of the sea, low and dry. It holds the largest colony of magnificent frigatebirds in the islands and a great many blue-footed boobies, nesting right beside the trail. The land iguanas here are the ones that saved Baltra's.",
+  l:"Male frigatebirds with their red throat pouches blown up like balloons, sitting in the bushes calling to females overhead. Booby courtship on the path — the strut, the salute, the whistling.",
+  x:"Early morning landing on a rock step; it can be slippery with spray. The trail is loose underfoot. The boobies nest on the trail itself, so walk around, not through.",
+  see:["magfrig","greatfrig","bfbooby","nazca","swgull","landiguana","marineiguana","sealion","lavalizard","sallylightfoot","palosanto","opuntia","dove","mockingbird","groundfinch"]
+},
+bachas: {
+  n:"Las Bachas", isl:"Santa Cruz · north shore", c:"-0.4900,-90.3380", how:"wet", diff:"Easy · beach",
+  d:"A long white beach whose name is a mispronunciation: two Second World War barges were abandoned here, and 'barges' became bachas. Their ribs still stick out of the sand.",
+  l:"Turtle tracks up the beach to nests in the dunes, flamingos in the lagoon behind, Sally Lightfoot crabs on every rock. A swim from the beach.",
+  x:"Wet landing, then free time on the beach. Stay out of the dunes — that is where the nests are. Soft sand at the waterline can hide rays.",
+  see:["greenturtle","flamingo","stilt","pintail","oystercatcher","sallylightfoot","marineiguana","lavagull","pelican","sealion","goldenray","stingray","mangrove","bfbooby"]
+},
+
+/* ---------------- Santiago ---------------- */
+buccaneer: {
+  n:"Buccaneer Cove", isl:"Santiago · north-west", c:"-0.1680,-90.8250", how:"panga", diff:"Easy · from the water",
+  d:"Pirates careened their ships here in the 1600s and 1700s and filled their holds with tortoises, which survive a year without food or water. Clay jars and anchors have been found on the beach. The cliffs are tuff — compacted ash — worn into shapes the crews named: the Elephant, the Monk.",
+  l:"Seabirds on the ledges, fur seals in the shade, and on a snorkel along the cliff: turtles, rays, reef fish, sometimes whitetips.",
+  x:"Usually panga ride and snorkel, no landing. Santiago had 80,000 feral goats until 2006 — what is growing back on these slopes is what came back after they were removed.",
+  water:"Moderate · 21–23 °C",
+  see:["bfbooby","nazca","noddy","shearwater","furseal","sealion","greenturtle","whitetip","eagleray","kingangel","surgeon","moorish","parrotfish","sergeant","pelican","marineiguana"]
+},
+egas: {
+  n:"Puerto Egas", isl:"Santiago · James Bay", c:"-0.2480,-90.8610", how:"wet", diff:"Moderate · 2.5 km on lava",
+  d:"Darwin spent nine days on this island in 1835. A century later the Egas family tried to run a salt mine here and failed; the ruins are by the trail. The coast is black lava cut into tide pools, channels and grottos.",
+  l:"The fur seal grottos — Galápagos fur seals lying in deep shade in collapsed lava tubes. Marine iguanas grazing the pools at low tide, and the full shorebird set: oystercatchers, herons, turnstones.",
+  x:"Wet landing on a black-sand beach, then a walk on uneven lava. Snorkelling from the beach afterwards is often excellent. Check the tide: low tide is better for the pools.",
+  see:["furseal","sealion","marineiguana","sallylightfoot","oystercatcher","lavaheron","ycnheron","gbheron","lavagull","swgull","hawk","dove","flycatcher","mockingbird","racer","lavalizard","noddy","pencilurchin","palosanto","whitetip"]
+},
+
+/* ---------------- Rábida & Bartolomé ---------------- */
+rabida: {
+  n:"Rábida", isl:"Rábida island", c:"-0.4120,-90.7060", how:"wet", diff:"Easy · 1 km",
+  d:"A small island with a red beach — the colour is iron oxide in the lava, rusting. Behind it a salt lagoon and a short loop up through palo santo.",
+  l:"Sea lions on the red sand, pelicans that have nested in the saltbush behind the beach, and the best snorkelling of the morning off the rocks at the end.",
+  x:"Wet landing straight onto the red beach. The snorkel off the eastern point can have good visibility and big schools.",
+  water:"Moderate · 22–24 °C",
+  see:["sealion","pelican","flamingo","pintail","lavaheron","mockingbird","groundfinch","yellowwarbler","dove","hawk","palosanto","whitetip","surgeon","parrotfish","kingangel","puffer"]
+},
+bartolome: {
+  n:"Bartolomé", isl:"off Santiago", c:"-0.2830,-90.5500", how:"dry", diff:"Moderate · 370 wooden steps",
+  d:"The view on every Galápagos poster. A boardwalk climbs 114 metres over a moonscape of spatter cones and lava flows to a summit looking down on two crescent beaches and Pinnacle Rock — the eroded remains of a tuff cone.",
+  l:"Pioneer plants on bare ash — lava cactus, Tiquilia mats — and then, at the base of Pinnacle Rock, the Galápagos penguins that live on the equator.",
+  x:"Dry landing, then the steps — steady, not hard, but hot without shade. Go early or late; the light at the top is better too. Snorkel off the beach by the rock afterwards for the penguins.",
+  water:"Moderate · 22–24 °C",
+  see:["penguin","sealion","bfbooby","noddy","pelican","lavalizard","sallylightfoot","marineiguana","lavacactus","tiquilia","greenturtle","whitetip","kingangel","surgeon","parrotfish","chocchip"]
+},
+
+/* ---------------- Genovesa — north of the equator ---------------- */
+steps: {
+  n:"Prince Philip's Steps", isl:"Genovesa · El Barranco", c:"0.3120,-89.9530", how:"dry", diff:"Moderate · steep rock steps, then 1.5 km",
+  d:"A rock stairway up the cliff of a drowned volcano, named for the Duke of Edinburgh, who landed here from the royal yacht. On top, a plateau of low palo santo full of nesting boobies, and a field of broken lava where storm petrels nest by the hundred thousand.",
+  l:"Short-eared owls. On Genovesa there are no hawks, so the owls hunt by day — walking among the petrels and taking them at the crevices. Nazca boobies on the cliff edge, red-footed boobies in the trees.",
+  x:"Dry landing straight onto the rock and a steep climb with a rope rail. Both hands free: camera on a strap. Genovesa is north of the equator — the ship crosses the line on the way.",
+  see:["rfbooby","nazca","greatfrig","stormpetrel","owl","swgull","tropicbird","dove","cactusfinch","groundfinch","mockingbird","lavalizard","palosanto","opuntia","sealion","furseal"]
+},
+darwinbay: {
+  n:"Darwin Bay", isl:"Genovesa", c:"0.3210,-89.9580", how:"wet", diff:"Easy · 1.5 km", flag:1,
+  d:"Genovesa is a volcano whose crater wall broke and let the sea in; the ship anchors inside the caldera. A coral-sand beach, a tidal lagoon and a trail through mangrove and saltbush packed with nesting seabirds.",
+  l:"Red-footed boobies — the only booby here that nests in trees — in both brown and white forms. Great frigatebirds with their pouches up. Swallow-tailed gulls, the only gull in the world that feeds at night.",
+  x:"HX prints Darwin Bay on the morning of 4 December, but the ship docks at Baltra at 08:30 that day and Genovesa is a night's sail away. Expect it the afternoon of the 3rd. The briefing will settle it.",
+  see:["rfbooby","greatfrig","nazca","swgull","ycnheron","lavagull","dove","cactusfinch","groundfinch","mockingbird","sealion","furseal","tropicbird","mangrove","opuntia","whitetip","hammerhead","marineiguana"]
+}
+};
+
+const DAYS = [
+{ id:"d1", date:"2026-11-24", tz:-5, n:"Quito", sub:"Arrive · JW Marriott Quito",
+  dock:{t:"JW Marriott Quito — Av. Francisco de Orellana 1172", d:"HX meets you in the arrivals hall with a sign. Check-in from 15:00, two nights. The hotel will want a card for incidentals even though the room is paid."},
+  acts:[
+    {s:"quito", t:"15:00", e:"", how:"other", w:"Check in · JW Marriott Quito", p:1,
+     note:"Quito is at 2,850 m. Eat lightly, drink water, skip the second pisco sour, and sleep early. Tomorrow is a long day on your feet."}
+  ]},
+{ id:"d2", date:"2026-11-25", tz:-5, n:"Quito", sub:"Historic Quito & the Middle of the World",
+  dock:{t:"HX excursion · 7–8 hours · Level 2, moderate", d:"Included. The Old Town on foot, then north to the equator monument. Sun at this altitude and latitude burns in twenty minutes, even under cloud."},
+  acts:[
+    {s:"quito", t:"08:30", e:"16:30", how:"walk", w:"Historic Quito & Middle of the World", p:1,
+     note:"Start time comes from the HX desk at the hotel. Comfortable shoes — the Old Town is all cobbles and hills."}
+  ]},
+{ id:"d3", date:"2026-11-26", tz:-6, n:"Baltra · Cerro Dragón", sub:"Fly to the islands · sail at 14:50",
+  dock:{t:"HX charter Quito → Baltra · ship sails 14:50", d:"Embarkation details and the flight time come in the Welcome Letter at the hotel the night before. Galápagos is an hour behind Quito — change your watch on the plane."},
+  acts:[
+    {s:"baltra", t:"", e:"", how:"other", w:"Charter flight · Quito → Baltra", p:1, note:"One checked bag each, 23 kg. Cabin bags 12 kg in total. Your bags are inspected for seeds and fruit on arrival."},
+    {s:"baltra", t:"", e:"14:50", how:"other", w:"Board MS Santa Cruz II · ship departs", p:1, note:"Safety drill before sailing. Collect your wetsuit and snorkel kit when they call your deck."},
+    {s:"dragon", t:"16:00", e:"18:00", how:"dry", w:"Cerro Dragón", p:1}
+  ]},
+{ id:"d4", date:"2026-11-27", tz:-6, n:"Isabela & Fernandina", sub:"The young west",
+  dock:{t:"The coldest water and the youngest lava of the trip", d:"Overnight the ship rounds the north of Isabela. The morning is in the water; the afternoon is on Fernandina, which has never had an introduced mammal."},
+  acts:[
+    {s:"vicente", t:"08:00", e:"09:00", how:"panga", w:"Punta Vicente Roca · panga ride", p:1},
+    {s:"vicente", t:"09:30", e:"10:30", how:"snorkel", w:"Punta Vicente Roca · snorkel", p:1},
+    {s:"espinoza", t:"15:00", e:"17:30", how:"dry", w:"Fernandina · Punta Espinoza", p:1}
+  ],
+  screen:{f:"Planet Earth II — “Islands”", y:"2016", d:"The marine-iguana hatchlings running a gauntlet of racer snakes — the sequence everyone remembers — was filmed on Fernandina. Watch it tonight and you will look at the sand differently tomorrow. Download before you fly."}},
+{ id:"d5", date:"2026-11-28", tz:-6, n:"Puerto Ayora", sub:"Santa Cruz · tortoises and the town",
+  dock:{t:"Alongside the town by panga · the only day with shops", d:"The tortoise centre in the morning, the highlands for wild tortoises, then free time in town. All aboard is set by the ship."},
+  acts:[
+    {s:"cdrs", t:"08:00", e:"10:00", how:"dry", w:"Darwin Station & tortoise centre", p:1},
+    {s:"highlands", t:"10:30", e:"13:30", how:"coach", w:"Highlands · wild tortoises"},
+    {s:"ayora", t:"14:00", e:"17:30", how:"walk", w:"Puerto Ayora · free time"}
+  ]},
+{ id:"d6", date:"2026-11-29", tz:-6, n:"Floreana", sub:"Letters, mockingbirds and Flour Beach",
+  dock:{t:"Floreana: the island with a history", d:"The first island to be settled, Darwin's 'Charles Island', and the scene of an unsolved 1930s disappearance. Two wet landings and the best snorkel of the week."},
+  acts:[
+    {s:"postoffice", t:"07:30", e:"09:00", how:"wet", w:"Post Office Bay", p:1},
+    {s:"champion", t:"09:45", e:"11:30", how:"snorkel", w:"Champion Islet · panga & snorkel", p:1},
+    {s:"cormorant", t:"15:30", e:"17:30", how:"wet", w:"Punta Cormorant", p:1}
+  ],
+  screen:{f:"The Galápagos Affair: Satan Came to Eden", y:"2013", d:"A documentary built from the settlers' own film and letters: a German doctor, a family, a self-styled baroness and her lovers on Floreana in the 1930s — and the people who vanished. Ron Howard dramatised it as Eden (2024), shot in Australia, not here. Watch the documentary first; the island itself tells you how hard the life was."}},
+{ id:"d7", date:"2026-11-30", tz:-6, n:"Seymour · Las Bachas", sub:"Frigatebirds, then a beach",
+  dock:{t:"Back in the centre of the islands", d:"North Seymour early, while the birds are active and before the heat. Las Bachas in the afternoon is the easiest beach time of the trip."},
+  acts:[
+    {s:"seymour", t:"07:00", e:"09:30", how:"dry", w:"North Seymour", p:1},
+    {s:"bachas", t:"15:00", e:"17:30", how:"wet", w:"Las Bachas · beach & swim", p:1}
+  ]},
+{ id:"d8", date:"2026-12-01", tz:-6, n:"Santiago", sub:"Buccaneers, fur seals and Darwin's island",
+  dock:{t:"Santiago — James Island", d:"Darwin camped here for nine days. The morning is from the water under the cliffs; the afternoon is the black lava coast and the fur seal grottos."},
+  acts:[
+    {s:"buccaneer", t:"08:00", e:"10:30", how:"panga", w:"Buccaneer Cove · panga & snorkel", p:1},
+    {s:"egas", t:"15:00", e:"17:45", how:"wet", w:"Puerto Egas · James Bay", p:1}
+  ]},
+{ id:"d9", date:"2026-12-02", tz:-6, n:"Rábida · Bartolomé", sub:"The red beach and the postcard view",
+  dock:{t:"The two most photographed landscapes on the route", d:"Rábida in the morning. Bartolomé's summit is usually timed for the softer late light."},
+  acts:[
+    {s:"rabida", t:"07:30", e:"10:30", how:"wet", w:"Rábida · landing & snorkel", p:1},
+    {s:"bartolome", t:"15:00", e:"16:30", how:"dry", w:"Bartolomé · the summit", p:1},
+    {s:"bartolome", t:"16:30", e:"18:00", how:"snorkel", w:"Bartolomé · beach & snorkel"}
+  ],
+  screen:{f:"Master and Commander: The Far Side of the World", y:"2003", d:"The first major feature film allowed to shoot in the islands; the Galápagos scenes are in the last third, when the naturalist ship's surgeon finally gets ashore. Ask the naturalists which landings it used — the book will not guess."}},
+{ id:"d10", date:"2026-12-03", tz:-6, n:"Genovesa", sub:"North of the equator · the bird island",
+  dock:{t:"Across the line overnight", d:"Genovesa sits a third of a degree north of the equator. The ship anchors inside the flooded caldera of Darwin Bay. If Darwin Bay is this afternoon, it is your last landing."},
+  acts:[
+    {s:"steps", t:"07:00", e:"09:30", how:"dry", w:"Prince Philip's Steps", p:1},
+    {s:"darwinbay", t:"15:00", e:"17:30", how:"wet", w:"Darwin Bay", flag:"HX prints this on 4 Dec — see the note"}
+  ]},
+{ id:"d11", date:"2026-12-04", tz:-6, n:"Baltra · Quito", sub:"Disembark 08:30 · fly to Quito",
+  dock:{t:"Ship alongside at Baltra 08:30 · HX charter to Quito", d:"Bags out the night before. Disembarkation details come from the Expedition Coordinator on board."},
+  acts:[
+    {s:"itabaca", t:"06:45", e:"07:45", how:"panga", w:"Itabaca Channel", p:1, flag:"Depends on the disembarkation plan"},
+    {s:"baltra", t:"", e:"08:30", how:"other", w:"Ship arrives · Seymour dock, Baltra", p:1},
+    {s:"baltra", t:"", e:"", how:"other", w:"Charter flight · Baltra → Quito", p:1}
+  ]}
+];
+
+/* What to carry, by how you get ashore. The day's list is the union. */
+const BRING = {
+  wet:"Water shoes or sandals with a back strap — you step off the panga into the surf, about knee-deep. Shorts, not trousers.",
+  dry:"Shoes with grip and a closed toe. Landing rocks are wet with spray and the lava is sharp as glass.",
+  snorkel:"Wetsuit, mask and fins from the ship. A rash vest under the wetsuit stops it chafing.",
+  panga:"A dry bag for the camera and a thin rain shell. Panga rides throw spray.",
+  coach:"Layers and a rain jacket: the highlands are cooler and often in mist.",
+  walk:"Comfortable shoes, sun hat, and something warm for the evening.",
+  every:"Hat, reef-safe sunscreen, sunglasses, a full water bottle. No food goes ashore."
+};
+
+/* ============================================================
+   SPECIES — what this route can show you, not the whole archipelago.
+   st:  E endemic species · e endemic race of a wider species
+        N native, found elsewhere too · M visitor
+   k:1  a species people come for
+   c    colours you would name at a glance · z size s/m/l
+   w    where you meet it: sea, shore, land, air
+   Where each one is likely comes from the visitor sites above, so the
+   two lists cannot drift apart.
+   ============================================================ */
+const GROUPS = {
+  bird:"Birds", reptile:"Reptiles", mammal:"Mammals", fish:"Fish & sharks", sea:"Shore & reef life", plant:"Plants"
+};
+const SPECIES = [
+/* ---------- boobies & seabirds ---------- */
+{id:"bfbooby", n:"Blue-footed booby", sci:"Sula nebouxii excisa", g:"bird", st:"e", k:1, c:["brown","white","blue"], z:"m", w:["shore","air","sea"],
+ look:"Brown back, white chest, streaky pale head and feet in every shade from sky to turquoise. Females have a larger dark pupil-ring that makes the eye look bigger.",
+ why:"The feet are an advertisement. Their colour comes from pigments in fresh fish and fades within a couple of days if the bird eats badly, so a male lifting his feet in a slow strut is showing a female exactly how well he is fishing. Females choose on it.",
+ conf:["nazca","rfbooby"], tip:"The feet, if you can see them. Otherwise: blue-foots have a brown back and streaky head; Nazcas are white with a black mask."},
+{id:"nazca", n:"Nazca booby", sci:"Sula granti", g:"bird", st:"N", k:1, c:["white","black","yellow"], z:"l", w:["shore","air","sea"],
+ look:"The largest booby here. Brilliant white with black flight feathers and tail, a dark bare-skin mask round the eyes, and an orange-yellow bill.",
+ why:"Lays two eggs a few days apart and raises one. The older chick pushes the younger out of the nest scrape and the parents do nothing. The second egg is insurance, not a second child. Split from the masked booby as its own species in 2002.",
+ conf:["bfbooby","rfbooby"], tip:"Bill colour: orange-yellow on a Nazca, pale blue-grey on a red-foot's white form."},
+{id:"rfbooby", n:"Red-footed booby", sci:"Sula sula websteri", g:"bird", st:"N", k:1, c:["brown","white","red","blue"], z:"m", w:["land","air"],
+ look:"The smallest booby, with bright red feet, a blue bill and pink at its base. Comes in a brown form and a much rarer white form with black wingtips; both are the same species.",
+ why:"The only Galápagos booby that nests in trees and bushes, which is why its feet are made to grip a branch. It fishes far out to sea, so on this route you will see it only on Genovesa — where the colony is one of the largest in the world.",
+ conf:["bfbooby","nazca"], tip:"Feet and perch: if it is in a tree, it is almost certainly a red-foot."},
+{id:"magfrig", n:"Magnificent frigatebird", sci:"Fregata magnificens", g:"bird", st:"N", k:1, c:["black","white","red"], z:"l", w:["air","land"],
+ look:"Huge black bird with long angled wings and a deeply forked tail. Breeding males inflate a scarlet throat pouch. Females have a black throat and a white breast; males have a purple sheen on the back in good light.",
+ why:"It cannot land on the water — its feathers are not waterproof — so it feeds by snatching from the surface or by chasing boobies until they drop their catch. Males sit in the bushes with the pouch blown up and call to females passing overhead; the display can last hours.",
+ conf:["greatfrig"], tip:"Female throat: black on a magnificent, white on a great. Male back sheen: purple on magnificent, green on great."},
+{id:"greatfrig", n:"Great frigatebird", sci:"Fregata minor", g:"bird", st:"N", c:["black","white","red"], z:"l", w:["air","land"],
+ look:"Almost identical to the magnificent. Females have a white throat and breast and a red eye-ring. Males have a green sheen on the back and a pale bar on the upper wing. Juveniles have a rusty-brown wash on the head.",
+ why:"Ranges further out to sea than the magnificent, which is why Genovesa — far offshore — is full of them while inshore North Seymour belongs to the magnificent. Two near-identical species dividing the islands by distance from the coast.",
+ conf:["magfrig"], tip:"Look at the throat of a female, or the sheen on a male's back in sunlight."},
+{id:"penguin", n:"Galápagos penguin", sci:"Spheniscus mendiculus", g:"bird", st:"E", k:1, c:["black","white"], z:"s", w:["sea","shore"],
+ look:"Small — about 35 cm and 2.5 kg. Black back, white front, a thin white line from the eye round the throat, and a pink patch of bare skin at the base of the bill.",
+ why:"The only penguin north of the equator, and only possible here because the cold currents in the west reach the surface. It keeps cool by standing with its back to the sun, panting, and hiding its feet in its own shade. One of the rarest penguins on Earth, a few thousand birds, and it crashes in El Niño years.",
+ conf:["cormorant"], tip:"In the water, only the head and a thin line of back show. A cormorant sits much longer and higher."},
+{id:"cormorant", n:"Flightless cormorant", sci:"Nannopterum harrisi", g:"bird", st:"E", k:1, c:["black","brown"], z:"l", w:["shore","sea"],
+ look:"A big dark cormorant with a long hooked bill, turquoise eyes and wings so small they look like an afterthought.",
+ why:"The only cormorant in the world that has lost flight. With no predators on these shores and rich food a few metres down, the wings were dead weight; they shrank while the legs grew heavy for diving. It still holds the stubs out to dry after a dive, a habit kept from the ancestors that flew.",
+ conf:["penguin"], tip:"Only on the west side: on this route, Fernandina and Punta Vicente Roca. If you are anywhere else, it is not this bird."},
+{id:"swgull", n:"Swallow-tailed gull", sci:"Creagrus furcatus", g:"bird", st:"e", k:1, c:["grey","white","black","red"], z:"m", w:["shore","air"],
+ look:"Elegant grey and white gull with a forked tail, a dark hood in breeding season, and a bright red ring round a very large dark eye. Bill black with a pale tip.",
+ why:"The only gull in the world that feeds entirely at night, flying out after dark for squid and small fish that rise to the surface. The huge eyes are for that. It breeds almost nowhere else.",
+ conf:["lavagull"], tip:"The red eye-ring and grey-and-white plumage. A lava gull is dark grey all over."},
+{id:"lavagull", n:"Lava gull", sci:"Leucophaeus fuliginosus", g:"bird", st:"E", c:["grey","black","white"], z:"m", w:["shore"],
+ look:"Dark sooty-grey gull, darker head, white crescent over and under the eye, and a red mouth when it calls.",
+ why:"Probably the rarest gull in the world: a few hundred pairs scattered across the islands, nesting alone rather than in colonies. You will see one at a time, scavenging round a harbour or a beach.",
+ conf:["swgull"], tip:"Uniformly dark gull = lava gull."},
+{id:"tropicbird", n:"Red-billed tropicbird", sci:"Phaethon aethereus", g:"bird", st:"N", c:["white","black","red"], z:"m", w:["air","shore"],
+ look:"White with fine black barring on the back, a black stripe through the eye, a coral-red bill and two long white tail streamers.",
+ why:"Nests in crevices in cliffs and has legs so far back it can barely walk; it shuffles to the edge and drops into flight. Listen for the shrill screaming as they chase each other round the cliff tops.",
+ conf:["swgull"], tip:"The tail streamers — nothing else here has them."},
+{id:"stormpetrel", n:"Storm-petrels", sci:"Hydrobates tethys & H. castro", g:"bird", st:"N", c:["black","white"], z:"s", w:["air","sea"],
+ look:"Sparrow-sized dark seabirds with a white rump, fluttering low over the lava field or the water. Two species nest on Genovesa — wedge-rumped and band-rumped — and telling them apart in flight is for specialists.",
+ why:"They nest by the hundred thousand in cracks in the lava on Genovesa, and the short-eared owls hunt them in daylight. The book records them as one entry on purpose: a fair photo of a dark fluttering bird is a storm-petrel, and that is an honest identification.",
+ conf:["noddy"], tip:"Tiny, dark, white rump, fluttering: storm-petrel. Leave the species to the specialists."},
+{id:"noddy", n:"Brown noddy", sci:"Anous stolidus galapagensis", g:"bird", st:"e", c:["brown","grey"], z:"s", w:["sea","shore","air"],
+ look:"A dark brown tern with a pale grey-white cap and a wedge-shaped tail.",
+ why:"Often sits on the head of a feeding pelican, waiting to steal the small fish that spill from its pouch. Nests on cliff ledges and in sea caves.",
+ conf:["stormpetrel"], tip:"Pale cap on a brown tern."},
+{id:"shearwater", n:"Galápagos shearwater", sci:"Puffinus subalaris", g:"bird", st:"E", c:["brown","white"], z:"s", w:["sea","air"],
+ look:"Small, dark brown above and white below, flying fast and low in tight flocks, tilting from side to side over the waves.",
+ why:"Rafts on the water in large groups off the cliffs where it nests. On a panga ride, they are the dark-and-white birds skimming the swell.",
+ conf:["noddy","stormpetrel"], tip:"Fast, low, stiff-winged over the water; white belly when it tilts."},
+{id:"pelican", n:"Brown pelican", sci:"Pelecanus occidentalis urinator", g:"bird", st:"e", c:["brown","grey","white"], z:"l", w:["sea","shore","air"],
+ look:"Huge grey-brown bird with an enormous pouched bill. Breeding adults have a white head with a chestnut nape.",
+ why:"Dives from height and crashes into the water, then drains the pouch before swallowing — which is when the noddies and gulls move in. Rábida's saltbush is a nesting place late in the year.",
+ conf:[], tip:""},
+{id:"flamingo", n:"American flamingo", sci:"Phoenicopterus ruber", g:"bird", st:"N", k:1, c:["pink"], z:"l", w:["shore"],
+ look:"Unmistakable: tall, pink, standing in a brackish lagoon with its head down.",
+ why:"There are only a few hundred in the islands, scattered across salt lagoons. The pink comes from pigments in the tiny crustaceans they filter from the mud, upside-down. They spook easily — this is where to keep your voice down.",
+ conf:[], tip:""},
+{id:"pintail", n:"White-cheeked pintail", sci:"Anas bahamensis galapagensis", g:"bird", st:"e", c:["brown","white","red"], z:"m", w:["shore"],
+ look:"A small brown duck with a white cheek and throat and a red spot at the base of a blue-grey bill.",
+ why:"The only duck that breeds in the islands. Shares the lagoons with the flamingos and the stilts.",
+ conf:[], tip:""},
+{id:"stilt", n:"Black-necked stilt", sci:"Himantopus mexicanus", g:"bird", st:"N", c:["black","white","pink"], z:"m", w:["shore"],
+ look:"Black above, white below, needle-thin bill and absurdly long pink legs.",
+ why:"Proportionally among the longest legs of any bird. Will fly round you calling loudly if you are near its nest.",
+ conf:[], tip:""},
+{id:"oystercatcher", n:"American oystercatcher", sci:"Haematopus palliatus galapagensis", g:"bird", st:"e", c:["black","white","brown","red"], z:"m", w:["shore"],
+ look:"Black head, brown back, white belly, a long straight scarlet bill and a yellow eye.",
+ why:"Pries limpets and mussels off the rocks with that chisel of a bill. Usually in pairs, piping loudly.",
+ conf:[], tip:""},
+{id:"lavaheron", n:"Lava heron", sci:"Butorides sundevalli", g:"bird", st:"E", c:["grey","black"], z:"s", w:["shore"],
+ look:"A small dark slate-grey heron, almost invisible against black lava until it moves. Legs go orange in breeding season.",
+ why:"Stands motionless at the tide line and spears crabs and small fish. A good example of how the islands produce dark forms on dark rock.",
+ conf:["ycnheron","gbheron"], tip:"Small and uniformly dark grey."},
+{id:"ycnheron", n:"Yellow-crowned night heron", sci:"Nyctanassa violacea pauper", g:"bird", st:"e", c:["grey","black","white","yellow"], z:"m", w:["shore"],
+ look:"Stocky grey heron with a black-and-white striped head and a pale yellow crown.",
+ why:"Hunts crabs at night and stands about by day looking cross. On Genovesa, often among the mangroves at Darwin Bay.",
+ conf:["lavaheron"], tip:"Striped black-and-white face."},
+{id:"gbheron", n:"Great blue heron", sci:"Ardea herodias cognata", g:"bird", st:"N", c:["grey","blue","white"], z:"l", w:["shore"],
+ look:"The tallest bird you will see here apart from the flamingo: grey-blue, long neck, dagger bill, black plume over the eye.",
+ why:"Takes anything it can swallow — fish, lizards, young iguanas, chicks.",
+ conf:["lavaheron"], tip:"Size alone."},
+{id:"owl", n:"Short-eared owl", sci:"Asio flammeus galapagoensis", g:"bird", st:"e", k:1, c:["brown","yellow"], z:"m", w:["land","air"],
+ look:"Mottled dark-brown owl with fierce yellow eyes in a dark face disc. Often on the ground among the lava.",
+ why:"On islands with hawks it hunts at dusk. On Genovesa there are no hawks, so it hunts in broad daylight, waiting at the crevices for storm-petrels. It is the one place where you can watch an owl hunt at ten in the morning.",
+ conf:["hawk"], tip:"On the ground among the lava at Prince Philip's Steps — scan the cracks."},
+{id:"hawk", n:"Galápagos hawk", sci:"Buteo galapagoensis", g:"bird", st:"E", k:1, c:["brown"], z:"l", w:["land","air"],
+ look:"Big dark-brown hawk, often perched on a rock or a dead tree, utterly unafraid. Young birds are paler and mottled.",
+ why:"The top predator on land. Breeds in groups where several males share one female and help raise the young — unusual among birds of prey.",
+ conf:["owl"], tip:"Size and bulk: much bigger than the owl."},
+{id:"dove", n:"Galápagos dove", sci:"Zenaida galapagoensis", g:"bird", st:"E", c:["brown","red","blue"], z:"s", w:["land"],
+ look:"Small reddish-brown dove with a bright blue eye-ring, red legs and iridescent pink-bronze on the neck.",
+ why:"Walks rather than flies, with a pigeon's head-nodding gait. Early visitors ate them by the dozen because they could be picked up by hand.",
+ conf:[], tip:"The blue eye-ring."},
+{id:"mockingbird", n:"Galápagos mockingbird", sci:"Mimus parvulus", g:"bird", st:"E", c:["grey","brown","white"], z:"s", w:["land","shore"],
+ look:"A slim grey-brown bird with a long tail, a long slightly curved bill and a dark mask through the eye.",
+ why:"Bold and curious; it will investigate your shoelaces and drink from a water bottle if you let it (do not let it). The mockingbirds varied from island to island, and that — more than the finches — first made Darwin wonder whether species were fixed.",
+ conf:["floreanamock"], tip:"Anywhere on this route except Champion Islet, a mockingbird is this one."},
+{id:"floreanamock", n:"Floreana mockingbird", sci:"Mimus trifasciatus", g:"bird", st:"E", k:1, c:["grey","brown","white"], z:"s", w:["land"],
+ look:"Larger and heavier-billed than the Galápagos mockingbird, with darker patches on the sides of the breast.",
+ why:"Collected by Darwin's party on Floreana in 1835 and gone from Floreana within fifty years — rats, cats and the settlers' land clearing. It survives on Champion and one other islet, a few hundred birds at most. Floreana is being cleared of rats and cats so it can go home.",
+ conf:["mockingbird"], tip:"If you are not at Champion Islet, it is not this bird."},
+{id:"flycatcher", n:"Galápagos flycatcher", sci:"Myiarchus magnirostris", g:"bird", st:"E", c:["grey","brown","yellow"], z:"s", w:["land"],
+ look:"Small, grey-brown above with a pale yellow belly and a slight crest. Sits upright on a branch and sallies out after insects.",
+ why:"Fearless to the point of landing on hats and cameras. One of the birds that tells you how little the islands' animals learned to fear.",
+ conf:["yellowwarbler"], tip:"Upright posture, pale yellow belly, grey head."},
+{id:"vermilion", n:"Little vermilion flycatcher", sci:"Pyrocephalus nanus", g:"bird", st:"E", c:["red","brown","black"], z:"s", w:["land"],
+ look:"A tiny flycatcher. The male has a brilliant scarlet crown and underparts; the female is brown with a yellowish-pink belly.",
+ why:"Once common in the Santa Cruz highlands and now hard to find — a parasitic fly introduced by people kills the chicks in the nest. A sighting is worth reporting to your naturalist.",
+ conf:[], tip:""},
+{id:"yellowwarbler", n:"Yellow warbler", sci:"Setophaga petechia aureola", g:"bird", st:"e", c:["yellow","red"], z:"s", w:["land","shore"],
+ look:"Small and bright yellow all over; males have a rusty cap and faint red streaks on the breast.",
+ why:"Found in every habitat from mangrove to highland, and often forages on the beach among the sea lions.",
+ conf:["flycatcher"], tip:"All yellow: warbler."},
+{id:"groundfinch", n:"Ground finches", sci:"Geospiza spp.", g:"bird", st:"E", k:1, c:["black","brown"], z:"s", w:["land","shore"],
+ look:"Sparrow-sized; males black, females streaked brown. Beaks range from small and pointed to massive nutcracker. Small, medium and large ground finches overlap and grade into each other.",
+ why:"Darwin's finches. On Daphne Major, a speck you may pass, researchers measured beaks for forty years and watched them change size within a few generations after a drought. Honest field note: most photos of a ground finch can only be named to 'ground finch'. That is not failure; that is the science.",
+ conf:["cactusfinch","warblerfinch"], tip:"Beak size relative to head is the only clue. Even naturalists say 'probably a medium ground finch'."},
+{id:"cactusfinch", n:"Cactus finches", sci:"Geospiza scandens & G. propinqua", g:"bird", st:"E", c:["black","brown"], z:"s", w:["land"],
+ look:"Like a ground finch with a longer, more pointed beak, usually on or near a prickly pear. Genovesa has its own large cactus finch with a heavier bill.",
+ why:"Feeds on opuntia flowers, pollen and seeds — and in doing so pollinates the cactus. On Genovesa it splits the work with the ground finches by beak size.",
+ conf:["groundfinch"], tip:"Long pointed beak, on a cactus."},
+{id:"warblerfinch", n:"Warbler finch", sci:"Certhidea olivacea", g:"bird", st:"E", c:["grey","green","brown"], z:"s", w:["land"],
+ look:"A tiny, plain olive-grey bird with a thin pointed beak. Looks like a warbler, flits like a warbler.",
+ why:"A Darwin's finch that turned into a warbler. It shows how far one ancestor's descendants spread: from seed-crackers to insect-pickers.",
+ conf:["yellowwarbler"], tip:"Thin beak, dull olive — not yellow."},
+{id:"woodpeckerfinch", n:"Woodpecker finch", sci:"Camarhynchus pallidus", g:"bird", st:"E", c:["brown","grey"], z:"s", w:["land"],
+ look:"A plain brown tree finch with a strong straight bill. Unremarkable to look at; remarkable to watch.",
+ why:"Uses tools. It breaks off a cactus spine or twig and pokes it into bark to pry out grubs — one of very few birds that do. Hard to see; worth asking about in the highlands.",
+ conf:["groundfinch"], tip:"In trees, not on the ground; holding a stick if you are very lucky."},
+/* ---------- reptiles ---------- */
+{id:"marineiguana", n:"Marine iguana", sci:"Amblyrhynchus cristatus", g:"reptile", st:"E", k:1, c:["black","grey","red","green"], z:"m", w:["shore","sea"],
+ look:"Black or grey iguana with a blunt face, a spiny crest and a flattened tail, piled on the lava. Males in some places flush red and green in the breeding season.",
+ why:"The only lizard in the world that feeds in the sea, grazing algae off the rocks. It drinks salt water and sneezes the salt out through glands in its nose — the white crust on its head. In El Niño years, when the algae fail, adults can actually shrink, bone included, and grow back when food returns. Fernandina's are the biggest.",
+ conf:["landiguana"], tip:"Black and on the shore: marine. Yellow and in the scrub: land."},
+{id:"landiguana", n:"Galápagos land iguana", sci:"Conolophus subcristatus", g:"reptile", st:"E", k:1, c:["yellow","orange","brown"], z:"l", w:["land"],
+ look:"Big, heavy, yellow-to-orange iguana with a brown back, often under a palo santo or chewing a cactus pad.",
+ why:"Eats prickly-pear pads, spines and all. North Seymour's iguanas were put there from Baltra in the 1930s by an American expedition — and when Baltra's own died out in the war years, Seymour's descendants were used to bring them back.",
+ conf:["marineiguana"], tip:"Yellow, inland, eating cactus."},
+{id:"tortoise", n:"Giant tortoise (Santa Cruz)", sci:"Chelonoidis porteri & C. donfaustoi", g:"reptile", st:"E", k:1, c:["black","grey","brown"], z:"l", w:["land"],
+ look:"The tortoise that named the islands: galápago is old Spanish for a kind of saddle, after the shells. Santa Cruz's are dome-shelled, and can weigh more than 250 kg.",
+ why:"Each island had its own tortoise; Darwin was told a local could tell which island a tortoise came from by its shell. Whalers took perhaps 100,000 of them, alive, as fresh meat that kept for a year. Santa Cruz's eastern tortoises were named as a separate species only in 2015, for the ranger Fausto Llerena.",
+ conf:[], tip:"Wild ones are in the highlands; numbered ones are at the breeding centre."},
+{id:"lavalizard", n:"Lava lizards", sci:"Microlophus spp.", g:"reptile", st:"E", c:["brown","grey","red","yellow","black"], z:"s", w:["land","shore"],
+ look:"Small lizards everywhere on the trail. Males are larger, patterned; females have a bright red or orange throat.",
+ why:"There are several species, most of them confined to one island. Males hold territories with push-up displays — the faster the push-ups, the more serious the threat.",
+ conf:[], tip:"Red throat = female."},
+{id:"racer", n:"Galápagos racer", sci:"Pseudalsophis spp.", g:"reptile", st:"E", c:["brown","black","yellow"], z:"m", w:["land","shore"],
+ look:"A slender brown snake with pale stripes or spots, about a metre long. Mildly venomous and harmless to people.",
+ why:"Constrictors that hunt lizards, young iguanas and hatchlings. Fernandina's racers are the snakes in the famous iguana-hatchling chase in Planet Earth II.",
+ conf:[], tip:""},
+{id:"greenturtle", n:"Green sea turtle", sci:"Chelonia mydas", g:"reptile", st:"N", k:1, c:["green","brown","black"], z:"l", w:["sea","shore"],
+ look:"Large sea turtle with a small rounded head and a dark, smooth shell. The East Pacific population is darker than most — locally called the black turtle.",
+ why:"Grazes on algae and seagrass, which makes it the only largely vegetarian sea turtle. November is the start of the season when they gather to mate and come ashore to nest on beaches like Las Bachas and Flour Beach. The tracks up the sand look like a tractor's.",
+ conf:[], tip:""},
+/* ---------- mammals ---------- */
+{id:"sealion", n:"Galápagos sea lion", sci:"Zalophus wollebaeki", g:"mammal", st:"E", k:1, c:["brown","grey","black"], z:"l", w:["shore","sea"],
+ look:"Smooth, sleek, brown-to-golden sea lion with a long dog-like face and small ear flaps. Bulls are much larger, with a raised forehead.",
+ why:"The animal you will see most, and the one that shows best how little the islands' animals fear people. Bulls patrol a stretch of beach and bark; pups are curious and will swim at your mask. Keep 2 m, and give the bulls more.",
+ conf:["furseal"], tip:"Pointed dog-like face, small eyes, sleek coat."},
+{id:"furseal", n:"Galápagos fur seal", sci:"Arctocephalus galapagoensis", g:"mammal", st:"E", k:1, c:["brown","grey"], z:"m", w:["shore","sea"],
+ look:"Smaller and stockier than the sea lion, with a short pointed muzzle, big round eyes, thick fur and more prominent ears. Usually in the shade, in a crevice or a grotto.",
+ why:"The smallest fur seal in the world. It feeds at night — hence the big eyes — and spends the heat of the day hiding from the sun, since thick fur on the equator is a liability. Hunted close to extinction for its fur in the 1800s.",
+ conf:["sealion"], tip:"Bear-like face, big eyes, in the shade: fur seal."},
+{id:"bottlenose", n:"Bottlenose dolphin", sci:"Tursiops truncatus", g:"mammal", st:"N", c:["grey"], z:"l", w:["sea"],
+ look:"Grey dolphin with a short beak and curved dorsal fin, often riding the ship's bow wave.",
+ why:"Most often seen from the ship in the west. If the bridge announces dolphins, go to the bow — they come to ride the pressure wave.",
+ conf:[], tip:""},
+/* ---------- fish & sharks ---------- */
+{id:"whitetip", n:"Whitetip reef shark", sci:"Triaenodon obesus", g:"fish", st:"N", c:["grey","white"], z:"l", w:["sea"],
+ look:"Slim grey shark, usually under 1.6 m, with bright white tips on the dorsal and tail fins. Often lying still on the bottom.",
+ why:"Unlike most sharks it can rest on the seabed, pumping water over its gills. Not a danger to snorkellers; it is far more interested in sleeping.",
+ conf:["hammerhead"], tip:"White tips on the fins."},
+{id:"hammerhead", n:"Scalloped hammerhead", sci:"Sphyrna lewini", g:"fish", st:"N", c:["grey"], z:"l", w:["sea"],
+ look:"The hammer-shaped head is unmistakable.",
+ why:"Huge schools gather far north at Darwin and Wolf. Inside Genovesa's caldera an occasional one is seen along the cliffs from the snorkel. Treat it as a bonus, not a plan.",
+ conf:["whitetip"], tip:""},
+{id:"goldenray", n:"Golden cownose ray", sci:"Rhinoptera steindachneri", g:"fish", st:"N", c:["yellow","brown"], z:"m", w:["sea"],
+ look:"Golden-brown ray with a notched, cow-like head, often in groups in shallow water, wingtips breaking the surface.",
+ why:"Schools of them cruise lagoons and channels together. Seen best from a panga or standing still in the shallows.",
+ conf:["eagleray","stingray"], tip:"Golden colour and notched head."},
+{id:"eagleray", n:"Spotted eagle ray", sci:"Aetobatus laticeps", g:"fish", st:"N", k:1, c:["black","white","spotted"], z:"l", w:["sea"],
+ look:"Dark back covered in white spots, a pointed duck-like snout and a very long thin tail. Flies through the water.",
+ why:"The most beautiful thing on a snorkel. Often in pairs, gliding along the edge of a drop-off.",
+ conf:["goldenray"], tip:"White spots on a dark back."},
+{id:"stingray", n:"Diamond stingray", sci:"Hypanus dipterurus", g:"fish", st:"N", c:["grey","brown"], z:"m", w:["sea","shore"],
+ look:"A flat diamond-shaped ray lying on sand, often half buried, in very shallow water at the waterline.",
+ why:"Not aggressive, but it rests where you put your feet. The shuffle — sliding your feet along the bottom — warns it off.",
+ conf:["goldenray"], tip:""},
+{id:"mola", n:"Ocean sunfish", sci:"Mola mola", g:"fish", st:"N", k:1, c:["grey","white"], z:"l", w:["sea"],
+ look:"A huge flat disc of a fish, all head and fins, drifting up from deep water. Can be over 2 m tall.",
+ why:"The heaviest bony fish in the world. It comes up the cold walls in the west to be cleaned of parasites by reef fish and seabirds. A Mola at Punta Vicente Roca is the luck of the trip — and the reason to look down as well as along.",
+ conf:[], tip:""},
+{id:"kingangel", n:"King angelfish", sci:"Holacanthus passer", g:"fish", st:"N", c:["blue","black","white","yellow","orange"], z:"s", w:["sea"],
+ look:"Deep blue-black body with a single white vertical bar, yellow tail and orange flush on the fins.",
+ why:"The most striking common reef fish here. Sometimes acts as a cleaner for larger fish.",
+ conf:["moorish"], tip:""},
+{id:"surgeon", n:"Yellow-tailed surgeonfish", sci:"Prionurus laticlavius", g:"fish", st:"N", c:["grey","yellow","black"], z:"s", w:["sea"],
+ look:"Grey oval fish with a bright yellow tail and black spots near it, in big grazing schools.",
+ why:"The scalpel-like spines by the tail are the 'surgeon'. On almost every snorkel, often in schools of hundreds.",
+ conf:[], tip:""},
+{id:"parrotfish", n:"Blue-chin parrotfish", sci:"Scarus ghobban", g:"fish", st:"N", c:["blue","green","yellow","orange"], z:"m", w:["sea"],
+ look:"Big, colourful, beaked fish nibbling the rock. Males blue-green, females yellow-orange with blue bars.",
+ why:"Scrapes algae off rock and coral with fused teeth, and you can hear it crunch underwater. Much of the white sand on tropical beaches has been through a parrotfish.",
+ conf:[], tip:""},
+{id:"moorish", n:"Moorish idol", sci:"Zanclus cornutus", g:"fish", st:"N", c:["black","white","yellow"], z:"s", w:["sea"],
+ look:"Disc-shaped fish striped black, white and yellow, with a long trailing dorsal fin and a tubular snout.",
+ why:"The fish everyone recognises from Finding Nemo. Usually in pairs or threes.",
+ conf:["kingangel"], tip:""},
+{id:"puffer", n:"Guineafowl puffer", sci:"Arothron meleagris", g:"fish", st:"N", c:["black","white","yellow","spotted"], z:"s", w:["sea"],
+ look:"Round, slow puffer, dark with dense white spots — or the rarer all-yellow golden phase.",
+ why:"Inflates with water when threatened. Toxic to eat, slow to swim, unbothered by snorkellers.",
+ conf:[], tip:""},
+{id:"sergeant", n:"Panamic sergeant major", sci:"Abudefduf troschelii", g:"fish", st:"N", c:["yellow","black","white"], z:"s", w:["sea"],
+ look:"Small, flat fish with bold black vertical bars on a yellowish-white body. In loose schools near the surface.",
+ why:"Males guard purple egg patches on rocks and will charge at a snorkeller's mask.",
+ conf:[], tip:""},
+/* ---------- shore & reef life ---------- */
+{id:"sallylightfoot", n:"Sally Lightfoot crab", sci:"Grapsus grapsus", g:"sea", st:"N", k:1, c:["red","orange","blue","yellow"], z:"s", w:["shore"],
+ look:"Brilliant scarlet and orange crab with a blue underside, all over the black lava. Young ones are dark and almost invisible.",
+ why:"Named, the story goes, for a Caribbean dancer — they skip across the water. They clean the rocks, and the marine iguanas, picking off ticks and dead skin.",
+ conf:[], tip:"Dark crabs are young Sally Lightfoots."},
+{id:"pencilurchin", n:"Pencil sea urchin", sci:"Eucidaris galapagensis", g:"sea", st:"E", c:["red","brown"], z:"s", w:["sea","shore"],
+ look:"Reddish urchin with thick blunt spines like pencils, in tide pools and on the reef.",
+ why:"Look but do not lift. A grazer that, when its predators are fished out, can strip a reef bare.",
+ conf:[], tip:""},
+{id:"chocchip", n:"Chocolate chip sea star", sci:"Nidorellia armata", g:"sea", st:"N", c:["orange","brown","spotted"], z:"s", w:["sea"],
+ look:"Fat orange-brown five-armed starfish studded with dark knobs, on the sand or rock under the snorkel.",
+ why:"Looks like a biscuit. Leave it where it is — out of the water, a sea star suffocates.",
+ conf:[], tip:""},
+/* ---------- plants ---------- */
+{id:"opuntia", n:"Prickly pear cactus", sci:"Opuntia spp.", g:"plant", st:"E", k:1, c:["green","yellow"], z:"l", w:["land"],
+ look:"Flat green pads in chains, yellow flowers. On some islands it grows as a tree with a real bark-covered trunk.",
+ why:"Evolution in plain sight. Where tortoises and land iguanas eat the pads, the cactus grew tall and trunked to get its pads out of reach, and kept hard spines. On Genovesa, where there are no tortoises or iguanas, the spines are soft and hair-like — and the bees and finches pollinate it.",
+ conf:["candelabra","lavacactus"], tip:""},
+{id:"candelabra", n:"Candelabra cactus", sci:"Jasminocereus thouarsii", g:"plant", st:"E", c:["green"], z:"l", w:["land"],
+ look:"Tall branching columnar cactus like a candelabra, on dry lava slopes.",
+ why:"Grows extremely slowly; a big one may be over a century old.",
+ conf:["opuntia"], tip:""},
+{id:"lavacactus", n:"Lava cactus", sci:"Brachycereus nesioticus", g:"plant", st:"E", c:["green","yellow","grey","black"], z:"s", w:["land","shore"],
+ look:"Clumps of short spiny stems sprouting straight out of bare lava. New growth is yellow, old growth grey-black.",
+ why:"A pioneer: one of the first plants to colonise fresh lava, with almost no soil. It tells you how young the ground is.",
+ conf:["opuntia"], tip:""},
+{id:"palosanto", n:"Palo santo", sci:"Bursera graveolens", g:"plant", st:"N", c:["grey","white","green"], z:"l", w:["land"],
+ look:"Small pale grey-white trees that look dead for most of the year, leafing out only after the rains.",
+ why:"'Holy wood' — the resin smells of incense and is burned on the mainland. Here it shapes the whole dry-zone landscape.",
+ conf:[], tip:""},
+{id:"scalesia", n:"Scalesia", sci:"Scalesia pedunculata", g:"plant", st:"E", c:["green"], z:"l", w:["land"],
+ look:"Tall trees in a dense highland forest, dripping with moss and mist.",
+ why:"A daisy that became a tree. The Scalesia group diversified across the islands much as the finches did, and is called the Darwin's finches of the plant world.",
+ conf:[], tip:""},
+{id:"mangrove", n:"Mangroves", sci:"Rhizophora, Laguncularia & Avicennia", g:"plant", st:"N", c:["green"], z:"l", w:["shore","sea"],
+ look:"Dense shrubs and trees growing straight out of salt water on stilt roots.",
+ why:"Nurseries for young fish, sharks and rays, and nesting trees for pelicans, herons and boobies. The red mangrove's arched roots are the giveaway.",
+ conf:[], tip:""},
+{id:"tiquilia", n:"Tiquilia (grey matplant)", sci:"Tiquilia nesiotica", g:"plant", st:"E", c:["grey","white"], z:"s", w:["land"],
+ look:"Low silver-grey mats of hairy leaves on bare ash, like lichen from a distance.",
+ why:"Another pioneer, holding loose ash together on Bartolomé so other things can grow. The hairs reflect heat and trap moisture.",
+ conf:[], tip:""}
+];
+
+/* ============================================================
+   STATE — localStorage for the small things, IndexedDB for photos.
+   Keys start "sbg." so this book can share an origin with the others.
+   ============================================================ */
+const K = "sbg.";
+const mem = {};
+const store = {
+  get(k){ try{ const v = localStorage.getItem(k); return v===null?mem[k]:v; }catch(e){ return mem[k]; } },
+  set(k,v){ mem[k]=v; try{ localStorage.setItem(k,v); }catch(e){} },
+  del(k){ delete mem[k]; try{ localStorage.removeItem(k); }catch(e){} }
+};
+const getJ = (k, d) => { try{ const v = store.get(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } };
+const setJ = (k, v) => store.set(k, JSON.stringify(v));
+
+const SPX = {}; SPECIES.forEach(s => SPX[s.id] = s);
+const STATUS = {E:"Endemic", e:"Endemic race", N:"Native", M:"Visitor"};
+const HOW = {dry:"Dry landing", wet:"Wet landing", panga:"Panga ride", snorkel:"Snorkel", kayak:"Kayak",
+             walk:"On foot", coach:"By coach", other:""};
+
+let tab = store.get(K+"tab") || "day";
+let curDay = store.get(K+"day") || null;          /* set properly once the clock is read */
+const dayOf = id => DAYS.find(d => d.id === id);
+const day = () => dayOf(curDay);
+const dayIdx = id => DAYS.findIndex(d => d.id === id);
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const hhmm = m => { m = Math.max(0, Math.round(m)); const h = Math.floor(m/60), r = m%60;
+  return h ? h + "h " + String(r).padStart(2,"0") + "m" : r + "m"; };
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const WD = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+function fmtDate(iso, long){
+  const [y,m,d] = iso.split("-").map(Number);
+  const dt = new Date(Date.UTC(y,m-1,d));
+  return (long ? WD[dt.getUTCDay()] + " " : "") + d + " " + MON[m-1];
+}
+let toastT = 0;
+function toast(msg){
+  let el = $("#toast");
+  if(!el){ el = document.createElement("div"); el.id = "toast"; el.className = "toast";
+           el.setAttribute("role","status"); document.body.appendChild(el); }
+  el.textContent = msg; el.classList.remove("hidden");
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.add("hidden"), 3800);
+}
+
+/* ============================================================
+   TIME — the book keeps ship time, whatever the phone thinks.
+   A phone at sea often has no network to set its zone from, and some
+   ships keep mainland time for convenience; both are handled here.
+   ============================================================ */
+const shipClock = () => store.get(K+"clock") === "mainland" ? "mainland" : "galapagos";
+const tzFor = d => (d.tz === -6 && shipClock() === "mainland") ? -5 : d.tz;
+function epochOf(d, t){
+  if(!t) return null;
+  const [y,m,dd] = d.date.split("-").map(Number), [h,mi] = t.split(":").map(Number);
+  return Date.UTC(y,m-1,dd,h,mi) - tzFor(d)*3600e3;
+}
+function localParts(ms, tz){
+  const x = new Date(ms + tz*3600e3);
+  return {date: x.toISOString().slice(0,10), mins: x.getUTCHours()*60 + x.getUTCMinutes(),
+          hm: String(x.getUTCHours()).padStart(2,"0") + ":" + String(x.getUTCMinutes()).padStart(2,"0")};
+}
+/* which day of the trip is it now: before → the first, after → the last */
+function nowDay(){
+  const t = Date.now();
+  for(const d of DAYS) if(localParts(t, tzFor(d)).date === d.date) return {d, state:"on"};
+  return Date.now() < epochOf(DAYS[0], "00:00") ? {d:DAYS[0], state:"before"} : {d:DAYS[DAYS.length-1], state:"after"};
+}
+
+/* Alongside every hand-set time we keep the printed time it was typed over,
+   so a change in the itinerary is not hidden under an old edit. */
+const actKey = (d, a, i) => K + "t." + d.id + "." + i + "." + a.s;
+function planned(d){
+  const o = getJ(K+"plan."+d.id, null);
+  const base = JSON.stringify(d.acts);
+  if(o && o.base === base) return o.acts;
+  if(o) store.del(K+"plan."+d.id);                 /* the printed day changed under it */
+  return d.acts;
+}
+function acts(d){
+  return planned(d).map((a, i) => {
+    const k = actKey(d, a, i), out = Object.assign({}, a, {i});
+    ["t","e"].forEach(w => {
+      const v = store.get(k+"."+w);
+      if(v == null) return;
+      if(store.get(k+"."+w+".base") !== (a[w] || "")){ store.del(k+"."+w); store.del(k+"."+w+".base"); return; }
+      out[w] = v; out.edited = true;
+    });
+    return out;
+  });
+}
+function setActTime(d, i, w, v){
+  const a = planned(d)[i]; if(!a) return;
+  const k = actKey(d, a, i);
+  store.set(k+"."+w, v); store.set(k+"."+w+".base", a[w] || "");
+}
+const siteOf = a => SITES[a.s] || null;
+const isLanding = a => a.how !== "other" && a.s !== "baltra";
+
+/* which species each day offers — from the plan as it now stands */
+function buildWhere(){
+  const W = {};
+  DAYS.forEach((d, di) => {
+    const seenHere = {};
+    acts(d).forEach(a => {
+      const st = siteOf(a); if(!st || !isLanding(a)) return;
+      (st.see || []).forEach(id => {
+        const key = id + "|" + a.s; if(seenHere[key]) return; seenHere[key] = 1;
+        (W[id] = W[id] || []).push({di, day:d.id, site:a.s});
+      });
+    });
+  });
+  return W;
+}
+const routeSpecies = W => SPECIES.filter(s => W[s.id]);
+
+/* ============================================================
+   SIGHTINGS
+   ============================================================ */
+const seenMap = () => getJ(K+"seen", {});
+const isSeen = id => !!seenMap()[id];
+function addSighting(id, s){
+  const m = seenMap(), cur = m[id];
+  if(!cur) m[id] = {t:s.t, day:s.day, site:s.site || null, n:1, photos:s.photo ? [s.photo] : []};
+  else{
+    cur.n = (cur.n || 1) + 1;
+    if(s.photo && cur.photos.indexOf(s.photo) < 0) cur.photos.push(s.photo);
+    if(s.t < cur.t){ cur.t = s.t; cur.day = s.day; cur.site = s.site || null; }
+  }
+  setJ(K+"seen", m);
+}
+function dropSighting(id, photo){
+  const m = seenMap(), cur = m[id]; if(!cur) return;
+  if(photo){
+    cur.photos = cur.photos.filter(p => p !== photo);
+    cur.n = Math.max(0, (cur.n || 1) - 1);
+    if(cur.n > 0){ setJ(K+"seen", m); return; }
+  }
+  delete m[id]; setJ(K+"seen", m);
+}
+/* a tick without a photo: file it where you most likely are */
+function tickNow(id){
+  const nd = nowDay(), W = buildWhere();
+  let dd = nd.state === "on" ? nd.d : day(), site = null;
+  const live = liveAct(dd);
+  if(live && siteOf(live.a) && (siteOf(live.a).see || []).indexOf(id) > -1) site = live.a.s;
+  if(!site){ const w = (W[id] || []).find(x => x.day === dd.id); if(w) site = w.site; }
+  if(!site && nd.state !== "on"){
+    const w = (W[id] || []).find(x => x.day === curDay); if(w){ dd = dayOf(w.day); site = w.site; }
+  }
+  addSighting(id, {t:Date.now(), day:dd.id, site});
+}
+function toggleSeen(id){
+  if(isSeen(id)){
+    const s = seenMap()[id];
+    if(s.photos && s.photos.length && !confirm("Remove " + SPX[id].n + " from your log? Its photos stay in the Camera tab.")) return;
+    dropSighting(id);
+    toast(SPX[id].n + " removed from the log.");
+  } else {
+    tickNow(id);
+    const s = seenMap()[id];
+    toast(SPX[id].n + " logged" + (s.site && SITES[s.site] ? " · " + SITES[s.site].n : "") + ".");
+  }
+}
+
+/* ============================================================
+   NOW — the countdown. Live landing: time to the panga. Between:
+   time to the next. Same bar as every Shore Book; different boat.
+   ============================================================ */
+function liveAct(d){
+  const t = Date.now(), list = acts(d);
+  for(const a of list){
+    const s = epochOf(d, a.t), e = epochOf(d, a.e);
+    if(s && e && t >= s && t < e) return {a, s, e};
+  }
+  return null;
+}
+function nextAct(d){
+  const t = Date.now();
+  return acts(d).map(a => ({a, s:epochOf(d, a.t) || epochOf(d, a.e)})).filter(x => x.s && x.s > t)
+    .sort((x,y) => x.s - y.s)[0] || null;
+}
+const warned = {};
+function renderTide(){
+  const nd = nowDay(), d = nd.d, t = Date.now();
+  let label = "", clock = "—", what = "", fill = 0, warn = false, foot = "";
+  if(nd.state === "before"){
+    const ms = epochOf(DAYS[0], "15:00") - t, days = Math.ceil(ms / 864e5);
+    label = "The expedition begins in";
+    clock = days > 1 ? days + " days" : hhmm(ms/6e4);
+    what = "Quito, " + fmtDate(DAYS[0].date, true) + ". Then Baltra on " + fmtDate(DAYS[2].date) + ".";
+  } else if(nd.state === "after"){
+    label = "Home"; clock = "✓";
+    what = "The journal is ready to keep. Journal → Save as PDF.";
+    fill = 100;
+  } else {
+    const live = liveAct(d);
+    if(live){
+      const left = (live.e - t)/6e4;
+      const ship = live.a.how === "coach" || live.a.how === "walk" ? "Back by" : "Back to the panga in";
+      label = d.tz === -5 ? "Ends in" : ship;
+      clock = hhmm(left); warn = left <= 15;
+      what = live.a.w;
+      fill = Math.min(100, Math.max(0, (t - live.s) / (live.e - live.s) * 100));
+      foot = timeInputs(d, live.a, live.a.how === "coach" ? "Back" : "Panga back");
+      panga(live, left);
+    } else {
+      const nx = nextAct(d);
+      if(nx){
+        const list = acts(d), prev = list.map(a => epochOf(d, a.e)).filter(e => e && e <= t).sort((a,b)=>b-a)[0];
+        label = "Next in"; clock = hhmm((nx.s - t)/6e4);
+        what = nx.a.w + (nx.a.t ? " · " + nx.a.t : "");
+        if(prev) fill = Math.min(100, (t - prev) / (nx.s - prev) * 100);
+        foot = timeInputs(d, nx.a, "Ends");
+      } else {
+        const tm = DAYS[dayIdx(d.id)+1];
+        label = "Done for today"; clock = "—";
+        what = tm ? "Tomorrow: " + tm.n + (acts(tm)[0] && acts(tm)[0].t ? " · first out " + acts(tm)[0].t : "") : "";
+        fill = 100;
+      }
+    }
+  }
+  $("#tideLabel").textContent = label;
+  const c = $("#tideClock"); c.textContent = clock; c.classList.toggle("warn", warn);
+  $("#tideWhat").textContent = what;
+  $("#tideFill").style.width = fill + "%";
+  const f = $("#tideFoot");
+  if(f.dataset.html !== foot && !f.contains(document.activeElement)){ f.innerHTML = foot; f.dataset.html = foot; }
+}
+function timeInputs(d, a, endLabel){
+  if(!a.t && !a.e) return "";
+  return '<label>' + (a.how === "snorkel" ? "In the water" : "Ashore") + ' <input type="time" step="300" data-tday="' + d.id + '" data-ti="' + a.i + '" data-tw="t" value="' + esc(a.t || "") + '"></label>' +
+         '<label>' + endLabel + ' <input type="time" step="300" data-tday="' + d.id + '" data-ti="' + a.i + '" data-tw="e" value="' + esc(a.e || "") + '"></label>';
+}
+/* fifteen and five minutes before the panga leaves: a tap and, if asked for, a tone */
+function panga(live, left){
+  const key = live.a.s + live.e;
+  [15, 5].forEach(m => {
+    if(left <= m && left > m - 1.5 && !warned[key+m] && document.visibilityState === "visible"){
+      warned[key+m] = 1;
+      signal();
+      toast(m + " minutes to the panga.");
+    }
+  });
+}
+
+/* --- the only tap an iPhone gives a web page: the native switch's haptic.
+   Undocumented, a bonus, never the plan — hence the toast. ------------------ */
+let swEl = null;
+function tapSwitch(n){
+  try{ if(!("switch" in document.createElement("input"))) return; }catch(e){ return; }
+  if(!swEl || !swEl.isConnected){
+    const l = document.createElement("span"); l.className = "haptic-switch"; l.setAttribute("aria-hidden","true");
+    swEl = document.createElement("input"); swEl.type = "checkbox"; swEl.tabIndex = -1;
+    try{ swEl.setAttribute("switch",""); }catch(e){}
+    l.appendChild(swEl); document.body.appendChild(l);
+  }
+  for(let i = 0; i < n; i++) setTimeout(() => { try{ swEl.click(); }catch(e){} }, i*220);
+}
+let actx = null;
+function chime(){
+  if(store.get(K+"sound") !== "1") return;
+  const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return;
+  try{ actx = actx || new AC(); }catch(e){ return; }
+  const c = actx; if(c.state === "suspended"){ try{ c.resume(); }catch(e){} }
+  [0, .28].forEach((o, i) => {
+    const osc = c.createOscillator(), g = c.createGain(), t = c.currentTime + .02 + o;
+    osc.type = "sine"; osc.frequency.value = i ? 659.25 : 523.25;
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.2, t+.012);
+    g.gain.exponentialRampToValueAtTime(.0001, t+.24);
+    osc.connect(g); g.connect(c.destination); osc.start(t); osc.stop(t+.3);
+  });
+}
+function signal(){
+  try{ if(navigator.vibrate && navigator.vibrate([200,100,200])) { chime(); return; } }catch(e){}
+  tapSwitch(2); chime();
+}
+
+/* ============================================================
+   HEAD & RAIL
+   ============================================================ */
+function renderHead(){
+  const d = day(), nd = nowDay();
+  $("#dayName").textContent = d.n;
+  $("#daySub").textContent = fmtDate(d.date, true) + " · " + d.sub;
+  $("#kick").textContent = "Shore Book · Day " + (dayIdx(d.id)+1) + " of " + DAYS.length;
+  $("#today").textContent = nd.state === "on" ? "Ship time " + localParts(Date.now(), tzFor(nd.d)).hm
+    : nd.state === "before" ? "Departs " + fmtDate(DAYS[0].date) : "Home";
+}
+function renderRail(){
+  const nd = nowDay();
+  $("#dayRail").innerHTML = DAYS.map((d, i) =>
+    '<button class="port-btn' + (nd.state === "on" && nd.d.id === d.id ? " now" : "") + '" role="tab" data-day="' + d.id +
+    '" aria-selected="' + (d.id === curDay) + '">D' + (i+1) + '<small>' + esc(fmtDate(d.date)) + '</small></button>').join("");
+  const sel = $('#dayRail [aria-selected="true"]');
+  if(sel) sel.scrollIntoView({block:"nearest", inline:"center"});
+}
+function renderNet(){
+  const on = navigator.onLine !== false, code = !!store.get(K+"code");
+  const n = $("#net"); n.classList.toggle("on", on);
+  n.querySelector("span").textContent = on ? (code ? "Signal · AI on" : "Signal") : "No signal";
+  const q = PH.filter(p => p.status === "queued").length;
+  const t = document.querySelector('.tab[data-tab="cam"]');
+  if(t) t.innerHTML = "Camera" + (q ? '<span class="badge">' + q + '</span>' : "");
+}
+
+/* ============================================================
+   DAY — the morning briefing, assembled from the book. It is not
+   generated, so it is there at 6 a.m. with no signal.
+   ============================================================ */
+function bestChances(d, W, max){
+  const di = dayIdx(d.id), here = {};
+  acts(d).forEach(a => { const s = siteOf(a); if(s && isLanding(a)) (s.see || []).forEach(id => here[id] = a.s); });
+  return Object.keys(here).filter(id => !isSeen(id) && SPX[id]).map(id => {
+    const later = (W[id] || []).filter(w => w.di > di).length;
+    const earlier = (W[id] || []).filter(w => w.di < di).length;
+    return {id, site:here[id], only: !later && !earlier, last: !later && earlier > 0,
+            score:(SPX[id].k ? 4 : 0) + (SPX[id].st === "E" ? 2 : 0) + (!later ? 3 : 0)};
+  }).sort((a,b) => b.score - a.score || SPX[a.id].n.localeCompare(SPX[b.id].n)).slice(0, max || 8);
+}
+function briefing(d, W){
+  const list = acts(d), lands = list.filter(a => isLanding(a) && siteOf(a));
+  const ship = d.tz === -6;
+  let html = '<section class="brief"><p class="kick">' + (ship ? "Before breakfast" : "Today") + '</p>';
+  if(lands.length){
+    const kinds = {}; lands.forEach(a => kinds[a.how] = (kinds[a.how] || 0) + 1);
+    const words = ["", "one", "two", "three", "four"];
+    const parts = [];
+    const nl = (kinds.wet || 0) + (kinds.dry || 0);
+    if(nl) parts.push(kinds.wet && kinds.dry ? words[nl] + " landings, " + words[kinds.wet] + " wet and " + words[kinds.dry] + " dry"
+      : words[nl] + (kinds.wet ? " wet" : " dry") + " landing" + (nl > 1 ? "s" : ""));
+    if(kinds.panga) parts.push("a panga ride");
+    if(kinds.snorkel) parts.push("a snorkel");
+    if(kinds.coach) parts.push("a drive into the highlands");
+    if(kinds.walk && ship) parts.push("time in town");
+    if(parts.length){
+      const s = parts.length > 1 ? parts.slice(0,-1).join(", ") + " and " + parts[parts.length-1] : parts[0];
+      html += '<p>' + esc(s.charAt(0).toUpperCase() + s.slice(1)) + '.</p>';
+    }
+    const bring = [], seenHow = {};
+    lands.forEach(a => { if(BRING[a.how] && !seenHow[a.how]){ seenHow[a.how] = 1; bring.push(BRING[a.how]); } });
+    if(ship) bring.push(BRING.every);
+    const sn = lands.filter(a => a.how === "snorkel" && siteOf(a).water);
+    if(sn.length) bring.push("Water at " + sn.map(a => siteOf(a).n + ": " + siteOf(a).water.toLowerCase()).join("; ") + ".");
+    html += '<ul>' + bring.map(b => '<li>' + esc(b) + '</li>').join("") + '</ul>';
+  }
+  list.filter(a => a.flag).forEach(a => {
+    html += '<p class="x" style="color:var(--rosso);font-size:13px">' + esc(a.w) + ': ' + esc(a.flag) + '.</p>';
+  });
+  const bc = bestChances(d, W, 8);
+  if(bc.length){
+    html += '<p style="margin-top:10px"><b>Still missing, and here today</b></p><div class="chips">' +
+      bc.map(b => '<button class="chip' + (SPX[b.id].k ? " k" : "") + '" data-sp="' + b.id + '">' + esc(SPX[b.id].n) +
+        (b.only ? ' <span class="today-tag">only here</span>' : b.last ? ' <span class="today-tag">last chance</span>' : '') + '</button>').join("") + '</div>';
+  }
+  return html + '</section>';
+}
+function renderDay(){
+  const d = day(), W = buildWhere(), list = acts(d), nd = nowDay();
+  const live = nd.state === "on" && nd.d.id === d.id ? liveAct(d) : null;
+  const t = Date.now();
+  let html = '<div class="dock"><b>' + esc(d.dock.t) + '</b><span>' + esc(d.dock.d) + '</span></div>';
+  html += briefing(d, W);
+
+  const ov = getJ(K+"plan."+d.id, null);
+  if(ov && ov.base === JSON.stringify(d.acts)){
+    html += '<div class="dock warn"><b>Changed at the briefing</b><span>' + esc(ov.summary || "The plan below is the revised one.") +
+      ' <button class="more" data-unplan="' + d.id + '">Restore the printed plan</button></span></div>';
+  }
+
+  html += '<h3>The day</h3><ol class="rail">';
+  list.forEach((a, n) => {
+    const st = siteOf(a), e = epochOf(d, a.e);
+    const cls = live && live.a.i === a.i ? " live" : (e && e < t ? " past" : "");
+    html += '<li class="stop' + cls + '"><span class="dot">' + (n+1) + '</span>';
+    html += '<div class="stop-time">' + (a.t || a.e ? '<input type="time" step="300" class="tin" data-tday="' + d.id + '" data-ti="' + a.i + '" data-tw="t" value="' + esc(a.t || "") + '" aria-label="Start"> – ' +
+            '<input type="time" step="300" class="tin" data-tday="' + d.id + '" data-ti="' + a.i + '" data-tw="e" value="' + esc(a.e || "") + '" aria-label="End">' : "Time from the ship") +
+            (a.p ? "" : ' · <span title="Not printed by HX">typical</span>') + (a.edited ? " · edited" : "") + '</div>';
+    html += '<div class="stop-name">' + esc(a.w) + (st && st.isl ? '<small>' + esc(st.isl) + '</small>' : '') + '</div>';
+    if(HOW[a.how]) html += '<span class="how ' + a.how + '">' + HOW[a.how] + '</span>';
+    if(st && st.diff && isLanding(a)) html += '<span class="how" style="color:var(--mute)">' + esc(st.diff) + '</span>';
+    if(a.flag) html += '<span class="how flag">Unconfirmed</span>';
+    const first = list.findIndex(b => b.s === a.s) === n;
+    if(st && first && a.s !== "baltra"){
+      html += '<p>' + esc(st.d) + '</p>';
+      if(st.l) html += '<p class="look">' + esc(st.l) + '</p>';
+      if(st.x) html += '<p class="x">' + esc(st.x) + '</p>';
+      if(st.see && st.see.length){
+        const ids = st.see.filter(id => SPX[id]).sort((x,y) => (SPX[y].k?1:0) - (SPX[x].k?1:0));
+        html += '<div class="chips">' + ids.slice(0, 12).map(id => '<button class="chip' + (isSeen(id) ? " seen" : "") + '" data-sp="' + id + '">' + esc(SPX[id].n) + '</button>').join("") +
+          (ids.length > 12 ? '<button class="chip" data-wsite="' + a.s + '">+' + (ids.length - 12) + ' more</button>' : '') + '</div>';
+      }
+    }
+    if(a.note) html += '<p class="x">' + esc(a.note) + '</p>';
+    html += '</li>';
+  });
+  html += '</ol>';
+
+  /* the two days ashore get the old Shore Book treatment */
+  list.map(a => SITES[a.s]).filter((s, i, arr) => s && arr.indexOf(s) === i).forEach(st => {
+    if(st.walk && d.id === "d2"){
+      html += '<h3>What the day covers</h3>' + st.walk.map(w =>
+        '<article class="card"><h4>' + esc(w.n) + '</h4><p>' + esc(w.w) + '</p>' +
+        (w.l ? '<p class="look" style="border-left:2px solid var(--olio);padding-left:10px">' + esc(w.l) + '</p>' : '') +
+        (w.x ? '<p class="x">' + esc(w.x) + '</p>' : '') + '</article>').join("");
+    }
+    if(st.eat && (d.id !== "d2" || st !== SITES.quito)){
+      html += '<h3>Eat</h3>' + st.eat.map(e => '<article class="card"><div class="t">' + esc(e.t) + '</div><h4>' + esc(e.n) + '</h4><p>' + esc(e.d) + '</p></article>').join("");
+    }
+    if(st.buy) html += '<h3>Buy</h3>' + st.buy.map(b => '<article class="card"><h4>' + esc(b.n) + '</h4><p>' + esc(b.d) + '</p></article>').join("");
+  });
+
+  if(d.screen){
+    html += '<h3>Watch tonight</h3><article class="card"><div class="t">' + esc(d.screen.y) + '</div><h4>' + esc(d.screen.f) + '</h4><p>' + esc(d.screen.d) + '</p></article>';
+  }
+
+  /* tonight's briefing rewrites tomorrow */
+  const tm = DAYS[dayIdx(d.id)+1];
+  if(tm && tm.tz === -6 && d.id !== "d1"){
+    const draft = store.get(K+"brief."+tm.id) || "";
+    const res = getJ(K+"briefres."+tm.id, null);
+    html += '<h3>Tonight\'s briefing</h3>' +
+      '<p class="note">Each evening the expedition leader sets out tomorrow — and on an expedition, tomorrow moves. Type the gist, or tap the microphone on the keyboard and dictate while they talk. The book will work out what changed for ' +
+      esc(fmtDate(tm.date)) + ' and keep what the naturalists told you for the journal.</p>' +
+      '<textarea id="briefTxt" data-brief="' + tm.id + '" placeholder="“Wake-up 6:15. Wet landing at Punta Pitt instead of… snorkel at 10…”">' + esc(draft) + '</textarea>' +
+      '<div class="btnrow"><button class="btn" data-readbrief="' + tm.id + '">Read it</button></div>';
+    if(res) html += briefResult(tm, res);
+  }
+  $("#panel").innerHTML = html;
+}
+function briefResult(tm, r){
+  let h = '<div class="card hi"><div class="t">What changed for ' + esc(fmtDate(tm.date)) + '</div><p>' + esc(r.summary) + '</p>';
+  if(r.changes && r.changes.length){
+    h += '<ul style="font-size:14px;padding-left:18px;margin:8px 0">' + r.changes.map(c => '<li><b>' + esc(c.action) + '</b> ' + esc(c.site_name || (SITES[c.site] && SITES[c.site].n) || "") +
+      (c.start || c.end ? ' · ' + esc(c.start) + (c.end ? '–' + esc(c.end) : '') : '') + (c.how ? ' · ' + esc(c.how) : '') + (c.note ? ' — ' + esc(c.note) : '') + '</li>').join("") + '</ul>';
+    if(!r.applied) h += '<div class="btnrow"><button class="btn" data-applybrief="' + tm.id + '">Apply to ' + esc(fmtDate(tm.date)) + '</button><button class="btn ghost" data-dropbrief="' + tm.id + '">Ignore</button></div>';
+    else h += '<p class="x">Applied. Times can still be edited by hand.</p>';
+  }
+  if(r.learned && r.learned.length) h += '<p class="x" style="margin-top:8px">' + r.learned.length + ' note' + (r.learned.length > 1 ? 's' : '') + ' from the naturalists saved to today\'s journal.</p>';
+  return h + '</div>';
+}
+function applyBrief(tm, r){
+  let list = planned(tm).map(a => Object.assign({}, a));
+  (r.changes || []).forEach(c => {
+    const sid = SITES[c.site] ? c.site : null;
+    const how = c.how || (sid ? SITES[sid].how : "other");
+    const label = sid ? SITES[sid].n : (c.site_name || "New stop");
+    if(c.action === "replace"){
+      const ix = list.findIndex(a => a.s === c.replaces);
+      const na = {s:sid || "other_" + uid(), t:c.start || (ix > -1 ? list[ix].t : ""), e:c.end || (ix > -1 ? list[ix].e : ""), how, w:label, note:c.note, p:0, brief:1};
+      if(ix > -1) list.splice(ix, 1, na); else list.push(na);
+    } else if(c.action === "add"){
+      list.push({s:sid || "other_" + uid(), t:c.start, e:c.end, how, w:label, note:c.note, p:0, brief:1});
+    } else if(c.action === "remove"){
+      list = list.filter(a => a.s !== c.site);
+    } else if(c.action === "retime" || c.action === "note"){
+      list.forEach(a => { if(a.s === c.site){ if(c.start) a.t = c.start; if(c.end) a.e = c.end; if(c.note) a.note = c.note; } });
+    }
+  });
+  list.sort((a,b) => (a.t || a.e || "99").localeCompare(b.t || b.e || "99"));
+  setJ(K+"plan."+tm.id, {base:JSON.stringify(tm.acts), acts:list, summary:r.summary});
+  r.applied = true; setJ(K+"briefres."+tm.id, r);
+}
+
+/* ============================================================
+   WILDLIFE — the field key. Works with no signal: tell it what you
+   saw and it narrows the list, ranked by where you are standing.
+   ============================================================ */
+const wk = {q:"", scope:null, g:"", c:[], z:"", w:"", site:""};
+const COLOURS = {black:"#1a1a1a", white:"#fff", grey:"#9aa0a3", brown:"#7a5a3a", blue:"#2C7AA3", red:"#c0392b",
+  yellow:"#e1b92b", orange:"#e07b2a", green:"#4C6A3A", pink:"#e79bb2", spotted:"repeating-radial-gradient(#1a1a1a 0 2px,#fff 2px 4px)"};
+function renderWild(){
+  const W = buildWhere(), d = day(), here = {};
+  acts(d).forEach(a => { const s = siteOf(a); if(s && isLanding(a)) (s.see || []).forEach(id => here[id] = a.s); });
+  const hasHere = Object.keys(here).length > 0;
+  if(wk.scope == null) wk.scope = hasHere ? "today" : "route";
+  let pool = SPECIES.filter(s => W[s.id]);
+  if(wk.site) pool = pool.filter(s => (SITES[wk.site].see || []).indexOf(s.id) > -1);
+  else if(wk.scope === "today" && hasHere) pool = pool.filter(s => here[s.id]);
+  if(wk.g) pool = pool.filter(s => s.g === wk.g);
+  wk.c.forEach(c => pool = pool.filter(s => s.c.indexOf(c) > -1));
+  if(wk.z) pool = pool.filter(s => s.z === wk.z);
+  if(wk.w) pool = pool.filter(s => s.w.indexOf(wk.w) > -1);
+  if(wk.q){
+    const q = wk.q.toLowerCase();
+    pool = SPECIES.filter(s => (s.n + " " + s.sci + " " + s.look).toLowerCase().indexOf(q) > -1);
+  }
+  const di = dayIdx(curDay);
+  pool.sort((a,b) => (here[b.id]?1:0) - (here[a.id]?1:0) || (b.k?1:0) - (a.k?1:0) || a.n.localeCompare(b.n));
+
+  const chip = (attr, v, on, label, extra) => '<button class="chip' + (on ? " on" : "") + '" ' + attr + '="' + v + '">' + (extra || "") + esc(label) + '</button>';
+  let html = '<input class="search" type="search" id="wq" placeholder="Search: booby, iguana, red feet…" value="' + esc(wk.q) + '" autocomplete="off">';
+  if(wk.site){
+    html += '<div class="toggle">At ' + esc(SITES[wk.site].n) + ' · <button class="more" data-wsite="">Show all</button></div>';
+  } else {
+    html += '<div class="chips" style="margin-top:10px">' + (hasHere ? chip("data-wscope", "today", wk.scope === "today", "Here on " + fmtDate(d.date)) : "") +
+      chip("data-wscope", "route", wk.scope !== "today" || !hasHere, "Whole route") + '</div>';
+  }
+  html += '<div class="keyrow"><span class="lab">What is it</span><div class="chips">' + chip("data-wg", "", !wk.g, "All") +
+    Object.keys(GROUPS).map(g => chip("data-wg", g, wk.g === g, GROUPS[g])).join("") + '</div></div>';
+  html += '<div class="keyrow"><span class="lab">Colours you saw</span><div class="chips">' +
+    Object.keys(COLOURS).map(c => chip("data-wc", c, wk.c.indexOf(c) > -1, c, '<span class="sw" style="background:' + COLOURS[c] + '"></span>')).join("") + '</div></div>';
+  html += '<div class="keyrow"><span class="lab">Size · where</span><div class="chips">' +
+    [["s","Small"],["m","Medium"],["l","Large"]].map(z => chip("data-wz", z[0], wk.z === z[0], z[1])).join("") +
+    [["sea","In the water"],["shore","On the shore"],["land","Inland"],["air","Flying"]].map(w => chip("data-ww", w[0], wk.w === w[0], w[1])).join("") + '</div></div>';
+  html += '<p class="note" style="margin-top:12px">' + pool.length + (pool.length === 1 ? " match" : " matches") +
+    (wk.c.length || wk.z || wk.w || wk.g ? ' · <button class="more" data-wclear="1">Clear the key</button>' : '') + '</p>';
+  html += '<div>' + pool.map(s => spRow(s, W, di, here)).join("") + '</div>';
+  if(!pool.length) html += '<p class="note">Nothing in the book matches all of that. Take off a colour — light at sea plays tricks — or photograph it and ask on the Camera tab.</p>';
+  $("#panel").innerHTML = html;
+}
+function spRow(s, W, di, here){
+  const sn = seenMap()[s.id];
+  let meta = "";
+  if(sn) meta = "Seen " + (dayOf(sn.day) ? "Day " + (dayIdx(sn.day)+1) : "") + (sn.site && SITES[sn.site] ? " · " + SITES[sn.site].n : "");
+  else if(here && here[s.id] && SITES[here[s.id]]) meta = '<span class="today-tag">Today</span> · ' + esc(SITES[here[s.id]].n);
+  else {
+    const nx = (W[s.id] || []).find(w => w.di >= di) || (W[s.id] || [])[0];
+    if(nx) meta = (nx.di >= di ? "Next: " : "Was: ") + "Day " + (nx.di+1) + " · " + esc(SITES[nx.site].n);
+  }
+  return '<div class="sp" data-sp="' + s.id + '"><button class="sp-mark' + (sn ? " on" : "") + '" data-seen="' + s.id + '" aria-label="Seen">' + (sn ? "✓" : "") + '</button>' +
+    '<div class="sp-body"><div class="sp-n">' + esc(s.n) + '<span class="st ' + s.st + '">' + STATUS[s.st] + '</span></div>' +
+    '<div class="sp-s">' + esc(s.sci) + '</div><div class="sp-m">' + (sn ? esc(meta) : meta) + '</div></div></div>';
+}
+
+/* ---------- the species sheet ---------- */
+function openSpecies(id){
+  const s = SPX[id]; if(!s) return;
+  const W = buildWhere(), sn = seenMap()[id];
+  const where = (W[id] || []).map(w => '<button class="chip" data-day="' + w.day + '" data-close="1">Day ' + (w.di+1) + ' · ' + esc(SITES[w.site].n) + '</button>').join("");
+  const photos = sn && sn.photos ? sn.photos.map(pid => PH.find(p => p.id === pid)).filter(Boolean) : [];
+  let html = '<div class="veil" data-close="1"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="' + esc(s.n) + '"><div class="sheet-in">' +
+    '<button class="close" data-close="1" aria-label="Close">×</button>' +
+    '<div class="t" style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">' + GROUPS[s.g] + ' · ' + STATUS[s.st] + '</div>' +
+    '<h2>' + esc(s.n) + '</h2><div class="sp-s" style="font-size:14px">' + esc(s.sci) + '</div>' +
+    '<div class="btnrow"><button class="btn' + (sn ? " ghost" : "") + '" data-seen="' + id + '">' + (sn ? "✓ In your log" : "I saw this") + '</button></div>';
+  if(sn) html += '<p class="note">First seen ' + (dayOf(sn.day) ? fmtDate(dayOf(sn.day).date) : "") + (sn.site && SITES[sn.site] ? " at " + esc(SITES[sn.site].n) : "") + (sn.n > 1 ? " · logged " + sn.n + " times" : "") + '.</p>';
+  if(photos.length) html += '<div class="thumbs">' + photos.map(p => '<img src="' + p.thumb + '" alt="">').join("") + '</div>';
+  html += '<dl class="facts"><dt>How to know it</dt><dd>' + esc(s.look) + '</dd><dt>Why it matters</dt><dd>' + esc(s.why) + '</dd>';
+  if(s.tip) html += '<dt>Telling it apart</dt><dd>' + esc(s.tip) + '</dd>';
+  if(s.conf && s.conf.length) html += '<dt>Easily confused with</dt><dd><div class="chips">' + s.conf.map(c => SPX[c] ? '<button class="chip" data-sp="' + c + '">' + esc(SPX[c].n) + '</button>' : "").join("") + '</div></dd>';
+  html += '<dt>On this route</dt><dd>' + (where ? '<div class="chips">' + where + '</div>' : 'Not expected on this itinerary.') + '</dd></dl>';
+  html += askBox("sp:" + id, "Ask about the " + s.n.toLowerCase());
+  html += '</div></div>';
+  closeSheet();
+  const host = document.createElement("div"); host.id = "sheet"; host.innerHTML = html;
+  document.body.appendChild(host);
+  document.body.style.overflow = "hidden";
+}
+function closeSheet(){ const s = $("#sheet"); if(s) s.remove(); document.body.style.overflow = ""; }
+
+/* ---------- ask: shared by the species sheet and the photo card ---------- */
+const answers = {};
+function askBox(key, ph){
+  const a = answers[key];
+  return '<h3>Ask the book</h3><div style="display:flex;gap:8px"><input class="field" data-askin="' + esc(key) + '" placeholder="' + esc(ph) + '"><button class="btn" data-ask="' + esc(key) + '">Ask</button></div>' +
+    (a ? '<div class="card" style="margin-top:10px">' + (a.wait ? '<p class="x">Thinking…</p>' : a.err ? '<p class="x">' + esc(a.err) + '</p>' :
+      '<p class="t">' + esc(a.q) + '</p><p>' + esc(a.answer) + '</p>' +
+      (a.seen || a.inferred ? '<div class="split">' + (a.seen ? '<div><b>In the photo</b>' + esc(a.seen) + '</div>' : '<div></div>') +
+        (a.inferred ? '<div class="inf"><b>Interpretation</b>' + esc(a.inferred) + '</div>' : '') + '</div>' : '')) + '</div>' : '') +
+    '<p class="note" style="margin-top:6px">Needs signal. Answers come from Claude, told where you are and what the book knows.</p>';
+}
+async function ask(key, q){
+  if(!q) return;
+  answers[key] = {wait:true, q};
+  repaintAsk(key);
+  const body = {question:q, ctx:{}};
+  const nd = nowDay(), live = nd.state === "on" ? liveAct(nd.d) : null;
+  body.ctx.when = fmtDate(nd.d.date, true);
+  body.ctx.site = live && siteOf(live.a) ? siteOf(live.a).n : "";
+  if(key.startsWith("sp:")) body.ctx.species = SPX[key.slice(3)].n + " (" + SPX[key.slice(3)].sci + ")";
+  if(key.startsWith("ph:")){
+    const p = PH.find(x => x.id === key.slice(3));
+    if(p){
+      body.image = await b64(p);
+      body.ctx.site = SITES[p.site] ? SITES[p.site].n : p.act;
+      body.ctx.when = whenText(p);
+      if(p.species && SPX[p.species]) body.ctx.species = SPX[p.species].n;
+    }
+  }
+  try{
+    const r = await ai("ask", body);
+    answers[key] = Object.assign({q}, r);
+  }catch(e){ answers[key] = {q, err:errText(e)}; }
+  repaintAsk(key);
+}
+function repaintAsk(key){
+  if(key.startsWith("sp:") && $("#sheet")) openSpecies(key.slice(3));
+  else if(key.startsWith("ph:")) render();
+}
+function errText(e){
+  if(e && e.kind === "nocode") return "Photo ID and questions need the trip code — Know → Settings.";
+  if(e && e.kind === "net") return "No signal. Try again when the ship's Wi-Fi is back.";
+  return (e && e.msg) || "That did not work. Try again.";
+}
+
+/* ============================================================
+   AI — one small server function that holds the key. Everything
+   the phone sends is in the body below: a downscaled photo and the
+   context. Nothing else leaves the phone.
+   ============================================================ */
+let CATALOGUE = null;
+function catalogue(){
+  if(CATALOGUE) return CATALOGUE;
+  const W = buildWhere();
+  CATALOGUE = SPECIES.map(s => s.id + " | " + s.n + " (" + s.sci + ") | " + GROUPS[s.g] + " | " + STATUS[s.st] +
+    " | " + s.look + (s.tip ? " Tell apart: " + s.tip : "") +
+    " | sites: " + (W[s.id] || []).map(w => SITES[w.site].n).filter((v,i,a) => a.indexOf(v) === i).join(", ")).join("\n");
+  return CATALOGUE;
+}
+async function ai(task, body){
+  const code = store.get(K+"code");
+  if(!code) throw {kind:"nocode"};
+  if(navigator.onLine === false) throw {kind:"net"};
+  const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 110000);
+  let res, j = null;
+  try{
+    res = await fetch("api/claude", {method:"POST", signal:ctl.signal,
+      headers:{"content-type":"application/json", "x-book-code":code},
+      body:JSON.stringify(Object.assign({task, ref:catalogue()}, body))});
+  }catch(e){ throw {kind:"net"}; }
+  finally{ clearTimeout(tm); }
+  try{ j = await res.json(); }catch(e){}
+  if(!res.ok || !j || !j.ok){
+    const retry = res.status === 429 || res.status >= 500;
+    throw {kind:retry ? "retry" : "fail", status:res.status,
+           msg:(j && j.error) || (res.status === 404 ? "This copy of the book has no AI server behind it." : "Error " + res.status)};
+  }
+  return j.data;
+}
+
+/* ============================================================
+   PHOTOS — shoot now or import later; each one is filed under the
+   landing it was taken on by its own timestamp, then waits for
+   signal to be identified. Kept on this phone only.
+   ============================================================ */
+let PH = [];
+const idb = {
+  p:null,
+  open(){
+    if(this.p) return this.p;
+    this.p = new Promise((ok, no) => {
+      let r; try{ r = indexedDB.open("shorebook-galapagos", 1); }catch(e){ no(e); return; }
+      r.onupgradeneeded = () => r.result.createObjectStore("photos", {keyPath:"id"});
+      r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error);
+    });
+    return this.p;
+  },
+  async run(mode, fn){
+    const db = await this.open();
+    return new Promise((ok, no) => {
+      const t = db.transaction("photos", mode), r = fn(t.objectStore("photos"));
+      t.oncomplete = () => ok(r && r.result); t.onerror = () => no(t.error);
+    });
+  },
+  all(){ return this.run("readonly", s => s.getAll()); },
+  put(p){ return this.run("readwrite", s => s.put(p)); },
+  del(id){ return this.run("readwrite", s => s.delete(id)); }
+};
+async function savePhoto(p){ try{ await idb.put(p); }catch(e){ toast("This phone would not store the photo. Is it out of space?"); } }
+
+/* EXIF: DateTimeOriginal and, when the camera wrote it, its UTC offset. */
+function exifTime(buf){
+  const v = new DataView(buf);
+  if(v.byteLength < 4 || v.getUint16(0) !== 0xFFD8) return null;
+  let o = 2;
+  while(o + 4 < v.byteLength){
+    if(v.getUint8(o) !== 0xFF) return null;
+    const mk = v.getUint8(o+1), len = v.getUint16(o+2);
+    if(mk === 0xE1 && v.getUint32(o+4) === 0x45786966){          /* "Exif" */
+      const T = o + 10, le = v.getUint16(T) === 0x4949;
+      const u16 = p => v.getUint16(p, le), u32 = p => v.getUint32(p, le);
+      const str = (p, n) => { let s = ""; for(let i = 0; i < n && p+i < v.byteLength; i++){ const c = v.getUint8(p+i); if(!c) break; s += String.fromCharCode(c); } return s; };
+      const ifd = (start, want) => {
+        const out = {}; if(start + 2 > v.byteLength) return out;
+        const n = u16(start);
+        for(let i = 0; i < n; i++){
+          const e = start + 2 + i*12; if(e + 12 > v.byteLength) break;
+          const tag = u16(e);
+          if(want.indexOf(tag) < 0) continue;
+          const type = u16(e+2), cnt = u32(e+4);
+          if(type === 2) out[tag] = str(cnt > 4 ? T + u32(e+8) : e+8, cnt);
+          else out[tag] = u32(e+8);
+        }
+        return out;
+      };
+      const i0 = ifd(T + u32(T+4), [0x8769, 0x0132]);
+      const ex = i0[0x8769] ? ifd(T + i0[0x8769], [0x9003, 0x9011]) : {};
+      const dt = ex[0x9003] || i0[0x0132];
+      const m = dt && dt.match(/^(\d{4}):(\d\d):(\d\d) (\d\d):(\d\d)/);
+      if(!m) return null;
+      const off = ex[0x9011] && ex[0x9011].match(/^([+-])(\d\d):(\d\d)/);
+      return {y:+m[1], mo:+m[2], d:+m[3], h:+m[4], mi:+m[5],
+              off: off ? (off[1] === "-" ? -1 : 1) * (+off[2] + off[3]/60) : null};
+    }
+    if(mk === 0xDA) return null;
+    o += 2 + len;
+  }
+  return null;
+}
+function exifEpoch(x){
+  const wall = Date.UTC(x.y, x.mo-1, x.d, x.h, x.mi);
+  if(x.off != null) return wall - x.off*3600e3;
+  /* no offset: assume the camera keeps trip time, less any correction set in Know */
+  const iso = new Date(wall).toISOString().slice(0,10);
+  const d = DAYS.find(dd => dd.date === iso) || DAYS[DAYS.length-1];
+  return wall - tzFor(d)*3600e3 - (+(store.get(K+"camoff") || 0))*3600e3;
+}
+/* file a moment under a day and, if it fits, a landing */
+function matchTime(t){
+  let d = DAYS.find(dd => localParts(t, tzFor(dd)).date === dd.date);
+  if(!d) return {day:(t < epochOf(DAYS[0],"00:00") ? DAYS[0] : DAYS[DAYS.length-1]).id, site:null, act:"Outside the trip dates"};
+  const list = acts(d);
+  for(const a of list){
+    const s = epochOf(d, a.t), e = epochOf(d, a.e);
+    if(s && e && t >= s - 20*6e4 && t <= e + 30*6e4) return {day:d.id, site:siteOf(a) ? a.s : null, act:a.w};
+  }
+  const before = list.filter(a => epochOf(d, a.e || a.t) && epochOf(d, a.e || a.t) <= t).pop();
+  if(d.tz === -5) return {day:d.id, site:"quito", act:"Quito"};
+  return {day:d.id, site:null, act:before ? "Aboard, after " + before.w : "Aboard, morning"};
+}
+function whenText(p){
+  const d = dayOf(p.day);
+  return (d ? fmtDate(d.date, true) + " " + localParts(p.t, tzFor(d)).hm : "") + (p.tsrc === "now" ? "" : p.tsrc === "exif" ? "" : " (file time)");
+}
+function loadImg(file){
+  return new Promise((ok, no) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => ok({img, url}); img.onerror = () => { URL.revokeObjectURL(url); no(new Error("unreadable")); };
+    img.src = url;
+  });
+}
+function drawTo(img, max, q, type){
+  const s = Math.min(1, max / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height));
+  const w = Math.round((img.naturalWidth || img.width) * s), h = Math.round((img.naturalHeight || img.height) * s);
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  c.getContext("2d").drawImage(img, 0, 0, w, h);
+  if(type === "url") return Promise.resolve({url:c.toDataURL("image/jpeg", q), w, h});
+  return new Promise(ok => c.toBlob(b => ok({blob:b, w, h}), "image/jpeg", q));
+}
+async function addFiles(files){
+  if(!files || !files.length) return;
+  tab = "cam"; store.set(K+"tab", tab);
+  let n = 0;
+  try{ if(navigator.storage && navigator.storage.persist) navigator.storage.persist(); }catch(e){}
+  for(const f of Array.from(files)){
+    if(!/^image\//.test(f.type) && !/\.(jpe?g|heic|png)$/i.test(f.name)) continue;
+    let t = null, tsrc = "now";
+    try{ const x = exifTime(await f.slice(0, 256*1024).arrayBuffer()); if(x){ t = exifEpoch(x); tsrc = "exif"; } }catch(e){}
+    if(t == null && f.lastModified && Math.abs(f.lastModified - Date.now()) > 120000){ t = f.lastModified; tsrc = "file"; }
+    if(t == null) t = Date.now();
+    let big, th, loaded;
+    try{
+      loaded = await loadImg(f);
+      big = await drawTo(loaded.img, 1568, .86);
+      th = await drawTo(loaded.img, 360, .72, "url");
+    }catch(e){ toast("Could not read " + (f.name || "that photo") + ". HEIC from Files sometimes fails — share it from Photos instead."); continue; }
+    finally{ if(loaded) URL.revokeObjectURL(loaded.url); }
+    const m = matchTime(t);
+    const p = {id:uid(), t, tsrc, day:m.day, site:m.site, act:m.act, blob:big.blob, w:big.w, h:big.h,
+               thumb:th.url, status:"queued", added:Date.now(), species:null, result:null, err:""};
+    PH.unshift(p); await savePhoto(p); n++;
+    if(n === 1) camSel = p.id;
+  }
+  if(n) toast(n === 1 ? "Filed under " + (SITES[PH[0].site] ? SITES[PH[0].site].n : PH[0].act) + "." : n + " photos filed by the time they were taken.");
+  render(); pump();
+}
+function b64(p){
+  return new Promise((ok, no) => {
+    if(!p.blob){ ok(p.thumb.split(",")[1]); return; }
+    const r = new FileReader(); r.onload = () => ok(String(r.result).split(",")[1]); r.onerror = no; r.readAsDataURL(p.blob);
+  });
+}
+async function identify(p){
+  const st = SITES[p.site];
+  return ai("identify", {image:await b64(p), ctx:{
+    site: st ? st.n : (p.act || "aboard ship"), island: st ? st.isl : "",
+    when: whenText(p), act: p.act,
+    likely: st ? (st.see || []).filter(id => SPX[id]).map(id => id + " (" + SPX[id].n + ")") : [],
+    hint: p.hint || ""}});
+}
+let pumping = false, pumpT = 0;
+async function pump(){
+  if(pumping || !store.get(K+"code") || navigator.onLine === false) return;
+  pumping = true; clearTimeout(pumpT);
+  try{
+    for(;;){
+      const p = PH.filter(x => x.status === "queued" && x.blob).sort((a,b) => a.added - b.added)[0];
+      if(!p) break;
+      p.status = "working"; paintCam();
+      try{
+        p.result = await identify(p); p.status = "done"; p.err = "";
+        const top = p.result.candidates && p.result.candidates[0];
+        if(p.result.verdict === "confident" && top && SPX[top.id] && !p.species) p.suggest = top.id;
+      }catch(e){
+        if(e.kind === "net" || e.kind === "retry" || e.kind === "nocode"){
+          p.status = "queued"; p.err = errText(e); await savePhoto(p);
+          pumpT = setTimeout(pump, 90000); break;
+        }
+        p.status = "error"; p.err = errText(e);
+      }
+      await savePhoto(p); paintCam();
+    }
+  } finally { pumping = false; paintCam(); renderNet(); }
+}
+function confirmPhoto(p, id){
+  if(p.species && p.species !== id) dropSighting(p.species, p.id);
+  p.species = id; savePhoto(p);
+  addSighting(id, {t:p.t, day:p.day, site:p.site, photo:p.id});
+  toast(SPX[id].n + " logged" + (SITES[p.site] ? " at " + SITES[p.site].n : "") + ".");
+}
+
+let camSel = null;
+function paintCam(){ if(tab === "cam") render(); else renderNet(); }
+function renderCam(){
+  const code = !!store.get(K+"code"), q = PH.filter(p => p.status === "queued").length;
+  let html = '';
+  if(!code) html += '<div class="dock warn"><b>Photo ID is off</b><span>It needs the trip code from Aspen Travel Advisors — Know → Settings. Until then photos are filed and kept, and the field key on the Wildlife tab works with no signal at all.</span></div>';
+  html += '<div class="drop"><button class="btn big" data-pick="1">Add photos</button>' +
+    '<p>Take one now, or choose a whole landing\'s worth from the camera roll. Each photo is filed under the landing it was taken on, by its own timestamp, and identified when there is signal.</p></div>';
+  if(q) html += '<p class="note">' + q + ' waiting' + (navigator.onLine === false ? ' for signal — they go the moment the ship\'s Wi-Fi is back.' : '.') +
+    (code ? ' <button class="more" data-pump="1">Try now</button>' : '') + '</p>';
+  const p = PH.find(x => x.id === camSel);
+  if(p) html += photoCard(p);
+  if(PH.length){
+    const byDay = {};
+    PH.forEach(x => (byDay[x.day] = byDay[x.day] || []).push(x));
+    DAYS.slice().reverse().forEach(d => {
+      const list = byDay[d.id]; if(!list) return;
+      html += '<h3>Day ' + (dayIdx(d.id)+1) + ' · ' + esc(d.n) + '</h3><div class="grid">' + list.sort((a,b) => b.t - a.t).map(x => {
+        let s = "", cls = "";
+        if(x.species && SPX[x.species]){ s = "✓ " + SPX[x.species].n; cls = "ok"; }
+        else if(x.status === "queued"){ s = "Waiting"; cls = "q"; }
+        else if(x.status === "working") s = "Looking…";
+        else if(x.status === "done") s = (x.result.candidates[0] ? x.result.candidates[0].name + "?" : "Can't tell");
+        else if(x.status === "error") s = "Problem";
+        else if(x.status === "kept") s = "From partner";
+        return '<button class="ph' + (x.id === camSel ? " sel" : "") + '" data-ph="' + x.id + '"><img src="' + x.thumb + '" alt="">' +
+          (s ? '<span class="pst ' + cls + '">' + esc(s) + '</span>' : '') + '</button>';
+      }).join("") + '</div>';
+    });
+  } else {
+    html += '<p class="note">Nothing yet. On a landing, shoot first and ask later — the book will sort them out at dinner.</p>';
+  }
+  $("#panel").innerHTML = html;
+}
+let photoURL = {id:null, url:null};
+function photoSrc(p){
+  if(!p.blob) return p.thumb;
+  if(photoURL.id !== p.id){ if(photoURL.url) URL.revokeObjectURL(photoURL.url); photoURL = {id:p.id, url:URL.createObjectURL(p.blob)}; }
+  return photoURL.url;
+}
+function photoCard(p){
+  const d = dayOf(p.day);
+  let opts = "";
+  DAYS.forEach(dd => {
+    const seen = {};
+    acts(dd).forEach(a => { if(!siteOf(a) || seen[a.s] || !isLanding(a)) return; seen[a.s] = 1;
+      opts += '<option value="' + dd.id + '|' + a.s + '"' + (dd.id === p.day && a.s === p.site ? " selected" : "") + '>D' + (dayIdx(dd.id)+1) + ' · ' + esc(SITES[a.s].n) + '</option>'; });
+  });
+  opts = '<option value="' + p.day + '|"' + (!p.site ? " selected" : "") + '>' + esc(p.act || "Aboard") + '</option>' + opts;
+  let h = '<div class="result"><img src="' + photoSrc(p) + '" alt="Your photo">' + '<div class="in">' +
+    '<div class="when">' + esc(whenText(p)) + ' · <select data-phsite="' + p.id + '" aria-label="Where this was taken">' + opts + '</select></div>';
+  if(p.species && SPX[p.species]){
+    h += '<p class="verdict confident" style="margin-top:10px">In your log</p><div class="cn" style="font-family:var(--display);font-size:24px">' +
+      '<button class="more" style="font:inherit;color:inherit;text-transform:none;letter-spacing:0" data-sp="' + p.species + '">' + esc(SPX[p.species].n) + '</button></div>' +
+      '<div class="btnrow"><button class="btn ghost" data-unconfirm="' + p.id + '">Not this</button></div>';
+  }
+  if(p.status === "queued"){
+    h += '<p class="verdict possible" style="margin-top:10px">Waiting to be identified</p><p class="x">' + esc(p.err || (store.get(K+"code") ? "Goes when there is signal." : "Needs the trip code — Know → Settings.")) + '</p>' +
+      '<div class="btnrow"><button class="btn ghost" data-keyit="' + p.id + '">Key it out now</button></div>';
+  } else if(p.status === "working"){
+    h += '<p class="verdict possible" style="margin-top:10px">Looking closely…</p><p class="x">Comparing the marks against what lives at ' + esc(SITES[p.site] ? SITES[p.site].n : "this site") + '. Up to a minute.</p>';
+  } else if(p.status === "error"){
+    h += '<p class="verdict cannot_tell" style="margin-top:10px">Not identified</p><p class="x">' + esc(p.err) + '</p><div class="btnrow"><button class="btn ghost" data-retry="' + p.id + '">Try again</button></div>';
+  } else if(p.status === "done" && p.result){
+    const r = p.result, V = {confident:"Confident", possible:"Possible — see below", cannot_tell:"Can't tell from this photo", no_wildlife:"No wildlife found"};
+    h += '<p class="verdict ' + r.verdict + '" style="margin-top:10px">' + V[r.verdict] + '</p><p>' + esc(r.subject) + '</p>';
+    const vis = (r.seen || []).join("; ") + (r.behaviour && r.behaviour.seen ? (r.seen && r.seen.length ? ". " : "") + r.behaviour.seen : "");
+    if(vis || (r.behaviour && r.behaviour.meaning))
+      h += '<div class="split"><div><b>Visible</b>' + esc(vis) + '</div><div class="inf"><b>What it may mean</b>' + esc((r.behaviour && r.behaviour.meaning) || "—") + '</div></div>';
+    (r.candidates || []).forEach(c => {
+      const known = SPX[c.id];
+      h += '<div class="cand"><div class="cn">' + (known ? '<button class="more" style="font:inherit;color:inherit;text-transform:none;letter-spacing:0;font-family:var(--display);font-size:21px" data-sp="' + c.id + '">' + esc(known.n) + '</button>' : esc(c.name)) +
+        '<span class="conf">' + esc(c.confidence) + '</span></div>' +
+        '<p class="x" style="margin:4px 0 0">' + esc(c.why) + (c.against ? ' <i>Against: ' + esc(c.against) + '</i>' : '') + '</p>' +
+        (known && p.species !== c.id ? '<div class="btnrow" style="margin:8px 0 0"><button class="btn' + (p.suggest === c.id ? "" : " ghost") + '" data-confirm="' + p.id + '|' + c.id + '">This is it</button></div>' : '') + '</div>';
+    });
+    if(r.tip) h += '<p class="x" style="margin-top:8px">To settle it: ' + esc(r.tip) + '</p>';
+    h += '<div class="btnrow"><button class="btn ghost" data-keyit="' + p.id + '">None of these — key it out</button><button class="btn ghost" data-retry="' + p.id + '">Ask again</button></div>';
+  }
+  h += askBox("ph:" + p.id, "Why is it doing that?");
+  h += '<div class="btnrow" style="margin-top:14px"><button class="btn ghost" data-delph="' + p.id + '">Delete photo</button></div>';
+  return h + '</div></div>';
+}
+
+/* ============================================================
+   LOG — the checklist, with what is still out there and when
+   ============================================================ */
+function renderLog(){
+  const W = buildWhere(), route = routeSpecies(W), seen = seenMap();
+  const got = route.filter(s => seen[s.id]).length;
+  const end = route.filter(s => s.st === "E"), endGot = end.filter(s => seen[s.id]).length;
+  const nd = nowDay(), di = nd.state === "before" ? 0 : dayIdx(nd.d.id);
+  let html = '<div class="prog"><b>' + got + '</b><span>of ' + route.length + ' species this route can show you · ' + endGot + ' of ' + end.length + ' endemic</span></div>' +
+    '<div class="bar"><i style="width:' + (route.length ? got/route.length*100 : 0) + '%"></i></div>';
+  const extra = Object.keys(seen).filter(id => SPX[id] && !W[id]);
+  const todo = route.filter(s => !seen[s.id]).map(s => ({s, nx:(W[s.id] || []).find(w => w.di >= di)}));
+  const ahead = todo.filter(x => x.nx).sort((a,b) => a.nx.di - b.nx.di || (b.s.k?1:0) - (a.s.k?1:0));
+  const gone = todo.filter(x => !x.nx);
+  if(ahead.length){
+    html += '<h3>Still to find — and where</h3>';
+    const keys = ahead.filter(x => x.s.k).concat(ahead.filter(x => !x.s.k)).slice(0, 14).sort((a,b) => a.nx.di - b.nx.di);
+    html += keys.map(x => {
+      const left = (W[x.s.id] || []).filter(w => w.di >= di).length;
+      return '<div class="sp" data-sp="' + x.s.id + '"><button class="sp-mark" data-seen="' + x.s.id + '" aria-label="Seen"></button><div class="sp-body"><div class="sp-n">' + esc(x.s.n) +
+        '<span class="st ' + x.s.st + '">' + STATUS[x.s.st] + '</span></div><div class="sp-m">' +
+        (x.nx.di === di && nd.state === "on" ? '<span class="today-tag">Today</span>' : x.nx.di === di + 1 && nd.state === "on" ? 'Tomorrow' : 'Day ' + (x.nx.di+1)) +
+        ' · ' + esc(SITES[x.nx.site].n) + (left === 1 ? ' · <b>only chance left</b>' : '') + '</div></div></div>';
+    }).join("");
+  }
+  html += '<h3>Your log</h3>';
+  Object.keys(GROUPS).forEach(g => {
+    const list = route.filter(s => s.g === g);
+    if(!list.length) return;
+    const n = list.filter(s => seen[s.id]).length;
+    html += '<h3 style="margin-top:16px;color:var(--ink)">' + GROUPS[g] + ' · ' + n + '/' + list.length + '</h3>' +
+      list.sort((a,b) => (seen[b.id]?1:0) - (seen[a.id]?1:0) || a.n.localeCompare(b.n)).map(s => spRow(s, W, di, null)).join("");
+  });
+  if(gone.length) html += '<p class="note" style="margin-top:12px">' + gone.length + ' species had their only chances earlier in the trip: ' + gone.map(x => esc(x.s.n)).join(", ") + '.</p>';
+  if(extra.length) html += '<p class="note">Also logged, off this route\'s list: ' + extra.map(id => esc(SPX[id].n)).join(", ") + '.</p>';
+  html += '<h3>Two phones, one trip</h3><p class="note">Each phone keeps its own log. Send yours across — AirDrop is quickest — and the other phone merges it: sightings, notes and thumbnails, nothing overwritten.</p>' +
+    '<div class="btnrow"><button class="btn ghost" data-export="1">Send my log</button><button class="btn ghost" data-import="1">Merge a log</button></div>';
+  $("#panel").innerHTML = html;
+}
+
+/* ============================================================
+   JOURNAL — the trip, written up day by day, and a PDF at the end
+   ============================================================ */
+function dayFacts(d){
+  const seen = seenMap(), sites = [], firsts = [], today = [];
+  acts(d).forEach(a => { if(siteOf(a) && isLanding(a) && sites.indexOf(siteOf(a).n) < 0) sites.push(siteOf(a).n); });
+  Object.keys(seen).forEach(id => { if(seen[id].day === d.id && SPX[id]) firsts.push(SPX[id].n); });
+  PH.filter(p => p.day === d.id && p.species && SPX[p.species]).forEach(p => { if(today.indexOf(SPX[p.species].n) < 0) today.push(SPX[p.species].n); });
+  firsts.forEach(n => { if(today.indexOf(n) < 0) today.push(n); });
+  return {sites, firsts, species:today,
+          notes:store.get(K+"notes."+d.id) || "", learned:getJ(K+"learned."+d.id, []), j:getJ(K+"j."+d.id, null)};
+}
+function renderJournal(){
+  const nd = nowDay(), upto = nd.state === "before" ? -1 : dayIdx(nd.d.id);
+  const names = store.get(K+"names") || "";
+  let html = '<p class="lede">The trip, as it happened. Notes are yours; the book adds what you logged, what the naturalists told you, and the photos you confirmed.</p>' +
+    '<div class="set"><label for="names">Whose journal</label><input class="field" id="names" placeholder="Your names" value="' + esc(names) + '"></div>' +
+    '<div class="btnrow"><button class="btn" data-print="1">Save as PDF</button><button class="btn ghost" data-jfile="1">Download as a page</button></div>' +
+    '<p class="note">Save as PDF opens the print sheet: pinch out on the preview, then Share → Save to Files. Everything here lives on this phone only — keep a copy before you clear Safari.</p>';
+  DAYS.map((d, i) => [d, i]).reverse().forEach(([d, i]) => {
+    if(i > upto && !store.get(K+"notes."+d.id)) return;
+    const f = dayFacts(d);
+    const ph = PH.filter(p => p.day === d.id && p.species).slice(0, 9);
+    html += '<section class="jday"><div class="t">Day ' + (i+1) + ' · ' + fmtDate(d.date, true) + '</div><h4>' + esc(f.j && f.j.title || d.n) + '</h4>';
+    if(f.j && f.j.text) html += '<div class="ai">' + esc(f.j.text).replace(/\n+/g, "<br><br>") + '</div>';
+    if(ph.length) html += '<div class="thumbs">' + ph.map(p => '<img src="' + p.thumb + '" alt="' + esc(SPX[p.species] ? SPX[p.species].n : "") + '">').join("") + '</div>';
+    if(f.firsts.length) html += '<p class="x" style="font-size:13px;color:var(--mute)"><b>First of the trip:</b> ' + esc(f.firsts.join(", ")) + '</p>';
+    if(f.learned.length) html += '<ul class="learned">' + f.learned.map(l => '<li>' + esc(l) + '</li>').join("") + '</ul>';
+    html += '<textarea data-notes="' + d.id + '" placeholder="What happened, what surprised you, what the naturalist said…">' + esc(f.notes) + '</textarea>' +
+      '<div class="btnrow"><button class="btn ghost" data-write="' + d.id + '">' + (f.j ? "Write it again" : "Write up this day") + '</button></div>';
+    html += '</section>';
+  });
+  if(upto < 0) html += '<p class="note">The first page opens on ' + fmtDate(DAYS[0].date) + '.</p>';
+  $("#panel").innerHTML = html;
+}
+async function writeDay(id){
+  const d = dayOf(id), f = dayFacts(d);
+  if(!f.sites.length && !f.species.length && !f.notes){ toast("Nothing to write from yet — add a note or log something."); return; }
+  toast("Writing…");
+  try{
+    const r = await ai("journal", {ctx:{day:"Day " + (dayIdx(id)+1) + ", " + fmtDate(d.date, true) + " — " + d.n,
+      sites:f.sites.join(", ") || d.n, species:f.species.join(", "), firsts:f.firsts.join(", "),
+      notes:f.notes, learned:f.learned.join(" / ")}});
+    setJ(K+"j."+id, r); render();
+  }catch(e){ toast(errText(e)); }
+}
+async function journalHTML(full){
+  const names = store.get(K+"names") || "";
+  let h = '<div class="cover"><p style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase">Shore Book · ' + esc(TRIP.ship) + '</p>' +
+    '<h1 style="font-family:var(--display);font-weight:400">Galápagos</h1><p>' + esc(names) + (names ? " · " : "") + fmtDate(TRIP.start) + ' – ' + fmtDate(TRIP.end) + ' 2026</p>' +
+    '<p style="color:#666">' + esc(TRIP.line) + ' · ' + Object.keys(seenMap()).length + ' species logged</p></div>';
+  for(const d of DAYS){
+    const f = dayFacts(d), ph = PH.filter(p => p.day === d.id && p.species).slice(0, 9);
+    if(!f.notes && !f.j && !ph.length && !f.firsts.length) continue;
+    h += '<section class="pday"><p style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#666">Day ' + (dayIdx(d.id)+1) + ' · ' + fmtDate(d.date, true) + ' · ' + esc(f.sites.join(" · ")) + '</p>' +
+      '<h2 style="font-family:var(--display);font-weight:400;font-size:28px">' + esc(f.j && f.j.title || d.n) + '</h2>';
+    if(f.j) h += '<p style="font-family:var(--display);font-size:16px;line-height:1.5">' + esc(f.j.text).replace(/\n+/g, "<br><br>") + '</p>';
+    if(f.notes) h += '<p style="font-size:14px;white-space:pre-wrap">' + esc(f.notes) + '</p>';
+    if(ph.length){
+      const srcs = [];
+      for(const p of ph) srcs.push(full && p.blob ? await new Promise(ok => { const r = new FileReader(); r.onload = () => ok(r.result); r.readAsDataURL(p.blob); }) : (p.blob ? URL.createObjectURL(p.blob) : p.thumb));
+      h += '<div class="pimgs">' + srcs.map((s, i) => '<figure style="margin:0"><img src="' + s + '" alt=""><figcaption style="font-size:10px;color:#666">' + esc(SPX[ph[i].species].n) + '</figcaption></figure>').join("") + '</div>';
+    }
+    if(f.firsts.length) h += '<p style="font-size:12px;color:#444"><b>First of the trip:</b> ' + esc(f.firsts.join(", ")) + '</p>';
+    if(f.learned.length) h += '<ul style="font-size:12px">' + f.learned.map(l => '<li>' + esc(l) + '</li>').join("") + '</ul>';
+    h += '</section>';
+  }
+  return h;
+}
+async function printJournal(){
+  const host = $("#print");
+  host.innerHTML = await journalHTML(false);
+  await Promise.all(Array.from(host.querySelectorAll("img")).map(i => i.complete ? 0 : new Promise(ok => { i.onload = i.onerror = ok; setTimeout(ok, 4000); })));
+  window.print();
+}
+async function downloadJournal(){
+  toast("Building the page…");
+  const css = Array.from(document.querySelectorAll("style")).map(s => s.textContent).join("\n");
+  const body = await journalHTML(true);
+  const page = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Galápagos journal</title><style>' + css +
+    '\nbody{background:#fff;max-width:720px;margin:0 auto;padding:24px}#print{display:block}#print .pimgs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}#print .pimgs img{width:100%;aspect-ratio:1;object-fit:cover}#print .cover{min-height:40vh;display:flex;flex-direction:column;justify-content:flex-end}</style></head><body><div id="print">' + body + '</div></body></html>';
+  saveFile("galapagos-journal.html", page, "text/html");
+}
+async function saveFile(name, text, mime){
+  const file = new File([text], name, {type:mime});
+  try{
+    if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file], title:name}); return; }
+  }catch(e){ if(e && e.name === "AbortError") return; }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(file); a.download = name;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+}
+
+/* ---------- two phones: export and merge ---------- */
+function exportLog(){
+  const days = {};
+  DAYS.forEach(d => { days[d.id] = {notes:store.get(K+"notes."+d.id) || "", learned:getJ(K+"learned."+d.id, []), j:getJ(K+"j."+d.id, null)}; });
+  const out = {book:"shorebook-galapagos-2026", v:1, at:Date.now(), names:store.get(K+"names") || "", seen:seenMap(), days,
+    photos:PH.filter(p => p.species).map(p => ({id:p.id, t:p.t, day:p.day, site:p.site, act:p.act, species:p.species, thumb:p.thumb}))};
+  saveFile("shore-book-log.json", JSON.stringify(out), "application/json");
+}
+async function importLog(file){
+  let j; try{ j = JSON.parse(await file.text()); }catch(e){ toast("That file is not a Shore Book log."); return; }
+  if(!j || j.book !== "shorebook-galapagos-2026"){ toast("That is not a log from this book."); return; }
+  const m = seenMap(); let added = 0;
+  Object.keys(j.seen || {}).forEach(id => {
+    const s = j.seen[id]; if(!SPX[id]) return;
+    if(!m[id]){ m[id] = s; added++; }
+    else{ m[id].photos = Array.from(new Set((m[id].photos || []).concat(s.photos || []))); if(s.t < m[id].t){ m[id].t = s.t; m[id].day = s.day; m[id].site = s.site; } }
+  });
+  setJ(K+"seen", m);
+  Object.keys(j.days || {}).forEach(id => {
+    const x = j.days[id]; if(!dayOf(id)) return;
+    const mine = store.get(K+"notes."+id) || "";
+    if(x.notes && mine.indexOf(x.notes) < 0) store.set(K+"notes."+id, mine ? mine + "\n\n" + x.notes : x.notes);
+    const l = getJ(K+"learned."+id, []); (x.learned || []).forEach(s => { if(l.indexOf(s) < 0) l.push(s); }); setJ(K+"learned."+id, l);
+    if(x.j && !getJ(K+"j."+id, null)) setJ(K+"j."+id, x.j);
+  });
+  for(const p of (j.photos || [])){
+    if(PH.find(x => x.id === p.id)) continue;
+    const np = Object.assign({}, p, {blob:null, status:"kept", added:Date.now(), result:null, err:""});
+    PH.push(np); await savePhoto(np);
+  }
+  toast("Merged: " + added + " new species, notes and photos added.");
+  render();
+}
+
+/* ============================================================
+   KNOW — the rules, the practicalities, and the settings
+   ============================================================ */
+const KNOW = [
+  "Two metres from every animal, always — even when the sea lion comes to you. Back away; do not reach out.",
+  "Stay on the marked trail and with your naturalist. Every visitor site is in the National Park and no one goes ashore without a licensed guide.",
+  "No flash, ever. No drones without a permit. No selfie sticks pushed at wildlife.",
+  "Nothing goes ashore to eat, and nothing comes back: no shells, sand, rock, feathers or bones. Check your shoes and bag for seeds before each landing — the islands are kept separate on purpose.",
+  "Do not swim on turtle-nesting beaches when told not to, and do not stand on coral or rock under water.",
+  "Galápagos is on UTC−6, an hour behind Quito. The ship announces which clock it keeps; set it under Settings below and every time in this book follows.",
+  "US dollars are the currency of Ecuador. Small notes; a $100 bill is hard to break anywhere outside a bank.",
+  "The National Park entry fee and the transit control card are paid on arrival or through HX. Check your HX documents for which is included — the park fee for foreign adults is $200.",
+  "The water in the west — Fernandina, Isabela — is the coldest on the route, from the Cromwell upwelling. That is why the penguins are there. Take the thicker wetsuit.",
+  "Seasickness: the long crossings are at night. If you take something, take it before dinner, not when you feel it.",
+  "The equator sun is vertical at noon. Reef-safe sunscreen, a hat with a brim, and a long-sleeved rash vest for snorkelling will do more than anything in a bottle.",
+  "Tap water is not for drinking in Quito or the islands. The ship's water is.",
+  "Hours, prices and itineraries drift. The book says so, and means it."
+];
+function renderKnow(){
+  let html = '<h3>Park rules</h3><ul class="know">' + KNOW.slice(0,5).map(k => '<li>' + esc(k) + '</li>').join("") + '</ul>';
+  html += '<h3>Good to know</h3><ul class="know">' + KNOW.slice(5).map(k => '<li>' + esc(k) + '</li>').join("") + '</ul>';
+  html += '<h3>This route, and the one you are not on</h3>' +
+    '<p class="note">Santa Cruz II runs this Western & Northern loop and a Southern & Eastern one. Here is what that choice means for wildlife.</p>' +
+    '<table class="cmp"><tr><th>You get</th><th>You miss</th></tr>' +
+    '<tr><td>Flightless cormorants and the main penguin waters — only in the west</td><td>The waved albatross, which nests only on Española (April–December)</td></tr>' +
+    '<tr><td>Fernandina: the youngest island, the biggest marine iguana colony</td><td>Española\'s red-and-green marine iguanas and its own mockingbird</td></tr>' +
+    '<tr><td>Genovesa: red-footed boobies, daytime owls, storm petrels in their thousands</td><td>San Cristóbal\'s Punta Pitt, where all three boobies nest side by side</td></tr>' +
+    '<tr><td>Santiago\'s fur seal grottos and Bartolomé\'s summit</td><td>South Plaza\'s land iguanas among red sesuvium</td></tr></table>';
+  html += '<h3>Settings</h3>' +
+    '<div class="set"><label for="code">Trip code (switches on photo ID and questions)</label><div style="display:flex;gap:8px"><input class="field" id="code" type="password" autocomplete="off" placeholder="From Aspen Travel Advisors" value="' + esc(store.get(K+"code") || "") + '"><button class="btn" data-savecode="1">Save</button></div></div>' +
+    '<div class="set"><label for="clock">The ship keeps</label><select id="clock"><option value="galapagos"' + (shipClock() === "galapagos" ? " selected" : "") + '>Galápagos time (UTC−6)</option><option value="mainland"' + (shipClock() === "mainland" ? " selected" : "") + '>Mainland Ecuador time (UTC−5)</option></select></div>' +
+    '<div class="set"><label for="camoff">My camera\'s clock is</label><select id="camoff">' + [-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3].map(h => '<option value="' + h + '"' + (+(store.get(K+"camoff") || 0) === h ? " selected" : "") + '>' + (h === 0 ? "Right — on ship time" : Math.abs(h) + " hour" + (Math.abs(h) > 1 ? "s" : "") + (h > 0 ? " ahead" : " behind")) + '</option>').join("") + '</select></div>' +
+    '<p class="note">Phone photos carry their own time zone and need nothing. A separate camera left on home time is the usual reason a photo lands on the wrong island — fix it here and re-file with the picker on each photo.</p>' +
+    '<label class="toggle"><input type="checkbox" id="sound"' + (store.get(K+"sound") === "1" ? " checked" : "") + '> A tone with the panga warnings (a tap comes regardless, where the phone allows)</label>';
+  html += '<h3>What leaves this phone</h3><p class="note">Nothing, unless you ask. Asking for an identification, a question, a briefing or a journal entry sends that photo (made smaller) or text, with the name of the landing, to a server run for Aspen Travel Advisors, which passes it to Anthropic\'s Claude and returns the answer. No location, no names, no account. Photos, notes and your log stay on this phone.</p>';
+  html += '<div class="btnrow"><button class="btn ghost" data-storage="1">How much is stored</button><button class="btn ghost" data-wipe="1">Clear everything</button></div><p class="note" id="storageNote"></p>';
+  $("#panel").innerHTML = html;
+}
+
+/* ============================================================
+   CHART — drawn from coordinates, always. With signal it lays
+   OpenStreetMap tiles under the pins and the service worker keeps
+   the ones you have looked at. Nothing is fetched in bulk.
+   ============================================================ */
+const RAD = Math.PI/180, Z0 = 8, TS = 256;
+const wx = lon => (lon + 180)/360 * TS * 2**Z0;
+const wy = lat => { const s = Math.sin(lat*RAD); return (0.5 - Math.log((1+s)/(1-s))/(4*Math.PI)) * TS * 2**Z0; };
+const ll = c => { const [a,b] = String(c).split(",").map(Number); return {lat:a, lon:b}; };
+function kmBetween(a, b){
+  const dl = (b.lat-a.lat)*RAD, dn = (b.lon-a.lon)*RAD;
+  const h = Math.sin(dl/2)**2 + Math.cos(a.lat*RAD)*Math.cos(b.lat*RAD)*Math.sin(dn/2)**2;
+  return 12742 * Math.asin(Math.sqrt(h));
+}
+const COMPASS = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+function compass(a, b){
+  const y = Math.sin((b.lon-a.lon)*RAD)*Math.cos(b.lat*RAD);
+  const x = Math.cos(a.lat*RAD)*Math.sin(b.lat*RAD) - Math.sin(a.lat*RAD)*Math.cos(b.lat*RAD)*Math.cos((b.lon-a.lon)*RAD);
+  return COMPASS[Math.round(((Math.atan2(y,x)/RAD + 360) % 360)/22.5) % 16];
+}
+const chart = {cx:0, cy:0, s:1, W:0, H:0, fitted:null, sel:null, pins:[], tiles:new Map()};
+const geo = {on:false, fix:null, err:null, id:null};
+function chartSites(){
+  /* every visitor site in itinerary order, with the days it is visited */
+  const out = [], ix = {};
+  DAYS.forEach((d, di) => acts(d).forEach(a => {
+    const st = siteOf(a); if(!st || a.s === "baltra" && di !== 2) return;
+    if(ix[a.s] == null){ ix[a.s] = out.length; out.push({id:a.s, st, days:[di], L:ll(st.c)}); }
+    else if(out[ix[a.s]].days.indexOf(di) < 0) out[ix[a.s]].days.push(di);
+  }));
+  return out;
+}
+function fitTo(points){
+  if(!points.length) return;
+  const xs = points.map(p => wx(p.lon)), ys = points.map(p => wy(p.lat));
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  chart.cx = (x0+x1)/2; chart.cy = (y0+y1)/2;
+  const sx = (chart.W - 90)/Math.max(x1-x0, .05), sy = (chart.H - 90)/Math.max(y1-y0, .05);
+  chart.s = Math.max(.5, Math.min(256, Math.min(sx, sy), 64));
+}
+function fitScope(scope){
+  const all = chartSites();
+  let pts;
+  if(scope === "me" && geo.fix) pts = [{lat:geo.fix.lat - .02, lon:geo.fix.lon - .02}, {lat:geo.fix.lat + .02, lon:geo.fix.lon + .02}];
+  else if(scope === "day"){
+    const d = day();
+    pts = acts(d).map(a => siteOf(a)).filter(Boolean).map(s => ll(s.c));
+    if(d.id === "d2") pts = pts.concat(SITES.quito.walk.map(w => ll(w.c)));
+    if(pts.length === 1) pts = [{lat:pts[0].lat - .05, lon:pts[0].lon - .05}, {lat:pts[0].lat + .05, lon:pts[0].lon + .05}];
+  } else pts = all.filter(s => s.st !== SITES.quito).map(s => s.L);
+  fitTo(pts); chart.fitted = scope;
+}
+function renderChart(){
+  let html = '<div class="locbar" id="locbar"></div>' +
+    '<div class="chart-ctl"><button class="wide" data-fit="route">Route</button><button class="wide" data-fit="day">Day</button><button class="wide" data-fit="me">Me</button>' +
+    '<button data-zoom="1.6" aria-label="Zoom in">+</button><button data-zoom="0.625" aria-label="Zoom out">−</button></div>' +
+    '<div class="chartwrap" id="chartHost"><svg id="chartSvg" xmlns="http://www.w3.org/2000/svg"><g id="tileL"></g><g id="drawL"></g></svg>' +
+    '<span class="attrib">© OpenStreetMap contributors</span></div><div id="chartCard"></div>' +
+    '<p class="note" style="margin-top:10px">With signal, the chart lays the map under the pins and keeps every piece you look at for later. Look at each island once before you fly from Quito, and it will be there at sea.</p>';
+  $("#panel").innerHTML = html;
+  const host = $("#chartHost");
+  chart.W = host.clientWidth; chart.H = host.clientHeight; chart.tiles.clear();
+  if(!chart.fitted || chart.fittedDay !== curDay){ fitScope(day().tz === -5 ? "day" : "route"); chart.fittedDay = curDay; }
+  bindChart(host);
+  drawChart(); paintLoc(); paintChartCard();
+}
+function drawChart(){
+  const svg = $("#chartSvg"); if(!svg) return;
+  const {W, H, s, cx, cy} = chart;
+  const SX = x => (x - cx)*s + W/2, SY = y => (y - cy)*s + H/2;
+  /* tiles */
+  const z = Math.max(3, Math.min(17, Math.round(Z0 + Math.log2(s))));
+  const tw = TS * 2**(Z0 - z), n = 2**z;
+  const x0 = Math.floor((cx - W/2/s)/tw), x1 = Math.floor((cx + W/2/s)/tw);
+  const y0 = Math.max(0, Math.floor((cy - H/2/s)/tw)), y1 = Math.min(n-1, Math.floor((cy + H/2/s)/tw));
+  const want = new Set(), tl = $("#tileL");
+  for(let tx = x0; tx <= x1; tx++) for(let ty = y0; ty <= y1; ty++){
+    const wxp = ((tx % n) + n) % n, key = z + "/" + wxp + "/" + ty + "@" + tx;
+    want.add(key);
+    let im = chart.tiles.get(key);
+    if(!im){
+      im = document.createElementNS("http://www.w3.org/2000/svg", "image");
+      im.setAttribute("href", "https://tile.openstreetmap.org/" + z + "/" + wxp + "/" + ty + ".png");
+      im.addEventListener("error", () => im.setAttribute("visibility", "hidden"));
+      tl.appendChild(im); chart.tiles.set(key, im);
+    }
+    im.setAttribute("x", SX(tx*tw)); im.setAttribute("y", SY(ty*tw));
+    im.setAttribute("width", tw*s + .5); im.setAttribute("height", tw*s + .5);
+  }
+  chart.tiles.forEach((im, k) => { if(!want.has(k)){ im.remove(); chart.tiles.delete(k); } });
+
+  /* drawing */
+  const nd = nowDay(), di = nd.state === "before" ? -1 : nd.state === "after" ? 99 : dayIdx(nd.d.id), sd = dayIdx(curDay);
+  const sites = chartSites();
+  let g = '';
+  const eq = SY(wy(0));
+  if(eq > -20 && eq < H + 20) g += '<line x1="0" x2="' + W + '" y1="' + eq + '" y2="' + eq + '" stroke="#B4472A" stroke-width="1" stroke-dasharray="6 5" opacity=".8"/>' +
+    '<text x="8" y="' + (eq - 5) + '" font-family="Menlo,monospace" font-size="9" letter-spacing="1.5" fill="#B4472A">EQUATOR · 0°</text>';
+  const route = sites.filter(x => x.st !== SITES.quito).sort((a,b) => a.days[0] - b.days[0]);
+  const seq = []; DAYS.forEach((d, i) => acts(d).forEach(a => { if(siteOf(a) && a.s !== "quito" && seq[seq.length-1] !== a.s) seq.push(a.s); }));
+  const pts = seq.map(id => { const L = ll(SITES[id].c); return SX(wx(L.lon)).toFixed(1) + "," + SY(wy(L.lat)).toFixed(1); });
+  if(pts.length > 1) g += '<polyline points="' + pts.join(" ") + '" fill="none" stroke="#171A1C" stroke-width="1.2" stroke-dasharray="2 4" opacity=".55"/>';
+  chart.pins = [];
+  const big = s > 2.5;
+  sites.forEach(x => {
+    const X = SX(wx(x.L.lon)), Y = SY(wy(x.L.lat));
+    if(X < -40 || X > W + 40 || Y < -40 || Y > H + 40) return;
+    const isSel = x.days.indexOf(sd) > -1, isNow = x.days.indexOf(di) > -1, past = Math.max(...x.days) < di;
+    const fill = isNow ? "#B4472A" : past ? "#9AA0A3" : "#135B6B";
+    const r = isSel ? 11 : 9;
+    g += '<g>' + (chart.sel === x.id ? '<circle cx="' + X + '" cy="' + Y + '" r="' + (r+5) + '" fill="none" stroke="#171A1C" stroke-width="1.5"/>' : '') +
+      '<circle cx="' + X + '" cy="' + Y + '" r="' + r + '" fill="' + fill + '" stroke="#FBF9F4" stroke-width="2"/>' +
+      '<text x="' + X + '" y="' + (Y + 3.5) + '" text-anchor="middle" font-family="Menlo,monospace" font-size="9.5" fill="#fff">' + (x.days[0]+1) + '</text>';
+    if(big || isSel) g += '<text x="' + (X + r + 4) + '" y="' + (Y + 3.5) + '" font-family="Avenir Next,Avenir,sans-serif" font-size="11" fill="#171A1C" stroke="#FBF9F4" stroke-width="3" paint-order="stroke">' + esc(x.st.n) + '</text>';
+    g += '</g>';
+    chart.pins.push({id:x.id, X, Y});
+  });
+  if(curDay === "d2") SITES.quito.walk.forEach(w => {
+    const L = ll(w.c), X = SX(wx(L.lon)), Y = SY(wy(L.lat));
+    g += '<circle cx="' + X + '" cy="' + Y + '" r="5" fill="#8A6B1F" stroke="#FBF9F4" stroke-width="1.5"/>' +
+      (s > 200 ? '<text x="' + (X+8) + '" y="' + (Y+3.5) + '" font-size="10" font-family="Avenir Next,Avenir,sans-serif" stroke="#FBF9F4" stroke-width="3" paint-order="stroke" fill="#171A1C">' + esc(w.n) + '</text>' : '');
+  });
+  if(geo.fix){
+    const X = SX(wx(geo.fix.lon)), Y = SY(wy(geo.fix.lat));
+    g += '<circle cx="' + X + '" cy="' + Y + '" r="14" fill="#2C7AA3" opacity=".18"/><circle cx="' + X + '" cy="' + Y + '" r="6" fill="#2C7AA3" stroke="#fff" stroke-width="2"/>';
+  }
+  /* scale bar: metres per world pixel at this latitude */
+  const lat = 90 - 360*Math.atan(Math.exp((cy/(TS*2**Z0) - 0.5)*2*Math.PI))/Math.PI;
+  const mpp = 40075016.686*Math.cos(lat*RAD)/(TS*2**Z0)/s;
+  const nice = [100,200,500,1000,2000,5000,10000,20000,50000,100000,200000].find(m => m/mpp > 60) || 200000;
+  const bw = nice/mpp;
+  g += '<g transform="translate(' + (W - bw - 12) + ',' + (H - 14) + ')"><rect x="-4" y="-14" width="' + (bw + 8) + '" height="20" fill="#FBF9F4" opacity=".75"/>' +
+    '<line x1="0" x2="' + bw + '" y1="0" y2="0" stroke="#171A1C" stroke-width="2"/><text x="' + bw/2 + '" y="-4" text-anchor="middle" font-family="Menlo,monospace" font-size="9" fill="#171A1C">' + (nice >= 1000 ? nice/1000 + " km" : nice + " m") + '</text></g>';
+  $("#drawL").innerHTML = g;
+}
+let rafPending = false;
+const redraw = () => { if(rafPending) return; rafPending = true; requestAnimationFrame(() => { rafPending = false; drawChart(); }); };
+function zoomAt(f, sx, sy){
+  const ns = Math.max(.25, Math.min(512, chart.s * f));
+  const wxp = chart.cx + (sx - chart.W/2)/chart.s, wyp = chart.cy + (sy - chart.H/2)/chart.s;
+  chart.s = ns; chart.cx = wxp - (sx - chart.W/2)/ns; chart.cy = wyp - (sy - chart.H/2)/ns;
+  chart.fitted = null; redraw();
+}
+function bindChart(host){
+  const P = new Map(); let g = null;
+  const pt = e => { const r = host.getBoundingClientRect(); return {x:e.clientX - r.left, y:e.clientY - r.top}; };
+  host.addEventListener("pointerdown", e => {
+    host.setPointerCapture(e.pointerId); P.set(e.pointerId, pt(e));
+    if(P.size === 1){ const p = pt(e); g = {t:"pan", x:p.x, y:p.y, cx:chart.cx, cy:chart.cy, moved:false}; }
+    else if(P.size === 2){
+      const [a, b] = Array.from(P.values()), m = {x:(a.x+b.x)/2, y:(a.y+b.y)/2};
+      g = {t:"pinch", d:Math.hypot(a.x-b.x, a.y-b.y), s:chart.s, wx:chart.cx + (m.x - chart.W/2)/chart.s, wy:chart.cy + (m.y - chart.H/2)/chart.s, moved:true};
+    }
+  });
+  host.addEventListener("pointermove", e => {
+    if(!P.has(e.pointerId) || !g) return;
+    P.set(e.pointerId, pt(e));
+    if(g.t === "pan" && P.size === 1){
+      const p = pt(e);
+      if(Math.abs(p.x - g.x) + Math.abs(p.y - g.y) > 6) g.moved = true;
+      chart.cx = g.cx - (p.x - g.x)/chart.s; chart.cy = g.cy - (p.y - g.y)/chart.s; chart.fitted = null; redraw();
+    } else if(g.t === "pinch" && P.size === 2){
+      const [a, b] = Array.from(P.values()), m = {x:(a.x+b.x)/2, y:(a.y+b.y)/2};
+      chart.s = Math.max(.25, Math.min(512, g.s * Math.hypot(a.x-b.x, a.y-b.y)/g.d));
+      chart.cx = g.wx - (m.x - chart.W/2)/chart.s; chart.cy = g.wy - (m.y - chart.H/2)/chart.s; chart.fitted = null; redraw();
+    }
+  });
+  const up = e => {
+    if(!P.has(e.pointerId)) return;
+    const p = pt(e); P.delete(e.pointerId);
+    if(g && g.t === "pan" && !g.moved){
+      let best = null;
+      chart.pins.forEach(q => { const d = Math.hypot(q.X - p.x, q.Y - p.y); if(d < 24 && (!best || d < best.d)) best = {id:q.id, d}; });
+      chart.sel = best ? best.id : null; drawChart(); paintChartCard();
+    }
+    g = null;
+    if(P.size === 1){ const q = Array.from(P.values())[0]; g = {t:"pan", x:q.x, y:q.y, cx:chart.cx, cy:chart.cy, moved:true}; }
+  };
+  host.addEventListener("pointerup", up); host.addEventListener("pointercancel", up);
+  host.addEventListener("wheel", e => { e.preventDefault(); const p = pt(e); zoomAt(e.deltaY < 0 ? 1.25 : .8, p.x, p.y); }, {passive:false});
+}
+function paintChartCard(){
+  const host = $("#chartCard"); if(!host) return;
+  const x = chart.sel && SITES[chart.sel]; if(!x){ host.innerHTML = ""; return; }
+  const days = chartSites().find(s => s.id === chart.sel).days;
+  host.innerHTML = '<article class="card hi" style="margin-top:10px"><div class="t">' + days.map(i => "Day " + (i+1) + " · " + fmtDate(DAYS[i].date)).join(" / ") + '</div>' +
+    '<h4>' + esc(x.n) + '</h4><div class="x">' + esc(x.isl) + (geo.fix ? ' · ' + kmBetween(geo.fix, ll(x.c)).toFixed(kmBetween(geo.fix, ll(x.c)) < 10 ? 1 : 0) + ' km ' + compass(geo.fix, ll(x.c)) + ' of you' : '') + '</div><p>' + esc(x.d) + '</p>' +
+    '<div class="btnrow"><button class="btn ghost" data-day="' + DAYS[days[0]].id + '" data-totab="day">Open the day</button><a class="btn ghost" href="https://maps.apple.com/?ll=' + x.c + '&q=' + encodeURIComponent(x.n) + '" target="_blank" rel="noopener">Apple Maps</a></div></article>';
+}
+function paintLoc(){
+  const el = $("#locbar"); if(!el) return;
+  let h = '<button class="btn ghost" data-geo="1">' + (geo.on ? "Stop location" : "Where am I") + '</button>';
+  if(geo.err) h += '<span>' + esc(geo.err) + '</span>';
+  else if(geo.fix){
+    const f = geo.fix, eqm = Math.abs(f.lat)*111320;
+    h += '<span>' + Math.abs(f.lat).toFixed(4) + '°' + (f.lat < 0 ? "S" : "N") + ' ' + Math.abs(f.lon).toFixed(4) + '°W · ' +
+      (eqm < 5000 ? Math.round(eqm) + " m " : (eqm/1000).toFixed(eqm < 50000 ? 1 : 0) + " km ") + (f.lat < 0 ? "south" : "north") + ' of the equator</span>';
+    const nd = nowDay(), nx = nd.state === "on" ? (liveAct(nd.d) || nextAct(nd.d)) : null;
+    const st = nx && siteOf(nx.a);
+    if(st && st !== SITES.quito) h += '<span>' + esc(st.n) + ': ' + kmBetween(f, ll(st.c)).toFixed(0) + ' km ' + compass(f, ll(st.c)) + '</span>';
+  } else if(geo.on) h += '<span>Waiting for a fix — GPS needs sky, not signal.</span>';
+  el.innerHTML = h;
+}
+function startGeo(){
+  if(!("geolocation" in navigator)){ geo.err = "This browser has no location service."; paintLoc(); return; }
+  geo.on = true; geo.err = null; store.set(K+"geo", "1");
+  try{
+    geo.id = navigator.geolocation.watchPosition(p => {
+      geo.fix = {lat:p.coords.latitude, lon:p.coords.longitude, acc:p.coords.accuracy}; geo.err = null;
+      if(tab === "chart"){ if(chart.fitted === "me") fitScope("me"); drawChart(); paintLoc(); paintChartCard(); }
+    }, e => { geo.err = e.code === 1 ? "Location refused — allow it for this site in Settings." : "No fix yet. GPS wants open sky; inside a steel ship it may not get one."; paintLoc(); },
+    {enableHighAccuracy:true, maximumAge:10000, timeout:30000});
+  }catch(e){ geo.on = false; geo.err = "Location unavailable."; }
+  paintLoc();
+}
+function stopGeo(){
+  try{ if(geo.id != null) navigator.geolocation.clearWatch(geo.id); }catch(e){}
+  geo.on = false; geo.fix = null; geo.id = null; store.del(K+"geo"); paintLoc(); drawChart();
+}
+
+/* ============================================================
+   RENDER & EVENTS
+   ============================================================ */
+function render(){
+  renderHead(); renderRail(); renderTide(); renderNet();
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
+  ({day:renderDay, wild:renderWild, cam:renderCam, log:renderLog, chart:renderChart, journal:renderJournal, know:renderKnow})[tab]();
+}
+function setTab(t){ tab = t; store.set(K+"tab", t); render(); window.scrollTo({top:Math.min(window.scrollY, $(".tabs").offsetTop), behavior:"instant"}); }
+
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-tab],[data-day],[data-sp],[data-seen],[data-close],[data-wscope],[data-wg],[data-wc],[data-wz],[data-ww],[data-wclear],[data-wsite],[data-pick],[data-ph],[data-confirm],[data-unconfirm],[data-retry],[data-keyit],[data-delph],[data-pump],[data-ask],[data-readbrief],[data-applybrief],[data-dropbrief],[data-unplan],[data-write],[data-print],[data-jfile],[data-export],[data-import],[data-savecode],[data-storage],[data-wipe],[data-zoom],[data-fit],[data-geo]");
+  if(!el) return;
+  const D = el.dataset;
+  if(D.seen != null){ e.stopPropagation(); toggleSeen(D.seen); if($("#sheet")) openSpecies(D.seen); render(); return; }
+  if(D.close != null && !D.day){ closeSheet(); return; }
+  if(D.tab){ setTab(D.tab); return; }
+  if(D.day){ closeSheet(); curDay = D.day; store.set(K+"day", curDay); wk.scope = null; wk.site = "";
+             if(D.totab){ tab = D.totab; store.set(K+"tab", tab); } else if(tab === "chart") chart.fitted = null; render(); return; }
+  if(D.sp){ openSpecies(D.sp); return; }
+  if(D.wscope){ wk.scope = D.wscope; wk.site = ""; render(); return; }
+  if(D.wg != null){ wk.g = D.wg; render(); return; }
+  if(D.wc){ const i = wk.c.indexOf(D.wc); i > -1 ? wk.c.splice(i,1) : wk.c.push(D.wc); render(); return; }
+  if(D.wz){ wk.z = wk.z === D.wz ? "" : D.wz; render(); return; }
+  if(D.ww){ wk.w = wk.w === D.ww ? "" : D.ww; render(); return; }
+  if(D.wclear){ wk.c = []; wk.z = ""; wk.w = ""; wk.g = ""; render(); return; }
+  if(D.wsite != null){ wk.site = D.wsite; wk.q = ""; setTab("wild"); return; }
+  if(D.pick){ $("#pick").click(); return; }
+  if(D.ph){ camSel = camSel === D.ph ? null : D.ph; render(); if(camSel){ const r = $(".result"); if(r) r.scrollIntoView({block:"start", behavior:"smooth"}); } return; }
+  if(D.confirm){ const [pid, sid] = D.confirm.split("|"), p = PH.find(x => x.id === pid); if(p){ confirmPhoto(p, sid); render(); } return; }
+  if(D.unconfirm){ const p = PH.find(x => x.id === D.unconfirm); if(p && p.species){ dropSighting(p.species, p.id); p.species = null; savePhoto(p); render(); } return; }
+  if(D.retry){ const p = PH.find(x => x.id === D.retry); if(p && p.blob){ p.status = "queued"; p.err = ""; savePhoto(p); render(); pump(); } return; }
+  if(D.keyit){ const p = PH.find(x => x.id === D.keyit); wk.site = p && SITES[p.site] && p.site !== "quito" ? p.site : ""; if(p) { curDay = p.day; store.set(K+"day", curDay); } setTab("wild"); return; }
+  if(D.delph){ const p = PH.find(x => x.id === D.delph); if(p && confirm("Delete this photo from the book?")){ if(p.species) dropSighting(p.species, p.id); PH = PH.filter(x => x !== p); idb.del(p.id).catch(() => {}); camSel = null; render(); } return; }
+  if(D.pump){ pump(); return; }
+  if(D.ask){ const inp = document.querySelector('[data-askin="' + D.ask + '"]'); ask(D.ask, inp && inp.value.trim()); return; }
+  if(D.readbrief){ readBrief(D.readbrief); return; }
+  if(D.applybrief){ const r = getJ(K+"briefres."+D.applybrief, null); if(r){ applyBrief(dayOf(D.applybrief), r); toast("Tomorrow is updated."); render(); } return; }
+  if(D.dropbrief){ store.del(K+"briefres."+D.dropbrief); render(); return; }
+  if(D.unplan){ store.del(K+"plan."+D.unplan); const r = getJ(K+"briefres."+D.unplan, null); if(r){ r.applied = false; setJ(K+"briefres."+D.unplan, r); } render(); return; }
+  if(D.write){ writeDay(D.write); return; }
+  if(D.print){ printJournal(); return; }
+  if(D.jfile){ downloadJournal(); return; }
+  if(D.export){ exportLog(); return; }
+  if(D.import){ $("#pickBackup").click(); return; }
+  if(D.savecode){ const v = $("#code").value.trim(); v ? store.set(K+"code", v) : store.del(K+"code"); toast(v ? "Saved. Photo ID is on when there is signal." : "Trip code removed."); renderNet(); pump(); return; }
+  if(D.storage){ showStorage(); return; }
+  if(D.wipe){ wipe(); return; }
+  if(D.zoom){ zoomAt(+D.zoom, chart.W/2, chart.H/2); return; }
+  if(D.fit){ if(D.fit === "me" && !geo.fix){ if(!geo.on) startGeo(); toast("Finding you…"); chart.fitted = "me"; return; } fitScope(D.fit); drawChart(); return; }
+  if(D.geo){ geo.on ? stopGeo() : startGeo(); return; }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if(t.dataset && t.dataset.tday){ setActTime(dayOf(t.dataset.tday), +t.dataset.ti, t.dataset.tw, t.value); render(); return; }
+  if(t.id === "pick"){ addFiles(t.files).finally(() => { t.value = ""; }); return; }
+  if(t.id === "pickBackup"){ if(t.files[0]) importLog(t.files[0]).finally(() => { t.value = ""; }); return; }
+  if(t.dataset && t.dataset.phsite){
+    const p = PH.find(x => x.id === t.dataset.phsite), [dd, ss] = t.value.split("|");
+    if(p){ p.day = dd; p.site = ss || null; if(ss) p.act = SITES[ss].n; savePhoto(p); toast("Re-filed. Ask again to identify with the new place in mind."); render(); }
+    return;
+  }
+  if(t.id === "clock"){ store.set(K+"clock", t.value); render(); return; }
+  if(t.id === "camoff"){ store.set(K+"camoff", t.value); return; }
+  if(t.id === "sound"){ store.set(K+"sound", t.checked ? "1" : "0"); if(t.checked) chime(); return; }
+});
+document.addEventListener("input", e => {
+  const t = e.target;
+  if(t.id === "wq"){ wk.q = t.value; const pos = t.selectionStart; renderWild(); const n = $("#wq"); n.focus(); try{ n.setSelectionRange(pos, pos); }catch(x){} return; }
+  if(t.dataset && t.dataset.notes){ store.set(K+"notes."+t.dataset.notes, t.value); return; }
+  if(t.dataset && t.dataset.brief){ store.set(K+"brief."+t.dataset.brief, t.value); return; }
+  if(t.id === "names"){ store.set(K+"names", t.value); return; }
+});
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") closeSheet();
+  if(e.key === "Enter" && e.target.dataset && e.target.dataset.askin){ ask(e.target.dataset.askin, e.target.value.trim()); }
+});
+
+async function readBrief(id){
+  const tm = dayOf(id), text = (store.get(K+"brief."+id) || "").trim();
+  if(!text){ toast("Type or dictate the briefing first."); return; }
+  const plan = acts(tm).map(a => (a.t || "?") + "–" + (a.e || "?") + " " + a.w + " [" + a.s + ", " + a.how + "]").join("\n");
+  const sites = Object.keys(SITES).map(k => k + ": " + SITES[k].n + " (" + SITES[k].isl + ")").join("\n");
+  toast("Reading the briefing…");
+  try{
+    const r = await ai("briefing", {text, ctx:{day:fmtDate(tm.date, true), plan, sites}});
+    setJ(K+"briefres."+id, r);
+    /* the briefing is given the evening before — its stories belong to today's page */
+    const today = DAYS[dayIdx(id)-1];
+    if(today && r.learned && r.learned.length){
+      const l = getJ(K+"learned."+today.id, []); r.learned.forEach(s => { if(l.indexOf(s) < 0) l.push(s); }); setJ(K+"learned."+today.id, l);
+    }
+    render();
+  }catch(e){ toast(errText(e) + (e.kind === "net" ? " The text is saved here." : "")); }
+}
+async function showStorage(){
+  let s = PH.length + " photos, " + Object.keys(seenMap()).length + " species logged.";
+  try{
+    if(navigator.storage && navigator.storage.estimate){ const est = await navigator.storage.estimate(); s += " Using " + (est.usage/1048576).toFixed(1) + " MB."; }
+    if(navigator.storage && navigator.storage.persisted){ s += (await navigator.storage.persisted()) ? " Marked as permanent." : " Not yet marked as permanent — adding the book to the Home Screen helps."; }
+  }catch(e){}
+  $("#storageNote").textContent = s;
+}
+async function wipe(){
+  if(!confirm("Delete every photo, note and sighting in this book on this phone?")) return;
+  if(!confirm("Really? This cannot be undone. Send your log or save the PDF first if you want to keep it.")) return;
+  try{ Object.keys(localStorage).filter(k => k.startsWith(K)).forEach(k => localStorage.removeItem(k)); }catch(e){}
+  Object.keys(mem).forEach(k => delete mem[k]);
+  for(const p of PH) await idb.del(p.id).catch(() => {});
+  PH = []; camSel = null; toast("Cleared."); render();
+}
+
+/* ============================================================
+   START
+   ============================================================ */
+window.addEventListener("online", () => { renderNet(); pump(); });
+window.addEventListener("offline", renderNet);
+document.addEventListener("visibilitychange", () => { if(document.visibilityState === "visible"){ renderTide(); renderHead(); pump(); } });
+window.addEventListener("resize", () => { if(tab === "chart"){ const h = $("#chartHost"); if(h){ chart.W = h.clientWidth; chart.H = h.clientHeight; drawChart(); } } });
+setInterval(() => { renderTide(); renderHead(); }, 20000);
+
+(async function boot(){
+  if(!curDay || !dayOf(curDay)) curDay = nowDay().d.id;
+  /* opening the book on a trip day takes you to that day */
+  const nd = nowDay();
+  if(nd.state === "on" && store.get(K+"opened") !== nd.d.date){ curDay = nd.d.id; store.set(K+"opened", nd.d.date); }
+  render();
+  try{ PH = (await idb.all()) || []; }catch(e){ PH = []; }
+  PH.forEach(p => { if(p.status === "working") p.status = "queued"; });
+  render(); pump();
+  if(store.get(K+"geo") === "1") startGeo();
+})();
+
+if("serviceWorker" in navigator && window.isSecureContext){
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+</script>
+</body>
+</html>

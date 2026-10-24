@@ -1,0 +1,24 @@
+{
+  "name": "Shore Book · Galápagos 2026",
+  "short_name": "Shore Book",
+  "description": "An expedition companion for the Galápagos: each day's landings, a field key, photo ID, a sightings log and a journal. Works offline.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ECE8DF",
+  "theme_color": "#ECE8DF",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
