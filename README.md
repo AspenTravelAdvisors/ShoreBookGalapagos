@@ -16,6 +16,7 @@ on, recognises what you photographed, keeps a log of what you have seen, and wri
 | **Before breakfast** — a briefing assembled from the book: what you still have not seen that today can show you, flagged *only here* or *last chance* | ✓ | |
 | **Tonight's briefing** — type or dictate the expedition leader's talk; the book works out what changed for tomorrow and rewrites the day | text is kept | ✓ to read it |
 | **Wildlife** — 64 species for this route, and a field key: group, colours, size, where. Ranked by what lives where you are standing | ✓ | |
+| **Species photos** — one openly licensed photo per species from Wikimedia Commons, credited on each species page | ✓ once saved | first open only |
 | **Camera** — photos are filed under the landing they were taken on, by their own EXIF timestamp (phone or separate camera), and identified when there is signal | filing and queue | ✓ to identify |
 | **Log** — the checklist: what you have, what is left, and the next and last chance to see each one | ✓ | |
 | **Chart** — every visitor site, the route, the equator, and where you are by GPS | ✓ drawn | tiles |
@@ -42,6 +43,13 @@ nobody who finds the URL can use it as a general Claude endpoint. It uses Claude
 structured JSON output and server-side refusal fallback. The species catalogue goes in a cached
 system block, so repeat calls are cheap.
 
+Species photos are not in the repo. The first time the book opens with signal, it asks
+Wikipedia for the lead image of a named article for each species (`WIKI` in `index.html`;
+alternates come after `|`). Only CC0, CC BY, CC BY-SA and public-domain files are kept. It saves a
+640 px copy and the photographer's credit to IndexedDB, so the photos work at sea. Credits show on
+each species page and under Know → Species photos. If a picture is wrong, change its article
+title in `WIKI`.
+
 `sw.js` caches the app and every map tile you look at. It never caches `/api/` and only ever
 deletes its own `shore-book-galapagos-*` caches. **Bump `CACHE` in `sw.js` whenever you edit
 `index.html`.**
@@ -56,8 +64,8 @@ deletes its own `shore-book-galapagos-*` caches. **Bump `CACHE` in `sw.js` whene
      **Know → Settings**. Requests without it are refused.
 3. On each phone, open the site in Safari, then Share → **Add to Home Screen**. Open the book
    from the icon and enter the trip code.
-4. **Before flying to the islands**, on hotel Wi-Fi in Quito, open the Chart and look at each
-   island once so its tiles are kept for use at sea.
+4. **Before flying to the islands**, on hotel Wi-Fi in Quito, check Know → Species photos says
+   64 of 64 (or close), and open the Chart and look at each island once so its tiles are kept.
 
 Without the two variables the book still works. It files photos and queues them, and the
 field key, log and journal all run. Photo ID and questions explain that they are not switched on.

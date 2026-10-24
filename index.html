@@ -201,6 +201,19 @@ p{margin:0 0 10px}
 .st.e{border-color:var(--reel);color:var(--reel)}
 .today-tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sea)}
 
+/* ---------- reference photos ---------- */
+.sp-img{flex:0 0 auto;width:54px;height:54px;object-fit:cover;display:block;background:var(--rule)}
+span.sp-img{display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:22px;color:var(--sand)}
+.cand-img{float:right;width:64px;height:64px;object-fit:cover;margin:0 0 6px 10px;background:var(--rule)}
+span.cand-img{display:none}
+.hero{display:block;width:calc(100% + 36px);margin:-16px -18px 0;max-height:46vh;object-fit:cover;background:var(--rule)}
+.credit{font-size:11px;color:var(--mute);margin:4px 0 12px}
+.credit a{color:inherit}
+.credits{font-size:12px;color:var(--mute);margin:0 0 12px}
+.credits summary{cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.credits ul{padding-left:16px}
+.credits a{color:inherit}
+
 /* ---------- progress ---------- */
 .prog{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
 .prog b{font-family:var(--display);font-weight:400;font-size:44px;line-height:1}
@@ -263,7 +276,8 @@ textarea:focus,.field:focus{outline:none;border-color:var(--sea)}
   border-top:1px solid var(--ink);padding:16px 18px calc(28px + env(safe-area-inset-bottom));
   -webkit-overflow-scrolling:touch}
 .sheet-in{max-width:620px;margin:0 auto}
-.sheet .close{position:sticky;top:0;float:right;background:var(--sand);border:1px solid var(--rule);border-radius:50%;
+.sheet-in{position:relative}
+.sheet .close{position:absolute;top:0;right:0;background:var(--sand);border:1px solid var(--rule);border-radius:50%;
   width:32px;height:32px;cursor:pointer;font-size:18px;line-height:1;z-index:2}
 .sheet h2{margin:2px 0 2px;font-size:32px}
 .facts{font-size:15px}
@@ -1487,7 +1501,7 @@ function spRow(s, W, di, here){
     if(nx) meta = (nx.di >= di ? "Next: " : "Was: ") + "Day " + (nx.di+1) + " · " + esc(SITES[nx.site].n);
   }
   return '<div class="sp" data-sp="' + s.id + '"><button class="sp-mark' + (sn ? " on" : "") + '" data-seen="' + s.id + '" aria-label="Seen">' + (sn ? "✓" : "") + '</button>' +
-    '<div class="sp-body"><div class="sp-n">' + esc(s.n) + '<span class="st ' + s.st + '">' + STATUS[s.st] + '</span></div>' +
+    refImg(s.id, "sp-img") + '<div class="sp-body"><div class="sp-n">' + esc(s.n) + '<span class="st ' + s.st + '">' + STATUS[s.st] + '</span></div>' +
     '<div class="sp-s">' + esc(s.sci) + '</div><div class="sp-m">' + (sn ? esc(meta) : meta) + '</div></div></div>';
 }
 
@@ -1498,7 +1512,7 @@ function openSpecies(id){
   const where = (W[id] || []).map(w => '<button class="chip" data-day="' + w.day + '" data-close="1">Day ' + (w.di+1) + ' · ' + esc(SITES[w.site].n) + '</button>').join("");
   const photos = sn && sn.photos ? sn.photos.map(pid => PH.find(p => p.id === pid)).filter(Boolean) : [];
   let html = '<div class="veil" data-close="1"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="' + esc(s.n) + '"><div class="sheet-in">' +
-    '<button class="close" data-close="1" aria-label="Close">×</button>' +
+    '<button class="close" data-close="1" aria-label="Close">×</button>' + refHero(id) +
     '<div class="t" style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">' + GROUPS[s.g] + ' · ' + STATUS[s.st] + '</div>' +
     '<h2>' + esc(s.n) + '</h2><div class="sp-s" style="font-size:14px">' + esc(s.sci) + '</div>' +
     '<div class="btnrow"><button class="btn' + (sn ? " ghost" : "") + '" data-seen="' + id + '">' + (sn ? "✓ In your log" : "I saw this") + '</button></div>';
@@ -1598,6 +1612,135 @@ async function ai(task, body){
 }
 
 /* ============================================================
+   REFERENCE PHOTOS — one picture per species from Wikimedia Commons.
+   Fetched once, the first time the book opens with signal, and kept on
+   the phone so the field key has pictures at sea. Each species points at
+   a named Wikipedia article (alternates after "|"), never a search, so
+   the wrong animal cannot turn up. Only openly licensed files are kept,
+   and every one is credited on its species page and under Know.
+   ============================================================ */
+const WIKI = {
+  bfbooby:"Blue-footed booby", nazca:"Nazca booby", rfbooby:"Red-footed booby",
+  magfrig:"Magnificent frigatebird", greatfrig:"Great frigatebird", penguin:"Galápagos penguin",
+  cormorant:"Flightless cormorant", swgull:"Swallow-tailed gull", lavagull:"Lava gull",
+  tropicbird:"Red-billed tropicbird", stormpetrel:"Wedge-rumped storm petrel|Band-rumped storm petrel",
+  noddy:"Brown noddy", shearwater:"Galápagos shearwater", pelican:"Brown pelican",
+  flamingo:"American flamingo", pintail:"White-cheeked pintail", stilt:"Black-necked stilt",
+  oystercatcher:"American oystercatcher", lavaheron:"Lava heron", ycnheron:"Yellow-crowned night heron",
+  gbheron:"Great blue heron", owl:"Short-eared owl", hawk:"Galápagos hawk", dove:"Galápagos dove",
+  mockingbird:"Galápagos mockingbird", floreanamock:"Floreana mockingbird", flycatcher:"Galápagos flycatcher",
+  vermilion:"Little vermilion flycatcher|Brujo flycatcher", yellowwarbler:"Yellow warbler|American yellow warbler",
+  groundfinch:"Medium ground finch|Small ground finch", cactusfinch:"Common cactus finch|Genovesa cactus finch",
+  warblerfinch:"Green warbler-finch|Warbler-finch", woodpeckerfinch:"Woodpecker finch",
+  marineiguana:"Marine iguana", landiguana:"Galápagos land iguana", tortoise:"Galápagos tortoise",
+  lavalizard:"Galápagos lava lizard|Microlophus", racer:"Pseudalsophis|Galápagos racer",
+  greenturtle:"Green sea turtle", sealion:"Galápagos sea lion", furseal:"Galápagos fur seal",
+  bottlenose:"Common bottlenose dolphin", whitetip:"Whitetip reef shark", hammerhead:"Scalloped hammerhead",
+  goldenray:"Rhinoptera steindachneri|Cownose ray", eagleray:"Spotted eagle ray|Aetobatus laticeps",
+  stingray:"Diamond stingray", mola:"Ocean sunfish", kingangel:"King angelfish",
+  surgeon:"Prionurus laticlavius|Prionurus", parrotfish:"Scarus ghobban", moorish:"Moorish idol",
+  puffer:"Guineafowl puffer", sergeant:"Abudefduf troschelii", sallylightfoot:"Grapsus grapsus",
+  pencilurchin:"Eucidaris galapagensis|Eucidaris", chocchip:"Nidorellia armata", opuntia:"Opuntia echios|Opuntia galapageia",
+  candelabra:"Jasminocereus|Jasminocereus thouarsii", lavacactus:"Brachycereus|Brachycereus nesioticus",
+  palosanto:"Bursera graveolens", scalesia:"Scalesia pedunculata|Scalesia", mangrove:"Rhizophora mangle",
+  tiquilia:"Tiquilia nesiotica|Tiquilia"
+};
+const OPEN_LICENCE = /^(cc0|cc[ -]by(-sa)?( |$|-)|public domain|pd)/i;
+const REF = {meta:getJ(K+"refs", {}), url:{}, busy:false};
+const WAPI = "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&origin=*&action=query";
+
+async function loadRefs(){
+  try{
+    ((await idb.refs()) || []).forEach(r => { if(r.blob && REF.meta[r.id]) REF.url[r.id] = URL.createObjectURL(r.blob); });
+  }catch(e){}
+}
+function refImg(id, cls){
+  if(REF.url[id]) return '<img class="' + cls + '" src="' + REF.url[id] + '" alt="" loading="lazy">';
+  const s = SPX[id];
+  return '<span class="' + cls + '" aria-hidden="true">' + (s ? esc(s.n.charAt(0)) : "") + '</span>';
+}
+function refHero(id){
+  const m = REF.meta[id];
+  if(!REF.url[id] || !m) return "";
+  return '<img class="hero" src="' + REF.url[id] + '" alt="' + esc(SPX[id].n) + '">' +
+    '<p class="credit">Photo: ' + esc(m.artist || "Unknown") + ' · <a href="' + esc(m.src) + '" target="_blank" rel="noopener">' + esc(m.lic) + ', Wikimedia Commons</a></p>';
+}
+/* Commons writes the artist as HTML; read it as text without ever running it */
+const plain = html => { try{ return (new DOMParser().parseFromString(String(html || ""), "text/html").body.textContent || "").replace(/\s+/g, " ").trim().slice(0, 120); }catch(e){ return ""; } };
+async function wget(params){
+  const r = await fetch(WAPI + params);
+  if(!r.ok) throw new Error("wiki " + r.status);
+  return r.json();
+}
+/* follow the API's own renames so an answer can be matched to what was asked */
+function finalTitle(q, t){
+  let x = t;
+  (q.normalized || []).forEach(n => { if(n.from === x) x = n.to; });
+  (q.redirects || []).forEach(r => { if(r.from === x) x = r.to; });
+  return x;
+}
+async function fetchRefs(force){
+  if(REF.busy || navigator.onLine === false) return;
+  const need = SPECIES.filter(s => WIKI[s.id] && !REF.url[s.id]);
+  if(!need.length) return;
+  if(!force && Date.now() - (+(store.get(K+"refs.try") || 0)) < 6*3600e3) return;
+  store.set(K+"refs.try", String(Date.now()));
+  REF.busy = true;
+  let got = 0;
+  try{
+    /* 1. article → its lead image, fifty titles to a request */
+    const pick = {};
+    for(let alt = 0; alt < 2; alt++){
+      const want = need.filter(s => !pick[s.id]).map(s => ({id:s.id, t:WIKI[s.id].split("|")[alt]})).filter(w => w.t);
+      for(let i = 0; i < want.length; i += 45){
+        const chunk = want.slice(i, i+45);
+        const j = await wget("&redirects=1&prop=pageimages&piprop=name&titles=" + encodeURIComponent(chunk.map(w => w.t).join("|")));
+        const q = j.query || {}, by = {};
+        (q.pages || []).forEach(pg => { if(pg.pageimage) by[pg.title] = pg.pageimage; });
+        chunk.forEach(w => { const f = by[finalTitle(q, w.t)]; if(f) pick[w.id] = f; });
+      }
+    }
+    /* 2. image → a 640 px copy and who made it */
+    const ids = Object.keys(pick), info = {};
+    for(let i = 0; i < ids.length; i += 45){
+      const chunk = ids.slice(i, i+45), titles = chunk.map(id => "File:" + pick[id]);
+      const j = await wget("&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=640&iiextmetadatafilter=Artist|LicenseShortName|LicenseUrl&titles=" + encodeURIComponent(titles.join("|")));
+      const q = j.query || {}, by = {};
+      (q.pages || []).forEach(pg => { if(pg.imageinfo && pg.imageinfo[0]) by[pg.title] = pg.imageinfo[0]; });
+      chunk.forEach((id, k) => { const ii = by[finalTitle(q, titles[k])]; if(ii) info[id] = ii; });
+    }
+    /* 3. keep only open licences, then download, three at a time */
+    const queue = ids.filter(id => {
+      const ii = info[id], md = ii && ii.extmetadata || {};
+      const lic = md.LicenseShortName && md.LicenseShortName.value || "";
+      return ii && ii.thumburl && OPEN_LICENCE.test(lic) && !/\bN[CD]\b/i.test(lic);
+    });
+    const one = async id => {
+      const ii = info[id], md = ii.extmetadata;
+      try{
+        const r = await fetch(ii.thumburl);
+        if(!r.ok) return;
+        const blob = await r.blob();
+        if(!/^image\//.test(blob.type)) return;
+        await idb.putRef({id, blob});
+        REF.meta[id] = {file:pick[id], artist:plain(md.Artist && md.Artist.value), lic:md.LicenseShortName.value,
+                        licUrl:md.LicenseUrl ? md.LicenseUrl.value : "", src:ii.descriptionurl || ""};
+        REF.url[id] = URL.createObjectURL(blob);
+        got++;
+        if(got % 8 === 0){ setJ(K+"refs", REF.meta); if(tab === "wild" || tab === "log") render(); }
+      }catch(e){}
+    };
+    for(let i = 0; i < queue.length; i += 3) await Promise.all(queue.slice(i, i+3).map(one));
+  }catch(e){
+  }finally{
+    setJ(K+"refs", REF.meta);
+    REF.busy = false;
+    if(force) toast(got ? got + " species photos saved for use at sea." : "Could not fetch photos just now. It will try again with signal.");
+    if(tab !== "cam" && tab !== "chart" && !document.activeElement.matches("input,textarea")) render();
+  }
+}
+
+/* ============================================================
    PHOTOS — shoot now or import later; each one is filed under the
    landing it was taken on by its own timestamp, then waits for
    signal to be identified. Kept on this phone only.
@@ -1608,22 +1751,28 @@ const idb = {
   open(){
     if(this.p) return this.p;
     this.p = new Promise((ok, no) => {
-      let r; try{ r = indexedDB.open("shorebook-galapagos", 1); }catch(e){ no(e); return; }
-      r.onupgradeneeded = () => r.result.createObjectStore("photos", {keyPath:"id"});
+      let r; try{ r = indexedDB.open("shorebook-galapagos", 2); }catch(e){ no(e); return; }
+      r.onupgradeneeded = () => {
+        const db = r.result;
+        if(!db.objectStoreNames.contains("photos")) db.createObjectStore("photos", {keyPath:"id"});
+        if(!db.objectStoreNames.contains("refs")) db.createObjectStore("refs", {keyPath:"id"});
+      };
       r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error);
     });
     return this.p;
   },
-  async run(mode, fn){
-    const db = await this.open();
+  async run(mode, fn, name){
+    const db = await this.open(), st = name || "photos";
     return new Promise((ok, no) => {
-      const t = db.transaction("photos", mode), r = fn(t.objectStore("photos"));
+      const t = db.transaction(st, mode), r = fn(t.objectStore(st));
       t.oncomplete = () => ok(r && r.result); t.onerror = () => no(t.error);
     });
   },
   all(){ return this.run("readonly", s => s.getAll()); },
   put(p){ return this.run("readwrite", s => s.put(p)); },
-  del(id){ return this.run("readwrite", s => s.delete(id)); }
+  del(id){ return this.run("readwrite", s => s.delete(id)); },
+  refs(){ return this.run("readonly", s => s.getAll(), "refs"); },
+  putRef(r){ return this.run("readwrite", s => s.put(r), "refs"); }
 };
 async function savePhoto(p){ try{ await idb.put(p); }catch(e){ toast("This phone would not store the photo. Is it out of space?"); } }
 
@@ -1849,7 +1998,7 @@ function photoCard(p){
       h += '<div class="split"><div><b>Visible</b>' + esc(vis) + '</div><div class="inf"><b>What it may mean</b>' + esc((r.behaviour && r.behaviour.meaning) || "—") + '</div></div>';
     (r.candidates || []).forEach(c => {
       const known = SPX[c.id];
-      h += '<div class="cand"><div class="cn">' + (known ? '<button class="more" style="font:inherit;color:inherit;text-transform:none;letter-spacing:0;font-family:var(--display);font-size:21px" data-sp="' + c.id + '">' + esc(known.n) + '</button>' : esc(c.name)) +
+      h += '<div class="cand">' + (known ? refImg(c.id, "cand-img") : '') + '<div class="cn">' + (known ? '<button class="more" style="font:inherit;color:inherit;text-transform:none;letter-spacing:0;font-family:var(--display);font-size:21px" data-sp="' + c.id + '">' + esc(known.n) + '</button>' : esc(c.name)) +
         '<span class="conf">' + esc(c.confidence) + '</span></div>' +
         '<p class="x" style="margin:4px 0 0">' + esc(c.why) + (c.against ? ' <i>Against: ' + esc(c.against) + '</i>' : '') + '</p>' +
         (known && p.species !== c.id ? '<div class="btnrow" style="margin:8px 0 0"><button class="btn' + (p.suggest === c.id ? "" : " ghost") + '" data-confirm="' + p.id + '|' + c.id + '">This is it</button></div>' : '') + '</div>';
@@ -2062,7 +2211,14 @@ function renderKnow(){
     '<div class="set"><label for="camoff">My camera\'s clock is</label><select id="camoff">' + [-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3].map(h => '<option value="' + h + '"' + (+(store.get(K+"camoff") || 0) === h ? " selected" : "") + '>' + (h === 0 ? "Right — on ship time" : Math.abs(h) + " hour" + (Math.abs(h) > 1 ? "s" : "") + (h > 0 ? " ahead" : " behind")) + '</option>').join("") + '</select></div>' +
     '<p class="note">Phone photos carry their own time zone and need nothing. A separate camera left on home time is the usual reason a photo lands on the wrong island — fix it here and re-file with the picker on each photo.</p>' +
     '<label class="toggle"><input type="checkbox" id="sound"' + (store.get(K+"sound") === "1" ? " checked" : "") + '> A tone with the panga warnings (a tap comes regardless, where the phone allows)</label>';
-  html += '<h3>What leaves this phone</h3><p class="note">Nothing, unless you ask. Asking for an identification, a question, a briefing or a journal entry sends that photo (made smaller) or text, with the name of the landing, to a server run for Aspen Travel Advisors, which passes it to Anthropic\'s Claude and returns the answer. No location, no names, no account. Photos, notes and your log stay on this phone.</p>';
+  const nref = Object.keys(REF.url).length;
+  html += '<h3>Species photos</h3><p class="note">' + nref + ' of ' + SPECIES.length + ' saved on this phone, from Wikimedia Commons under open licences. ' +
+    (REF.busy ? 'Fetching now…' : nref < SPECIES.length ? 'The rest come down the next time there is signal.' : 'All there — they work at sea.') + '</p>' +
+    '<div class="btnrow"><button class="btn ghost" data-refs="1"' + (REF.busy ? ' disabled' : '') + '>' + (nref ? 'Fetch missing photos' : 'Fetch photos now') + '</button></div>' +
+    (nref ? '<details class="credits"><summary>Photo credits</summary><ul>' + SPECIES.filter(x => REF.meta[x.id] && REF.url[x.id]).map(x => {
+      const m = REF.meta[x.id];
+      return '<li>' + esc(x.n) + ': ' + esc(m.artist || "Unknown") + ' · <a href="' + esc(m.src) + '" target="_blank" rel="noopener">' + esc(m.lic) + '</a></li>'; }).join("") + '</ul></details>' : '');
+  html += '<h3>What leaves this phone</h3><p class="note">Nothing, unless you ask — apart from fetching the species photos from Wikipedia once. Asking for an identification, a question, a briefing or a journal entry sends that photo (made smaller) or text, with the name of the landing, to a server run for Aspen Travel Advisors, which passes it to Anthropic\'s Claude and returns the answer. No location, no names, no account. Photos, notes and your log stay on this phone.</p>';
   html += '<div class="btnrow"><button class="btn ghost" data-storage="1">How much is stored</button><button class="btn ghost" data-wipe="1">Clear everything</button></div><p class="note" id="storageNote"></p>';
   $("#panel").innerHTML = html;
 }
@@ -2298,7 +2454,7 @@ function render(){
 function setTab(t){ tab = t; store.set(K+"tab", t); render(); window.scrollTo({top:Math.min(window.scrollY, $(".tabs").offsetTop), behavior:"instant"}); }
 
 document.addEventListener("click", e => {
-  const el = e.target.closest("[data-tab],[data-day],[data-sp],[data-seen],[data-close],[data-wscope],[data-wg],[data-wc],[data-wz],[data-ww],[data-wclear],[data-wsite],[data-pick],[data-ph],[data-confirm],[data-unconfirm],[data-retry],[data-keyit],[data-delph],[data-pump],[data-ask],[data-readbrief],[data-applybrief],[data-dropbrief],[data-unplan],[data-write],[data-print],[data-jfile],[data-export],[data-import],[data-savecode],[data-storage],[data-wipe],[data-zoom],[data-fit],[data-geo]");
+  const el = e.target.closest("[data-tab],[data-day],[data-sp],[data-seen],[data-close],[data-wscope],[data-wg],[data-wc],[data-wz],[data-ww],[data-wclear],[data-wsite],[data-pick],[data-ph],[data-confirm],[data-unconfirm],[data-retry],[data-keyit],[data-delph],[data-pump],[data-ask],[data-readbrief],[data-applybrief],[data-dropbrief],[data-unplan],[data-write],[data-print],[data-jfile],[data-export],[data-import],[data-savecode],[data-storage],[data-wipe],[data-zoom],[data-fit],[data-geo],[data-refs]");
   if(!el) return;
   const D = el.dataset;
   if(D.seen != null){ e.stopPropagation(); toggleSeen(D.seen); if($("#sheet")) openSpecies(D.seen); render(); return; }
@@ -2338,6 +2494,7 @@ document.addEventListener("click", e => {
   if(D.zoom){ zoomAt(+D.zoom, chart.W/2, chart.H/2); return; }
   if(D.fit){ if(D.fit === "me" && !geo.fix){ if(!geo.on) startGeo(); toast("Finding you…"); chart.fitted = "me"; return; } fitScope(D.fit); drawChart(); return; }
   if(D.geo){ geo.on ? stopGeo() : startGeo(); return; }
+  if(D.refs){ fetchRefs(true); render(); return; }
 });
 document.addEventListener("change", e => {
   const t = e.target;
@@ -2402,7 +2559,7 @@ async function wipe(){
 /* ============================================================
    START
    ============================================================ */
-window.addEventListener("online", () => { renderNet(); pump(); });
+window.addEventListener("online", () => { renderNet(); pump(); fetchRefs(false); });
 window.addEventListener("offline", renderNet);
 document.addEventListener("visibilitychange", () => { if(document.visibilityState === "visible"){ renderTide(); renderHead(); pump(); } });
 window.addEventListener("resize", () => { if(tab === "chart"){ const h = $("#chartHost"); if(h){ chart.W = h.clientWidth; chart.H = h.clientHeight; drawChart(); } } });
@@ -2416,7 +2573,8 @@ setInterval(() => { renderTide(); renderHead(); }, 20000);
   render();
   try{ PH = (await idb.all()) || []; }catch(e){ PH = []; }
   PH.forEach(p => { if(p.status === "working") p.status = "queued"; });
-  render(); pump();
+  await loadRefs();
+  render(); pump(); fetchRefs(false);
   if(store.get(K+"geo") === "1") startGeo();
 })();
 

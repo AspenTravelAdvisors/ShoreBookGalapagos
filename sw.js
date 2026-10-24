@@ -1,6 +1,6 @@
 /* Shore Book · Galápagos — offline cache.
    Bump CACHE when you edit index.html, or the phone keeps the old copy. */
-const CACHE = "shore-book-galapagos-v1";
+const CACHE = "shore-book-galapagos-v2";
 const TILES = "shore-book-galapagos-tiles-v1";
 const OWN = "shore-book-galapagos-";   /* only ever clear our own caches — other books may share the origin */
 const TILE_HOSTS = ["tile.openstreetmap.org"];
