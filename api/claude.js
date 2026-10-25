@@ -21,7 +21,7 @@ const client = new Anthropic();
 
 const MAX_IMAGE_B64 = 3_000_000;   /* ~2.2 MB of JPEG — the phone sends ~1568 px, far under */
 const MAX_TEXT = 6000;
-const MAX_REF = 40000;             /* the species catalogue the phone sends as context */
+const MAX_REF = 80000;             /* the species catalogue the phone sends as context: the route in full, the rest of the islands in brief */
 
 /* ------------------------------------------------------------------ prompts */
 
@@ -35,7 +35,7 @@ What you never do:
 - Never encourage approaching, touching, feeding, flash photography, leaving the trail or going ashore without a naturalist. Galápagos National Park rules: 2 m from wildlife, stay on the marked trail, guided groups only.
 - Never give precise locations for sensitive species beyond the named visitor site.
 
-The species catalogue below is the book's own list for this route, with ids. Prefer those ids. If the animal or plant is genuinely not in the catalogue, use the id "other" and name it.`;
+The species catalogue below is the book's own list, with ids: first the species of this route, then the rest of the islands, which this voyage does not expect to show. Prefer those ids, and treat an off-route species as an unusual answer that the photograph must earn. If the animal or plant is genuinely not in the catalogue, use the id "other" and give its common name, so the guest can log it.`;
 
 const TASKS = {
   identify: {
@@ -54,10 +54,11 @@ const TASKS = {
           items: {
             type: "object",
             additionalProperties: false,
-            required: ["id", "name", "confidence", "why", "against"],
+            required: ["id", "name", "group", "confidence", "why", "against"],
             properties: {
               id: { type: "string" },
               name: { type: "string" },
+              group: { type: "string", enum: ["bird", "reptile", "mammal", "fish", "sea", "bug", "plant", "other"], description: "bird, reptile, mammal, fish (incl. sharks and rays), sea (shore and reef invertebrates), bug (insects, spiders, centipedes), plant." },
               confidence: { type: "string", enum: ["high", "medium", "low"] },
               why: { type: "string", description: "Which visible marks point here." },
               against: { type: "string", description: "What argues against it, or what is not visible. Empty if nothing." }

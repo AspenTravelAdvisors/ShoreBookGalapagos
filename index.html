@@ -200,6 +200,9 @@ p{margin:0 0 10px}
 .st.E{border-color:var(--rosso);color:var(--rosso)}
 .st.e{border-color:var(--reel);color:var(--reel)}
 .st.M{border-color:var(--sea);color:var(--sea)}
+.st.I{border-color:var(--mute);color:var(--mute);border-style:dashed}
+.st.U{border-color:var(--ink);color:var(--ink)}
+.off{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--rosso)}
 .today-tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sea)}
 
 /* ---------- reference photos ---------- */
@@ -382,7 +385,7 @@ footer{border-top:1px solid var(--rule);margin-top:30px;padding-top:12px;display
 <main id="panel"></main>
 
 <footer>
-  <span>Galápagos · November 2026</span>
+  <span id="footTrip">Galápagos · November 2026</span>
   <span>Shore Book</span>
 </footer>
 
@@ -406,11 +409,27 @@ footer{border-top:1px solid var(--rule);margin-top:30px;padding-top:12px;display
    Coordinates are "lat,lon" and good to the landing beach, not the boot.
    Galápagos keeps UTC−6, an hour behind Quito (UTC−5).
    ============================================================ */
+/* A new voyage: change TRIP and DAYS, add any SITES it needs (keep the
+   rest — unused sites cost nothing), and give it its own id and store so
+   two trips on one phone never mix logs. SPECIES covers the whole
+   archipelago; what a voyage can show is worked out from its sites. */
 const TRIP = {
+  id: "shorebook-galapagos-2026",   /* logs only merge between phones on the same id */
+  store: "sbg.",                    /* localStorage prefix; a new voyage takes a new one */
   title: "Galápagos",
   ship: "MS Santa Cruz II",
   line: "HX · Nine of the Best Isles · Western & Northern",
-  start: "2026-11-24", end: "2026-12-04"
+  start: "2026-11-24", end: "2026-12-04",
+  /* Know → what this route trades against the ship's other loop */
+  other: {
+    note: "Santa Cruz II runs this Western & Northern loop and a Southern & Eastern one. Here is what that choice means for wildlife.",
+    rows: [
+      ["Flightless cormorants and the main penguin waters — only in the west", "The waved albatross, which nests only on Española (April–December)"],
+      ["Fernandina: the youngest island, the biggest marine iguana colony", "Española's red-and-green marine iguanas and its own mockingbird"],
+      ["Genovesa: red-footed boobies, daytime owls, storm petrels in their thousands", "San Cristóbal's Punta Pitt, where all three boobies nest side by side"],
+      ["Santiago's fur seal grottos and Bartolomé's summit", "South Plaza's land iguanas among red sesuvium"]
+    ]
+  }
 };
 
 const SITES = {
@@ -460,7 +479,7 @@ dragon: {
   d:"Dragon Hill is named for its land iguanas, and it nearly lost them: feral dogs had reduced the colony to a handful by the 1970s. The Darwin Station bred them in captivity and put them back. Every iguana you see here is a conservation result.",
   l:"Iguana burrows under the palo santo, the lagoon behind the beach (flamingos if you are lucky), and cactus finches working the opuntia flowers.",
   x:"First landing of the trip: short, hot, open. The trail climbs a low hill — take water. A gentle introduction to the rules: 2 metres, stay on the trail, nothing leaves the island.",
-  see:["landiguana","flamingo","pintail","stilt","lavalizard","mockingbird","groundfinch","cactusfinch","flycatcher","yellowwarbler","gbheron","opuntia","palosanto","candelabra"]
+  see:["landiguana","flamingo","pintail","stilt","lavalizard","mockingbird","groundfinch","cactusfinch","flycatcher","yellowwarbler","gbheron","opuntia","palosanto","candelabra","greategret","carpenterbee","locust","sulphur"]
 },
 ayora: {
   n:"Puerto Ayora", isl:"Santa Cruz · the town", c:"-0.7470,-90.3130", how:"dry", diff:"Easy",
@@ -484,14 +503,14 @@ cdrs: {
   d:"The science station founded in 1959 and the Park's Fausto Llerena tortoise centre beside it. The breeding programmes here have returned thousands of young tortoises to the islands they came from.",
   l:"Lonesome George — the last Pinta Island tortoise, who died here in 2012 — preserved and on display in a climate-controlled room. And the corrals of yearlings, each with a painted number and an island of origin.",
   x:"Morning, before it heats up. The visit is on foot from the town pier, about 20 minutes' walk.",
-  see:["tortoise","landiguana","marineiguana","lavalizard","yellowwarbler","groundfinch","mockingbird","opuntia","lavaheron"]
+  see:["tortoise","landiguana","marineiguana","lavalizard","yellowwarbler","groundfinch","mockingbird","opuntia","lavaheron","saddleback","carpenterbee"]
 },
 highlands: {
   n:"Santa Cruz highlands", isl:"Tortoise reserve · El Chato area", c:"-0.6650,-90.4150", how:"coach", diff:"Easy · muddy in garúa",
   d:"Up from the coast the island turns green, wet and cool. Wild giant tortoises graze the pastures here in the season — Santa Cruz has two species, separated in 2015 when DNA showed the eastern animals were their own lineage.",
   l:"Tortoises in the ponds, the lava tunnels, and Scalesia forest — trees that are really giant daisies. Listen for the vermilion flycatcher; it has become rare here.",
   x:"Rubber boots are usually lent at the farm. It can be 10 °C cooler than the coast and drizzling in November. Layers.",
-  see:["tortoise","scalesia","woodpeckerfinch","warblerfinch","vermilion","flycatcher","groundfinch","yellowwarbler","pintail","mockingbird"]
+  see:["tortoise","scalesia","woodpeckerfinch","warblerfinch","vermilion","flycatcher","groundfinch","yellowwarbler","pintail","mockingbird","cattleegret","ani","vegfinch","smalltreefinch","gallinule","crake","rail","cuckoo","carpenterbee","sulphur"]
 },
 itabaca: {
   n:"Itabaca Channel", isl:"Between Santa Cruz and Baltra", c:"-0.4830,-90.2780", how:"panga", diff:"Easy", flag:1,
@@ -508,14 +527,14 @@ vicente: {
   l:"Penguins and flightless cormorants on the ledges, and green turtles grazing algae on the rock. Snorkel the cliff wall — if a huge flat disc drifts up from the dark, it is a Mola mola.",
   x:"The coldest water of the trip — around 19–22 °C. Take the wetsuit the ship offers, the thick one if there is a choice. Panga rides here are often rough on the way out.",
   water:"Cold · 19–22 °C",
-  see:["penguin","cormorant","greenturtle","mola","bfbooby","noddy","shearwater","marineiguana","sealion","furseal","bottlenose","kingangel","surgeon","sergeant","eagleray","barberfish"]
+  see:["penguin","cormorant","greenturtle","mola","bfbooby","noddy","shearwater","marineiguana","sealion","furseal","bottlenose","kingangel","surgeon","sergeant","eagleray","barberfish","hogfish","creolefish","salema"]
 },
 bolivar: {
   n:"Bolívar Channel", isl:"Between Isabela and Fernandina · from the ship", c:"-0.1700,-91.4200", how:"ship", diff:"",
   d:"The strait between the two youngest big islands, where the Cromwell Current — a cold undercurrent running east along the equator — hits the wall of Isabela and wells up. Cold, green, plankton-thick water, and the best whale water in the islands. There is no landing: the ship sails it between Punta Vicente Roca and Fernandina.",
   l:"A tall, thin blow, then a long dark back with a small hooked fin: a Bryde's whale. Fast pods of common dolphins coming in to the bow. A sperm whale's blow is low and angled forward.",
   x:"Nothing is scheduled; the ship repositions over lunch. Take binoculars and a layer to the dining room. When the bridge calls a sighting, go up — whales do not wait for dessert.",
-  see:["brydes","sperm","orca","humpback","commondolphin","bottlenose","mola","shearwater","stormpetrel","noddy","bfbooby","penguin","cormorant"]
+  see:["brydes","sperm","orca","humpback","commondolphin","bottlenose","mola","shearwater","stormpetrel","noddy","bfbooby","penguin","cormorant","galpetrel","whitevented","phalarope"]
 },
 espinoza: {
   n:"Punta Espinoza", isl:"Fernandina", c:"-0.2650,-91.4430", how:"dry", diff:"Moderate · uneven lava",
@@ -531,7 +550,7 @@ postoffice: {
   d:"Whalers in the 1790s left a barrel here so that ships going home could carry letters for each other. It is still in use. You leave an unstamped postcard; you go through the pile and take any you could deliver by hand.",
   l:"Your own home town in the pile. Then the lava tube behind the barrel, and the rusting remains of a 1920s Norwegian fish cannery.",
   x:"Bring a postcard, addressed, no stamp. Wet landing on a sandy beach — sea lions often on it.",
-  see:["sealion","greenturtle","lavaheron","mockingbird","groundfinch","yellowwarbler","sallylightfoot","flamingo","turnstone","whimbrel","plover","sanderling"]
+  see:["sealion","greenturtle","lavaheron","mockingbird","groundfinch","yellowwarbler","sallylightfoot","flamingo","turnstone","whimbrel","plover","sanderling","greyplover","ghostcrab"]
 },
 champion: {
   n:"Champion Islet", isl:"off Floreana", c:"-1.2370,-90.3870", how:"snorkel", diff:"Moderate · open water, current",
@@ -539,14 +558,14 @@ champion: {
   l:"The mockingbird, from the water, with binoculars. Then in the water: sea lions that will play, schooling fish, eagle rays, sometimes whitetip sharks along the wall.",
   x:"One of the best snorkels on the route, but in open water with some current — stay with the group and the panga driver.",
   water:"Warm · 22–24 °C",
-  see:["floreanamock","sealion","whitetip","eagleray","kingangel","surgeon","parrotfish","moorish","puffer","sergeant","greenturtle","bfbooby","nazca","swgull","chocchip","barberfish"]
+  see:["floreanamock","sealion","whitetip","eagleray","kingangel","surgeon","parrotfish","moorish","puffer","sergeant","greenturtle","bfbooby","nazca","swgull","chocchip","barberfish","hogfish","creolefish","salema","bumphead","damsel","rainbowwrasse","moray","marbledray","trumpetfish","scorpionfish"]
 },
 cormorant: {
   n:"Punta Cormorant", isl:"Floreana · north", c:"-1.2230,-90.4230", how:"wet", diff:"Easy · 1.5 km",
   d:"Two beaches back to back across a narrow neck. You land on sand glittering green with olivine crystals, cross past a brackish lagoon, and come out on Flour Beach, white and fine as the name.",
   l:"Flamingos in the lagoon. On Flour Beach, stingrays in the shallows at the waterline and green turtle tracks up the sand — November is when they start to come ashore.",
   x:"No swimming on Flour Beach — it is a turtle-nesting beach. Shuffle your feet in the shallows at the landing: rays bury themselves in the sand.",
-  see:["flamingo","pintail","stilt","greenturtle","stingray","goldenray","sealion","bfbooby","pelican","lavalizard","groundfinch","yellowwarbler","palosanto","turnstone","whimbrel","plover","sanderling"]
+  see:["flamingo","pintail","stilt","greenturtle","stingray","goldenray","sealion","bfbooby","pelican","lavalizard","groundfinch","yellowwarbler","palosanto","turnstone","whimbrel","plover","sanderling","greyplover","ghostcrab"]
 },
 
 /* ---------------- Seymour & Las Bachas ---------------- */
@@ -562,7 +581,7 @@ bachas: {
   d:"A long white beach whose name is a mispronunciation: two Second World War barges were abandoned here, and 'barges' became bachas. Their ribs still stick out of the sand.",
   l:"Turtle tracks up the beach to nests in the dunes, flamingos in the lagoon behind, Sally Lightfoot crabs on every rock. A swim from the beach.",
   x:"Wet landing, then free time on the beach. Stay out of the dunes — that is where the nests are. Soft sand at the waterline can hide rays.",
-  see:["greenturtle","flamingo","stilt","pintail","oystercatcher","sallylightfoot","marineiguana","lavagull","pelican","sealion","goldenray","stingray","mangrove","bfbooby","turnstone","whimbrel","plover","sanderling","blacktip"]
+  see:["greenturtle","flamingo","stilt","pintail","oystercatcher","sallylightfoot","marineiguana","lavagull","pelican","sealion","goldenray","stingray","mangrove","bfbooby","turnstone","whimbrel","plover","sanderling","blacktip","greategret","greyplover","ghostcrab","hermitcrab"]
 },
 
 /* ---------------- Santiago ---------------- */
@@ -572,14 +591,14 @@ buccaneer: {
   l:"Seabirds on the ledges, fur seals in the shade, and on a snorkel along the cliff: turtles, rays, reef fish, sometimes whitetips.",
   x:"Usually panga ride and snorkel, no landing. Santiago had 80,000 feral goats until 2006 — what is growing back on these slopes is what came back after they were removed.",
   water:"Moderate · 21–23 °C",
-  see:["bfbooby","nazca","noddy","shearwater","furseal","sealion","greenturtle","whitetip","eagleray","kingangel","surgeon","moorish","parrotfish","sergeant","pelican","marineiguana","barberfish"]
+  see:["bfbooby","nazca","noddy","shearwater","furseal","sealion","greenturtle","whitetip","eagleray","kingangel","surgeon","moorish","parrotfish","sergeant","pelican","marineiguana","barberfish","hogfish","creolefish","salema","damsel","rainbowwrasse","moray"]
 },
 egas: {
   n:"Puerto Egas", isl:"Santiago · James Bay", c:"-0.2480,-90.8610", how:"wet", diff:"Moderate · 2.5 km on lava",
   d:"Darwin spent nine days on this island in 1835. A century later the Egas family tried to run a salt mine here and failed; the ruins are by the trail. The coast is black lava cut into tide pools, channels and grottos.",
   l:"The fur seal grottos — Galápagos fur seals lying in deep shade in collapsed lava tubes. Marine iguanas grazing the pools at low tide, and the full shorebird set: oystercatchers, herons, turnstones.",
   x:"Wet landing on a black-sand beach, then a walk on uneven lava. Snorkelling from the beach afterwards is often excellent. Check the tide: low tide is better for the pools.",
-  see:["furseal","sealion","marineiguana","sallylightfoot","oystercatcher","lavaheron","ycnheron","gbheron","lavagull","swgull","hawk","dove","flycatcher","mockingbird","racer","lavalizard","noddy","pencilurchin","palosanto","whitetip","turnstone","whimbrel","plover","tattler"]
+  see:["furseal","sealion","marineiguana","sallylightfoot","oystercatcher","lavaheron","ycnheron","gbheron","lavagull","swgull","hawk","dove","flycatcher","mockingbird","racer","lavalizard","noddy","pencilurchin","palosanto","whitetip","turnstone","whimbrel","plover","tattler","spottedsandpiper","greenurchin"]
 },
 
 /* ---------------- Rábida & Bartolomé ---------------- */
@@ -589,7 +608,7 @@ rabida: {
   l:"Sea lions on the red sand, pelicans that have nested in the saltbush behind the beach, and the best snorkelling of the morning off the rocks at the end.",
   x:"Wet landing straight onto the red beach. The snorkel off the eastern point can have good visibility and big schools.",
   water:"Moderate · 22–24 °C",
-  see:["sealion","pelican","flamingo","pintail","lavaheron","mockingbird","groundfinch","yellowwarbler","dove","hawk","palosanto","whitetip","surgeon","parrotfish","kingangel","puffer","saltbush","tattler","turnstone","barberfish"]
+  see:["sealion","pelican","flamingo","pintail","lavaheron","mockingbird","groundfinch","yellowwarbler","dove","hawk","palosanto","whitetip","surgeon","parrotfish","kingangel","puffer","saltbush","tattler","turnstone","barberfish","hogfish","salema","damsel","rainbowwrasse","scorpionfish"]
 },
 bartolome: {
   n:"Bartolomé", isl:"off Santiago", c:"-0.2830,-90.5500", how:"dry", diff:"Moderate · 370 wooden steps",
@@ -597,7 +616,7 @@ bartolome: {
   l:"Pioneer plants on bare ash — lava cactus, Tiquilia mats — and then, at the base of Pinnacle Rock, the Galápagos penguins that live on the equator.",
   x:"Dry landing, then the steps — steady, not hard, but hot without shade. Go early or late; the light at the top is better too. Snorkel off the beach by the rock afterwards for the penguins.",
   water:"Moderate · 22–24 °C",
-  see:["penguin","sealion","bfbooby","noddy","pelican","lavalizard","sallylightfoot","marineiguana","lavacactus","tiquilia","greenturtle","whitetip","kingangel","surgeon","parrotfish","chocchip","barberfish"]
+  see:["penguin","sealion","bfbooby","noddy","pelican","lavalizard","sallylightfoot","marineiguana","lavacactus","tiquilia","greenturtle","whitetip","kingangel","surgeon","parrotfish","chocchip","barberfish","hogfish","salema","bumphead","damsel","rainbowwrasse","moray"]
 },
 
 /* ---------------- Genovesa — north of the equator ---------------- */
@@ -720,7 +739,7 @@ const BRING = {
    two lists cannot drift apart.
    ============================================================ */
 const GROUPS = {
-  bird:"Birds", reptile:"Reptiles", mammal:"Mammals", fish:"Fish & sharks", sea:"Shore & reef life", plant:"Plants"
+  bird:"Birds", reptile:"Reptiles", mammal:"Mammals", fish:"Fish & sharks", sea:"Shore & reef life", bug:"Insects & centipedes", plant:"Plants"
 };
 const SPECIES = [
 /* ---------- boobies & seabirds ---------- */
@@ -734,7 +753,7 @@ const SPECIES = [
  conf:["bfbooby","rfbooby"], tip:"Bill colour: orange-yellow on a Nazca, pale blue-grey on a red-foot's white form."},
 {id:"rfbooby", n:"Red-footed booby", sci:"Sula sula websteri", g:"bird", st:"N", k:1, c:["brown","white","red","blue"], z:"m", w:["land","air"],
  look:"The smallest booby, with bright red feet, a blue bill and pink at its base. Comes in a brown form and a much rarer white form with black wingtips; both are the same species.",
- why:"The only Galápagos booby that nests in trees and bushes, which is why its feet are made to grip a branch. It fishes far out to sea, so on this route you will see it only on Genovesa — where the colony is one of the largest in the world.",
+ why:"The only Galápagos booby that nests in trees and bushes, which is why its feet are made to grip a branch. It fishes far out to sea, so it nests only on the outer islands — Genovesa, San Cristóbal's Punta Pitt, Wolf and Darwin. Genovesa's colony is one of the largest in the world.",
  conf:["bfbooby","nazca"], tip:"Feet and perch: if it is in a tree, it is almost certainly a red-foot."},
 {id:"magfrig", n:"Magnificent frigatebird", sci:"Fregata magnificens", g:"bird", st:"N", k:1, c:["black","white","red"], z:"l", w:["air","land"],
  look:"Huge black bird with long angled wings and a deeply forked tail. Breeding males inflate a scarlet throat pouch. Females have a black throat and a white breast; males have a purple sheen on the back in good light.",
@@ -751,7 +770,7 @@ const SPECIES = [
 {id:"cormorant", n:"Flightless cormorant", sci:"Nannopterum harrisi", g:"bird", st:"E", k:1, c:["black","brown"], z:"l", w:["shore","sea"],
  look:"A big dark cormorant with a long hooked bill, turquoise eyes and wings so small they look like an afterthought.",
  why:"The only cormorant in the world that has lost flight. With no predators on these shores and rich food a few metres down, the wings were dead weight; they shrank while the legs grew heavy for diving. It still holds the stubs out to dry after a dive, a habit kept from the ancestors that flew.",
- conf:["penguin"], tip:"Only on the west side: on this route, Fernandina and Punta Vicente Roca. If you are anywhere else, it is not this bird."},
+ conf:["penguin"], tip:"Only on the west side: the coasts of Fernandina and western and northern Isabela. Anywhere else, it is not this bird."},
 {id:"swgull", n:"Swallow-tailed gull", sci:"Creagrus furcatus", g:"bird", st:"e", k:1, c:["grey","white","black","red"], z:"m", w:["shore","air"],
  look:"Elegant grey and white gull with a forked tail, a dark hood in breeding season, and a bright red ring round a very large dark eye. Bill black with a pale tip.",
  why:"The only gull in the world that feeds entirely at night, flying out after dark for squid and small fish that rise to the surface. The huge eyes are for that. It breeds almost nowhere else.",
@@ -823,7 +842,7 @@ const SPECIES = [
 {id:"mockingbird", n:"Galápagos mockingbird", sci:"Mimus parvulus", g:"bird", st:"E", c:["grey","brown","white"], z:"s", w:["land","shore"],
  look:"A slim grey-brown bird with a long tail, a long slightly curved bill and a dark mask through the eye.",
  why:"Bold and curious; it will investigate your shoelaces and drink from a water bottle if you let it (do not let it). The mockingbirds varied from island to island, and that — more than the finches — first made Darwin wonder whether species were fixed.",
- conf:["floreanamock"], tip:"Anywhere on this route except Champion Islet, a mockingbird is this one."},
+ conf:["floreanamock"], tip:"Most of the archipelago has this one. Española, San Cristóbal and Floreana's islets each have their own — check where you are standing."},
 {id:"floreanamock", n:"Floreana mockingbird", sci:"Mimus trifasciatus", g:"bird", st:"E", k:1, c:["grey","brown","white"], z:"s", w:["land"],
  look:"Larger and heavier-billed than the Galápagos mockingbird, with darker patches on the sides of the breast.",
  why:"Collected by Darwin's party on Floreana in 1835 and gone from Floreana within fifty years — rats, cats and the settlers' land clearing. It survives on Champion and one other islet, a few hundred birds at most. Floreana is being cleared of rats and cats so it can go home.",
@@ -932,7 +951,7 @@ const SPECIES = [
  conf:[], tip:"Black and white with a tall fin. Nothing else here looks like it."},
 {id:"humpback", n:"Humpback whale", sci:"Megaptera novaeangliae", g:"mammal", st:"M", c:["black","grey","white"], z:"l", w:["sea"],
  look:"Big and bulky, black above, with a low stubby dorsal fin on a hump, knobs on the head, and very long pectoral fins that are white underneath. Raises its tail flukes when it dives; their pattern is unique to each whale.",
- why:"A long shot this late in the year. Humpbacks from the Southern Ocean come up to the Ecuador coast and the islands from about June to October to breed, and most have left by late November. A straggler is possible. If you see one, photograph the underside of the tail: researchers identify individuals by it.",
+ why:"Seasonal, so outside June to October a long shot. Humpbacks from the Southern Ocean come up to the Ecuador coast and the islands from about June to October to breed, and most have left by late November. A straggler is possible. If you see one, photograph the underside of the tail: researchers identify individuals by it.",
  conf:["brydes"], tip:"Shows its tail when it dives, and the long white flippers. A Bryde's does neither."},
 /* ---------- fish & sharks ---------- */
 {id:"whitetip", n:"Whitetip reef shark", sci:"Triaenodon obesus", g:"fish", st:"N", c:["grey","white"], z:"l", w:["sea"],
@@ -1036,14 +1055,384 @@ const SPECIES = [
 {id:"tiquilia", n:"Tiquilia (grey matplant)", sci:"Tiquilia nesiotica", g:"plant", st:"E", c:["grey","white"], z:"s", w:["land"],
  look:"Low silver-grey mats of hairy leaves on bare ash, like lichen from a distance.",
  why:"Another pioneer, holding loose ash together on Bartolomé so other things can grow. The hairs reflect heat and trap moisture.",
- conf:[], tip:""}
+ conf:[], tip:""},
+/* ============================================================
+   THE REST OF THE ISLANDS — added so the book works on any route.
+   Species no stop on this voyage lists show as "Not expected on this
+   route"; r says where in the islands they do live.
+   ============================================================ */
+/* ---------- birds ---------- */
+{id:"albatross", n:"Waved albatross", sci:"Phoebastria irrorata", g:"bird", st:"E", k:1, c:["white","brown","yellow"], z:"l", w:["air","shore","sea"],
+ look:"A huge seabird with a white head washed yellow, a brown body finely waved with grey, and a long yellow bill. Wingspan about 2.3 m.",
+ why:"Almost the whole world population nests on one island. Pairs reunite each year with a courtship dance of bill-fencing, sky-pointing and clacking that can last half an hour. They walk off the cliff edge to take off.",
+ conf:[], tip:"Nothing else on land here is this big and this pale.",
+ r:"Española only (Punta Suárez), April to December. The rest of the year it fishes off Peru."},
+{id:"galpetrel", n:"Galápagos petrel", sci:"Pterodroma phaeopygia", g:"bird", st:"E", c:["black","grey","white"], z:"m", w:["sea","air"],
+ look:"A long-winged seabird, dark grey above and white below with a white forehead, arcing high and low over the swell on stiff wings.",
+ why:"Critically endangered. It nests in burrows in the damp highlands of the inhabited islands, where rats, cats and farmland have taken a heavy toll. At sea you see it banking far from land.",
+ conf:["shearwater"], tip:"Bigger than a shearwater, with high wheeling arcs instead of fast low flight."},
+{id:"whitevented", n:"White-vented storm-petrel", sci:"Oceanites gracilis galapagoensis", g:"bird", st:"e", c:["black","white"], z:"s", w:["sea","air"],
+ look:"A tiny dark storm-petrel with a white rump and a white patch on the belly, dancing on the water with its legs dangling.",
+ why:"Also called Elliot's storm-petrel. It follows ships to pick food from the churned wake, pattering its feet on the surface. Where it nests in the islands is still hardly known.",
+ conf:["stormpetrel"], tip:"White on the belly, and following the ship's wake: white-vented."},
+{id:"phalarope", n:"Red-necked phalarope", sci:"Phalaropus lobatus", g:"bird", st:"M", c:["grey","white"], z:"s", w:["sea"],
+ look:"A small grey-and-white bird sitting high on the sea like a toy, in loose flocks, often spinning in circles.",
+ why:"A shorebird that spends the winter at sea. The spinning draws plankton up to the surface where it can pick it off. Large flocks gather where cold water wells up.",
+ conf:[], tip:"Small birds sitting on the open sea, spinning."},
+{id:"hoodmock", n:"Española mockingbird", sci:"Mimus macdonaldi", g:"bird", st:"E", c:["grey","brown","white"], z:"s", w:["land","shore"],
+ look:"The largest mockingbird here, with a long down-curved bill.",
+ why:"Notoriously bold: it will land on your bag and try to drink from a water bottle. On an island with little fresh water it takes eggs, carrion and blood from sea lion afterbirth.",
+ conf:["mockingbird"], tip:"Only on Española.", r:"Española and its islet Gardner only."},
+{id:"scmock", n:"San Cristóbal mockingbird", sci:"Mimus melanotis", g:"bird", st:"E", c:["grey","brown","white"], z:"s", w:["land"],
+ look:"Like the Galápagos mockingbird, with a darker ear patch.",
+ why:"One of the four mockingbirds Darwin collected. Seeing that each island had its own was the clue that led him to wonder whether species could change.",
+ conf:["mockingbird"], tip:"Only on San Cristóbal.", r:"San Cristóbal only."},
+{id:"espcactus", n:"Española cactus finch", sci:"Geospiza conirostris", g:"bird", st:"E", c:["black","brown"], z:"s", w:["land"],
+ look:"A large finch with a deep, pointed bill.",
+ why:"On an island without the large ground finch, this one fills both roles, cracking seeds and probing cactus. Beak shape follows the competition.",
+ conf:["cactusfinch","groundfinch"], tip:"", r:"Española only."},
+{id:"vampirefinch", n:"Vampire ground finch", sci:"Geospiza septentrionalis", g:"bird", st:"E", c:["black","brown"], z:"s", w:["land"],
+ look:"A small ground finch with a sharp pointed bill.",
+ why:"On the far northern islands, where water is scarce, it pecks at the base of boobies' feathers and drinks their blood. It also rolls booby eggs against rocks to break them.",
+ conf:["groundfinch"], tip:"", r:"Wolf and Darwin, the far northern islands. Visited only by liveaboard dive boats."},
+{id:"vegfinch", n:"Vegetarian finch", sci:"Platyspiza crassirostris", g:"bird", st:"E", c:["black","brown","grey"], z:"s", w:["land"],
+ look:"A tree finch with a thick, curved, parrot-like bill. Males have a black head and breast.",
+ why:"It eats buds, leaves, flowers and fruit, an odd diet for a finch. It is the earliest branch of the tree finches.",
+ conf:["groundfinch","smalltreefinch"], tip:"Heavy curved bill, in trees."},
+{id:"smalltreefinch", n:"Small tree finch", sci:"Camarhynchus parvulus", g:"bird", st:"E", c:["grey","brown","black"], z:"s", w:["land"],
+ look:"A small grey-brown finch with a short, stubby bill, working through the branches. Males have a dark head.",
+ why:"The commonest tree finch, picking insects off leaves and bark in the highland forest. Like the other finches it suffers from an introduced fly whose larvae feed on nestlings.",
+ conf:["warblerfinch","woodpeckerfinch"], tip:"Stubby bill, in trees: tree finch. Thin bill: warbler finch."},
+{id:"largetreefinch", n:"Large tree finch", sci:"Camarhynchus psittacula", g:"bird", st:"E", c:["grey","brown","black"], z:"s", w:["land"],
+ look:"Like the small tree finch, but bigger and with a heavier, more curved bill.",
+ why:"Rips into bark and twigs for beetle larvae. Uncommon and declining.",
+ conf:["smalltreefinch"], tip:"", r:"Highlands of the larger central and western islands. Scarce on Santa Cruz."},
+{id:"mediumtreefinch", n:"Medium tree finch", sci:"Camarhynchus pauper", g:"bird", st:"E", c:["grey","brown","black"], z:"s", w:["land"],
+ look:"A tree finch between the small and the large in size.",
+ why:"Critically endangered and found on one island. Nest parasites, the larvae of an introduced fly, kill most of its chicks. Researchers have tried fumigating nests and giving the finches treated cotton to line them with.",
+ conf:["smalltreefinch"], tip:"", r:"Floreana highlands only. Ship landings on Floreana are on the coast, not in the highlands."},
+{id:"mangrovefinch", n:"Mangrove finch", sci:"Camarhynchus heliobates", g:"bird", st:"E", c:["brown","grey"], z:"s", w:["land"],
+ look:"A plain brown finch with a long, pointed bill.",
+ why:"Among the rarest birds in the world, with perhaps a hundred left. It uses twigs as tools, like the woodpecker finch. Chicks are raised in captivity and released back into the mangroves.",
+ conf:["woodpeckerfinch"], tip:"", r:"A few mangrove patches on north-west Isabela, closed to visitors."},
+{id:"rail", n:"Galápagos rail", sci:"Laterallus spilonota", g:"bird", st:"E", c:["brown","black","red"], z:"s", w:["land"],
+ look:"A tiny dark rail, about the size of a sparrow, with fine white spots on the wings and a red eye.",
+ why:"Barely flies and lives in dense, wet grass and fern. You are far more likely to hear its chattering call than to see it.",
+ conf:["crake"], tip:"Tiny, dark, red eye, in the undergrowth."},
+{id:"crake", n:"Paint-billed crake", sci:"Mapacicus erythrops", g:"bird", st:"N", c:["grey","brown","yellow","red"], z:"s", w:["land"],
+ look:"A small grey-and-brown rail with a yellow-green bill that is red at the base, and red legs.",
+ why:"Arrived on its own in the 1950s and spread through the farmland of the inhabited islands.",
+ conf:["rail"], tip:"Bigger than the rail, with the painted bill."},
+{id:"gallinule", n:"Common gallinule", sci:"Gallinula galeata", g:"bird", st:"N", c:["black","red","yellow"], z:"m", w:["shore"],
+ look:"A dark, hen-like waterbird with a red forehead shield and a yellow-tipped bill, swimming with a jerking head.",
+ why:"One of the few freshwater birds, on the highland ponds where tortoises wallow.",
+ conf:[], tip:""},
+{id:"cattleegret", n:"Cattle egret", sci:"Bubulcus ibis", g:"bird", st:"N", c:["white","yellow"], z:"m", w:["land"],
+ look:"A small, stocky white egret with a short yellow bill, walking among grazing animals in the pastures.",
+ why:"It reached the islands by itself in the 1960s, part of a spread from Africa across the Americas. In the highlands it walks with tortoises and cattle, picking off the insects they stir up.",
+ conf:["greategret"], tip:"Short neck, yellow bill, in a field."},
+{id:"greategret", n:"Great egret", sci:"Ardea alba", g:"bird", st:"N", c:["white","yellow","black"], z:"l", w:["shore"],
+ look:"A tall, slender, all-white heron with a yellow bill and black legs, standing in a lagoon.",
+ why:"Hunts slowly through the brackish lagoons and mangroves. Uncommon, so a white heron is worth a second look.",
+ conf:["cattleegret"], tip:"Tall, long-necked and white, in water."},
+{id:"striatedheron", n:"Striated heron", sci:"Butorides striata", g:"bird", st:"N", c:["grey","green","brown"], z:"s", w:["shore"],
+ look:"Very like the lava heron but paler, with a streaked neck and a darker cap.",
+ why:"Close enough to the lava heron that the two interbreed, and some scientists treat them as one species.",
+ conf:["lavaheron"], tip:"A paler, streakier lava heron.", r:"Mangroves and shores on the larger islands, especially Santa Cruz and Isabela. Uncommon."},
+{id:"barnowl", n:"Galápagos barn owl", sci:"Tyto alba punctatissima", g:"bird", st:"e", c:["white","brown","grey"], z:"m", w:["land","air"],
+ look:"A small pale barn owl with a heart-shaped face, darker and more spotted than mainland birds.",
+ why:"Hunts rodents, insects and small birds strictly at night, so on a ship-based trip it goes unseen.",
+ conf:["owl"], tip:"", r:"Santa Cruz, Isabela, Fernandina, Santiago and San Cristóbal. Only at night."},
+{id:"martin", n:"Galápagos martin", sci:"Progne modesta", g:"bird", st:"E", c:["black","brown"], z:"s", w:["air"],
+ look:"A small, all-dark swallow (females browner), hunting insects on the wing round cliffs and highland slopes.",
+ why:"One of the rarest birds in the islands and poorly known.",
+ conf:[], tip:"", r:"Scattered and rare: highlands and sea cliffs of the central and southern islands."},
+{id:"cuckoo", n:"Dark-billed cuckoo", sci:"Coccyzus melacoryphus", g:"bird", st:"N", c:["brown","yellow","grey"], z:"m", w:["land"],
+ look:"A slim, long-tailed cuckoo, brown above and buff-yellow below, with a black bill and a dark mask.",
+ why:"Skulks in dense trees eating caterpillars. Easily overlooked.",
+ conf:[], tip:"", r:"Dry and transition forest on the larger islands, including the Santa Cruz highlands. Secretive."},
+{id:"ani", n:"Smooth-billed ani", sci:"Crotophaga ani", g:"bird", st:"I", c:["black"], z:"m", w:["land"],
+ look:"A floppy, all-black bird with a long tail and a tall, arched, parrot-like bill, usually in a noisy group.",
+ why:"Brought by farmers in the 1960s, who believed it would pick ticks off their cattle. It now eats native insects, lizards and the chicks of other birds, and spreads the seeds of invasive plants.",
+ conf:[], tip:"Black, long-tailed, with that bill."},
+{id:"franklinsgull", n:"Franklin's gull", sci:"Leucophaeus pipixcan", g:"bird", st:"M", c:["grey","white","black"], z:"m", w:["shore","air","sea"],
+ look:"A small gull with a dark grey back and a half-hood of dark smudging on the head in winter.",
+ why:"Passes through on migration between the North American prairies and the coasts of Peru and Chile.",
+ conf:["lavagull","laughinggull"], tip:"", r:"An irregular passage migrant at sea and on beaches, mostly October to April."},
+{id:"laughinggull", n:"Laughing gull", sci:"Leucophaeus atricilla", g:"bird", st:"M", c:["grey","white","black"], z:"m", w:["shore","air"],
+ look:"A slim gull with a dark grey back and a long, drooping bill.",
+ why:"A North American gull that winters south as far as the islands in small numbers.",
+ conf:["franklinsgull","lavagull"], tip:"", r:"A scarce winter visitor to harbours and beaches."},
+{id:"greyplover", n:"Black-bellied plover", sci:"Pluvialis squatarola", g:"bird", st:"M", c:["grey","white","black"], z:"m", w:["shore"],
+ look:"A stocky, grey-speckled plover with a big head and a short heavy bill. In flight, black 'armpits' under the wing.",
+ why:"Breeds on the Arctic tundra. In the northern winter it stands alone on the beach and runs in short bursts like the smaller plovers.",
+ conf:["plover","tattler"], tip:"Bigger and greyer than the semipalmated plover, with no breast band."},
+{id:"spottedsandpiper", n:"Spotted sandpiper", sci:"Actitis macularius", g:"bird", st:"M", c:["brown","white"], z:"s", w:["shore"],
+ look:"A small brown sandpiper, white below, which bobs its tail end constantly and flies low on stiff, flickering wings.",
+ why:"A North American migrant on rocky shores and lagoon edges, usually alone.",
+ conf:["tattler"], tip:"Brown and bobbing. A tattler is grey and bigger."},
+{id:"osprey", n:"Osprey", sci:"Pandion haliaetus", g:"bird", st:"M", c:["brown","white"], z:"l", w:["air","shore"],
+ look:"A large raptor, brown above and white below, with a dark stripe through the eye, hovering and plunging feet-first for fish.",
+ why:"A rare winter visitor from North America. In the islands, any big raptor that isn't a Galápagos hawk is worth reporting to your naturalist.",
+ conf:["hawk"], tip:"", r:"An occasional visitor to coasts and lagoons, October to April."},
+{id:"peregrine", n:"Peregrine falcon", sci:"Falco peregrinus", g:"bird", st:"M", c:["grey","white","black"], z:"m", w:["air"],
+ look:"A powerful falcon with pointed wings, slate-grey above and a dark 'moustache'.",
+ why:"A few winter in the islands, hunting shorebirds and seabirds.",
+ conf:["hawk"], tip:"", r:"A scarce winter visitor, anywhere."},
+{id:"barnswallow", n:"Barn swallow", sci:"Hirundo rustica", g:"bird", st:"M", c:["blue","white","red"], z:"s", w:["air"],
+ look:"A glossy blue-black swallow with a rusty throat and long tail streamers.",
+ why:"Passes through on the way between North and South America.",
+ conf:["martin"], tip:"", r:"A passage migrant, mostly in the northern autumn and spring."},
+{id:"teal", n:"Blue-winged teal", sci:"Spatula discors", g:"bird", st:"M", c:["brown","blue","white"], z:"m", w:["shore"],
+ look:"A small dabbling duck. Males have a white crescent in front of the eye; both sexes show a pale blue wing patch in flight.",
+ why:"A North American duck that sometimes winters on the lagoons alongside the resident pintails.",
+ conf:["pintail"], tip:"", r:"An irregular winter visitor to lagoons."},
+/* ---------- reptiles ---------- */
+{id:"pinkiguana", n:"Pink land iguana", sci:"Conolophus marthae", g:"reptile", st:"E", k:1, c:["pink","black"], z:"l", w:["land"],
+ look:"A land iguana with pink skin and dark bands.",
+ why:"Only described as a species in 2009, although it was first noticed in 1986 and the lineage is several million years old. A few hundred are left.",
+ conf:["landiguana"], tip:"", r:"Wolf Volcano on northern Isabela only. Closed to visitors."},
+{id:"santafeiguana", n:"Santa Fe land iguana", sci:"Conolophus pallidus", g:"reptile", st:"E", c:["yellow","brown"], z:"l", w:["land"],
+ look:"A paler, more yellow land iguana with a longer, spinier crest.",
+ why:"Its own species, found on one island, among the tallest prickly pears in the islands.",
+ conf:["landiguana"], tip:"", r:"Santa Fe only."},
+{id:"saddleback", n:"Saddleback tortoises", sci:"Chelonoidis hoodensis, C. duncanensis & others", g:"reptile", st:"E", c:["black","grey","brown"], z:"l", w:["land"],
+ look:"Smaller tortoises whose shell rises at the front like a saddle, letting the long neck reach up.",
+ why:"They live on dry, low islands where food grows high. Española's tortoises were down to 14 animals in the 1960s. A captive-breeding programme returned more than 2,000 to the island; the best-known breeder, Diego, went home in 2020.",
+ conf:["tortoise"], tip:"A shell flared up at the front: saddleback.",
+ r:"Española, Pinzón, Pinta and San Cristóbal. Some are among the young tortoises at the Darwin Station in Puerto Ayora."},
+{id:"isabelatortoise", n:"Isabela giant tortoises", sci:"Chelonoidis vandenburghi & others", g:"reptile", st:"E", c:["black","grey","brown"], z:"l", w:["land"],
+ look:"Big dome-shelled tortoises. Isabela's five volcanoes each have their own population or species.",
+ why:"Alcedo volcano holds the largest wild tortoise population in the world. The calderas are only reached on long research hikes.",
+ conf:["tortoise"], tip:"", r:"The volcanoes of Isabela; the breeding centre at Puerto Villamil."},
+{id:"gecko", n:"Leaf-toed geckos", sci:"Phyllodactylus spp.", g:"reptile", st:"E", c:["brown","grey"], z:"s", w:["land"],
+ look:"Small, soft, pale-brown geckos with broad, flattened toe tips.",
+ why:"Several species, most confined to one island or a few. Active at night, so you are most likely to see one on a wall near a light in town.",
+ conf:["lavalizard"], tip:"", r:"Most islands, only at night. Look on walls in Puerto Ayora after dark."},
+{id:"hawksbill", n:"Hawksbill turtle", sci:"Eretmochelys imbricata", g:"reptile", st:"N", c:["brown","yellow","orange"], z:"l", w:["sea"],
+ look:"A sea turtle with a narrow, hooked, hawk-like beak and overlapping shell plates patterned in amber and brown.",
+ why:"Critically endangered worldwide. It feeds on sponges. It is rare here compared with the green turtle.",
+ conf:["greenturtle"], tip:"The pointed beak; a green turtle's face is short and round.", r:"Rare; occasionally on reefs throughout the islands."},
+{id:"ridley", n:"Olive ridley turtle", sci:"Lepidochelys olivacea", g:"reptile", st:"N", c:["green","grey"], z:"m", w:["sea"],
+ look:"A small sea turtle with a round, olive-grey shell, usually seen basking at the surface far from land.",
+ why:"Passes through on ocean journeys and does not nest here.",
+ conf:["greenturtle"], tip:"", r:"Open sea; occasionally seen from ships."},
+{id:"leatherback", n:"Leatherback turtle", sci:"Dermochelys coriacea", g:"reptile", st:"N", c:["black","white"], z:"l", w:["sea"],
+ look:"The largest turtle in the world, with no hard shell: a ridged back of leathery skin, black with pale spots.",
+ why:"Crosses the Pacific following jellyfish. Critically endangered in the eastern Pacific.",
+ conf:[], tip:"", r:"Rare, in open water."},
+{id:"seasnake", n:"Yellow-bellied sea snake", sci:"Hydrophis platurus", g:"reptile", st:"N", c:["black","yellow"], z:"m", w:["sea"],
+ look:"A slim snake, black above and bright yellow below, with a flattened paddle tail, drifting at the surface.",
+ why:"The only sea snake in the eastern Pacific. It drifts with slicks of floating debris and eats the small fish that hide under them. Venomous: watch it, never handle it.",
+ conf:[], tip:"", r:"Rare, in warm open water, more often in El Niño years."},
+/* ---------- mammals ---------- */
+{id:"ricerat", n:"Santa Fe rice rat", sci:"Aegialomys galapagoensis", g:"mammal", st:"E", c:["brown"], z:"s", w:["land"],
+ look:"A small, soft-furred brown rodent.",
+ why:"One of the islands' few native land mammals. Most of the native rice rats were wiped out by introduced black rats, but this one survived on Santa Fe, where black rats never arrived.",
+ conf:["blackrat"], tip:"", r:"Santa Fe only. Active at night."},
+{id:"fernandinarat", n:"Fernandina rice rats", sci:"Nesoryzomys narboroughi & N. fernandinae", g:"mammal", st:"E", c:["brown"], z:"s", w:["land"],
+ look:"Small brown rodents on bare lava.",
+ why:"Fernandina has never had an introduced rat, and its native ones survive there. One species was rediscovered in 1995, decades after it was thought lost.",
+ conf:[], tip:"", r:"Fernandina only. At night, so not seen on a day landing."},
+{id:"bat", n:"Galápagos red bat", sci:"Lasiurus brachyotis", g:"mammal", st:"E", c:["red","brown"], z:"s", w:["air"],
+ look:"A small reddish bat hunting insects at dusk.",
+ why:"One of only two native bats, and among the very few mammals that crossed a thousand kilometres of ocean on their own.",
+ conf:[], tip:"", r:"Santa Cruz, San Cristóbal and other larger islands, at dusk."},
+{id:"bluewhale", n:"Blue whale", sci:"Balaenoptera musculus", g:"mammal", st:"N", k:1, c:["blue","grey"], z:"l", w:["sea"],
+ look:"The largest animal that has ever lived. A long, mottled blue-grey back, a tiny dorsal fin far back, and a blow up to 9 m tall.",
+ why:"Passes through the deep water west of the islands on its way to and from the cold upwellings off Peru and Chile.",
+ conf:["brydes"], tip:"An enormous column of blow and a back that seems to go on for ever.", r:"Rare; the deep water west of Isabela and Fernandina."},
+{id:"pilotwhale", n:"Short-finned pilot whale", sci:"Globicephala macrorhynchus", g:"mammal", st:"N", c:["black"], z:"l", w:["sea"],
+ look:"A black whale with a bulbous rounded head and a broad, hooked dorsal fin set well forward, in tight family groups.",
+ why:"Dives deep at night for squid and rests at the surface by day, often with groups lying side by side.",
+ conf:["orca"], tip:"", r:"Deep water around the islands; possible on any passage."},
+{id:"rissos", n:"Risso's dolphin", sci:"Grampus griseus", g:"mammal", st:"N", c:["grey","white"], z:"l", w:["sea"],
+ look:"A big, blunt-headed, beakless dolphin, grey and so heavily scarred with white scratches that old ones look almost white.",
+ why:"The scars come from the teeth of other Risso's dolphins and from the squid they hunt.",
+ conf:["bottlenose"], tip:"", r:"Deep water, irregularly, on any passage."},
+{id:"spinner", n:"Spinner dolphin", sci:"Stenella longirostris", g:"mammal", st:"N", c:["grey","white"], z:"m", w:["sea"],
+ look:"A slim dolphin with a long thin beak, in fast-moving schools.",
+ why:"Named for leaping clear of the water and spinning several times in the air before falling back.",
+ conf:["commondolphin"], tip:"", r:"Offshore, occasionally, on any passage."},
+{id:"striped", n:"Striped dolphin", sci:"Stenella coeruleoalba", g:"mammal", st:"N", c:["grey","white","black"], z:"m", w:["sea"],
+ look:"A slim dolphin with a dark stripe from the eye along the flank to the belly, and a pale blaze over the shoulder.",
+ why:"Lives in deep warm water and keeps clear of ships.",
+ conf:["commondolphin"], tip:"", r:"Deep water offshore."},
+{id:"falsekiller", n:"False killer whale", sci:"Pseudorca crassidens", g:"mammal", st:"N", c:["black"], z:"l", w:["sea"],
+ look:"A long, slender, all-black whale with a rounded head and a curved fin.",
+ why:"Fast, social and a predator of large fish. It shares food within the group.",
+ conf:["pilotwhale","orca"], tip:"", r:"Rare, in deep water."},
+{id:"beakedwhale", n:"Cuvier's beaked whale", sci:"Ziphius cavirostris", g:"mammal", st:"N", c:["brown","grey","white"], z:"l", w:["sea"],
+ look:"A brownish whale with a pale, short-beaked head and a small fin far back, usually only a brief glimpse.",
+ why:"Holds the diving records for mammals: nearly 3,000 m deep and over two hours under water.",
+ conf:[], tip:"", r:"Deep water off the western islands, rarely seen."},
+{id:"goat", n:"Feral goat", sci:"Capra hircus", g:"mammal", st:"I", c:["brown","black","white"], z:"m", w:["land"],
+ look:"A goat, gone wild.",
+ why:"Released by whalers and settlers, goats stripped whole islands of vegetation and starved the tortoises. Project Isabela removed more than 140,000 from Santiago and northern Isabela by 2006, the largest island eradication ever attempted. The vegetation is still recovering.",
+ conf:[], tip:"", r:"Removed from Santiago, Pinta and northern Isabela. A few remain on some inhabited islands."},
+{id:"blackrat", n:"Black rat", sci:"Rattus rattus", g:"mammal", st:"I", c:["black","brown"], z:"s", w:["land"],
+ look:"A rat.",
+ why:"Arrived on ships and eats seabird eggs, tortoise hatchlings and seeds. Rat eradication on Pinzón in 2012 meant tortoise hatchlings survived there for the first time in a century. Floreana is now being cleared.",
+ conf:["ricerat"], tip:"", r:"Inhabited and many uninhabited islands, mostly at night."},
+{id:"cat", n:"Feral cat", sci:"Felis catus", g:"mammal", st:"I", c:["black","brown","grey","white"], z:"s", w:["land"],
+ look:"A house cat, living wild.",
+ why:"Kills lava lizards, young iguanas and birds. One of the reasons the Floreana mockingbird disappeared from its own island.",
+ conf:[], tip:"", r:"The inhabited islands: Santa Cruz, San Cristóbal, Isabela, Floreana."},
+/* ---------- fish & sharks ---------- */
+{id:"whaleshark", n:"Whale shark", sci:"Rhincodon typus", g:"fish", st:"N", k:1, c:["grey","white","spotted"], z:"l", w:["sea"],
+ look:"The biggest fish in the world: a broad flat head, a chequer of white spots on grey, and a slow, swinging tail.",
+ why:"Almost every whale shark at Darwin Island is a large pregnant female, passing through. Where they give birth is one of the big unanswered questions in the ocean.",
+ conf:[], tip:"", r:"Darwin and Wolf, June to November. Liveaboard dive boats only."},
+{id:"galshark", n:"Galápagos shark", sci:"Carcharhinus galapagensis", g:"fish", st:"N", c:["grey","white"], z:"l", w:["sea"],
+ look:"A big, heavy-bodied grey reef shark, up to 3 m, with no obvious markings.",
+ why:"Named from here and common around the remote islands and pinnacles. Curious around divers, but rarely seen by snorkellers in the central islands.",
+ conf:["whitetip","blacktip"], tip:"", r:"Offshore islands and pinnacles: Darwin, Wolf, Roca Redonda."},
+{id:"silky", n:"Silky shark", sci:"Carcharhinus falciformis", g:"fish", st:"N", c:["grey"], z:"l", w:["sea"],
+ look:"A slender, smooth-skinned grey ocean shark.",
+ why:"Lives in the open ocean, often near floating objects.",
+ conf:["galshark"], tip:"", r:"Open water and the northern dive sites."},
+{id:"hornshark", n:"Galápagos bullhead shark", sci:"Heterodontus quoyi", g:"fish", st:"N", c:["brown","grey","spotted"], z:"m", w:["sea"],
+ look:"A small, blunt-headed, spotted shark with a spine in front of each dorsal fin, resting on the bottom.",
+ why:"Crushes crabs and urchins with flat back teeth. A rare find even for divers.",
+ conf:[], tip:"", r:"Rocky bottoms in cool western water, mostly below snorkelling depth."},
+{id:"tigershark", n:"Tiger shark", sci:"Galeocerdo cuvier", g:"fish", st:"N", c:["grey","brown"], z:"l", w:["sea"],
+ look:"A big, square-snouted shark with faint dark bars on the flanks.",
+ why:"A large predator that eats almost anything, including turtles and sea lions.",
+ conf:[], tip:"", r:"Offshore and northern dive sites; rarely seen."},
+{id:"manta", n:"Giant oceanic manta ray", sci:"Mobula birostris", g:"fish", st:"N", k:1, c:["black","white"], z:"l", w:["sea"],
+ look:"An enormous black-and-white ray, up to 7 m across, with a pair of fleshy lobes at the front of the head for funnelling plankton.",
+ why:"Feeds on plankton near the surface and sometimes leaps clear of the water. The pattern of spots on the belly is unique to each animal.",
+ conf:["mobula","eagleray"], tip:"Head lobes, huge size, no spots on the back.",
+ r:"Possible anywhere, from a panga or the ship, but never predictable. Most often in cool upwelling water."},
+{id:"mobula", n:"Mobula rays", sci:"Mobula spp.", g:"fish", st:"N", c:["black","grey","white"], z:"m", w:["sea"],
+ look:"Smaller cousins of the manta, often in schools, leaping and belly-flopping out of the water.",
+ why:"Nobody knows for sure why they leap. Ideas include courtship, signalling and shaking off parasites.",
+ conf:["manta"], tip:"", r:"Anywhere at sea, unpredictably; most often seen leaping from the ship."},
+{id:"marbledray", n:"Marbled ray", sci:"Taeniura meyeni", g:"fish", st:"N", c:["black","grey","spotted"], z:"l", w:["sea"],
+ look:"A big, round, thick stingray, mottled black and grey, lying on sand or under ledges.",
+ why:"Can be well over a metre across. Placid, but it carries a venomous tail spine. Give it room.",
+ conf:["stingray"], tip:"Round and marbled, not diamond-shaped."},
+{id:"gardeneel", n:"Galápagos garden eel", sci:"Heteroconger klausewitzi", g:"fish", st:"N", c:["brown","grey"], z:"s", w:["sea"],
+ look:"Thin eels standing upright out of burrows in the sand like a field of grass, all leaning into the current.",
+ why:"They pick plankton out of the water and sink back into their burrows as you approach.",
+ conf:[], tip:"", r:"Sandy slopes at dive sites, usually deeper than snorkellers go."},
+{id:"hogfish", n:"Mexican hogfish", sci:"Bodianus diplotaenia", g:"fish", st:"N", c:["red","orange","yellow","blue"], z:"m", w:["sea"],
+ look:"A big wrasse. Females are reddish with dark stripes. Large males are purplish, with a big bump on the forehead and long trailing fins.",
+ why:"All of them start life as females, and the largest change sex to become the bumphead males.",
+ conf:["parrotfish"], tip:"The forehead bump on a big male."},
+{id:"creolefish", n:"Pacific creolefish", sci:"Paranthias colonus", g:"fish", st:"N", c:["red","orange","spotted"], z:"s", w:["sea"],
+ look:"A slim salmon-red fish with a row of small white spots along the back, in schools in the open water off the wall.",
+ why:"Picks plankton from the water column in large loose schools.",
+ conf:[], tip:""},
+{id:"salema", n:"Black-striped salema", sci:"Xenocys jessiae", g:"fish", st:"E", c:["white","black","grey"], z:"s", w:["sea"],
+ look:"Silvery fish with neat black stripes along the body, in huge, dense schools that move as one.",
+ why:"Found almost only here. The silver walls of fish that swirl round snorkellers at the rocks are often salemas.",
+ conf:["sergeant"], tip:"Stripes along the body; a sergeant major's run up and down."},
+{id:"bumphead", n:"Bumphead parrotfish", sci:"Scarus perrico", g:"fish", st:"N", c:["blue","green","grey"], z:"m", w:["sea"],
+ look:"A big blue-green parrotfish; mature males have a hump on the forehead.",
+ why:"Like the other parrotfish it scrapes rock with fused teeth and turns it into sand.",
+ conf:["parrotfish","hogfish"], tip:""},
+{id:"damsel", n:"Giant damselfish", sci:"Microspathodon dorsalis", g:"fish", st:"N", c:["blue","grey","black"], z:"s", w:["sea"],
+ look:"A dark blue-grey fish with a long trailing tail fin and bright blue eyes, guarding a patch of rock.",
+ why:"Farms algae on its territory and attacks anything that comes near, including snorkellers' masks.",
+ conf:["sergeant"], tip:""},
+{id:"rainbowwrasse", n:"Cortez rainbow wrasse", sci:"Thalassoma lucasanum", g:"fish", st:"N", c:["yellow","red","blue","black"], z:"s", w:["sea"],
+ look:"Small, fast, cigar-shaped fish in yellow, red and dark bands, darting in loose schools over the rocks.",
+ why:"Often the busiest fish in view, picking at everything, including parasites on larger fish.",
+ conf:[], tip:""},
+{id:"scorpionfish", n:"Stone scorpionfish", sci:"Scorpaena plumieri mystes", g:"fish", st:"N", c:["brown","red","grey"], z:"s", w:["sea"],
+ look:"A lumpy, mottled fish that looks exactly like a weedy rock until it moves.",
+ why:"Ambushes small fish. Its spines are venomous, which is one more reason never to put a hand or foot on the rock.",
+ conf:[], tip:"If a rock has eyes, it is this."},
+{id:"trumpetfish", n:"Trumpetfish", sci:"Aulostomus chinensis", g:"fish", st:"N", c:["brown","yellow"], z:"m", w:["sea"],
+ look:"A long, thin, stick-like fish with a tube snout, often hanging head-down or shadowing a larger fish.",
+ why:"It hides alongside other fish to sneak up on its prey.",
+ conf:[], tip:""},
+{id:"moray", n:"Moray eels", sci:"Muraena, Gymnothorax & others", g:"fish", st:"N", c:["brown","yellow","spotted","black","white"], z:"m", w:["sea"],
+ look:"A long eel with its head out of a crack in the rock, mouth opening and closing.",
+ why:"The gaping mouth is breathing, not a threat: it pumps water over its gills. Several species here, spotted, banded and plain.",
+ conf:[], tip:"Name it to 'moray' unless the pattern is clear."},
+{id:"bacalao", n:"Galápagos grouper (bacalao)", sci:"Mycteroperca olfax", g:"fish", st:"N", c:["brown","grey","yellow"], z:"l", w:["sea"],
+ look:"A big, heavy grouper, mottled brown-grey; some are golden yellow all over.",
+ why:"Found only around the Galápagos, Cocos and Malpelo. It is the traditional salt fish of island cooking and has been heavily overfished.",
+ conf:[], tip:"", r:"Deeper rocky reefs; occasionally from the snorkel."},
+{id:"fourblenny", n:"Galápagos four-eyed blenny", sci:"Dialommus fuscus", g:"fish", st:"E", c:["brown","grey"], z:"s", w:["shore","sea"],
+ look:"A small mottled fish that sits out of the water on wet lava at the tideline.",
+ why:"Its eyes are split into two panes each, one for seeing in air and one for seeing in water. It hunts insects and crabs on the rocks.",
+ conf:[], tip:"", r:"Splash zone of lava shores; easy to miss."},
+{id:"seahorse", n:"Pacific seahorse", sci:"Hippocampus ingens", g:"fish", st:"N", c:["yellow","brown","grey"], z:"s", w:["sea"],
+ look:"A large seahorse, tail wrapped round a sea fan or weed.",
+ why:"The male carries the eggs in a pouch and gives birth.",
+ conf:[], tip:"", r:"Cool water off western Isabela, such as Tagus Cove and Elizabeth Bay."},
+{id:"batfish", n:"Red-lipped batfish", sci:"Ogcocephalus darwini", g:"fish", st:"N", k:1, c:["red","brown","grey"], z:"s", w:["sea"],
+ look:"A flattened, brown fish that walks on its fins across the sand, with bright red lips.",
+ why:"No one is sure what the red lips are for, though recognition at spawning is the usual guess.",
+ conf:[], tip:"", r:"Sandy bottoms at 30 m and deeper. Divers only."},
+/* ---------- shore & reef life ---------- */
+{id:"ghostcrab", n:"Ghost crab", sci:"Ocypode gaudichaudii", g:"sea", st:"N", c:["yellow","orange","white"], z:"s", w:["shore"],
+ look:"A pale, sand-coloured crab with eyes on tall stalks, racing sideways into a burrow on the beach.",
+ why:"Comes out in numbers at dusk. The little balls of sand round the burrows are its leftovers from sieving the sand for food.",
+ conf:["sallylightfoot"], tip:"On sand, not on rock."},
+{id:"hermitcrab", n:"Hermit crabs", sci:"Coenobita compressus & others", g:"sea", st:"N", c:["brown","red","orange"], z:"s", w:["shore"],
+ look:"Small crabs carrying borrowed snail shells, at the top of the beach and in tide pools.",
+ why:"As a hermit crab grows it has to find a bigger shell, which is one more reason to leave every shell where it lies.",
+ conf:[], tip:""},
+{id:"greenurchin", n:"Green sea urchin", sci:"Lytechinus semituberculatus", g:"sea", st:"N", c:["green","white"], z:"s", w:["sea","shore"],
+ look:"A small, short-spined greenish urchin, often covered in bits of shell and weed it holds on as camouflage.",
+ why:"A grazer of algae. It is often what you see in tide pools alongside the pencil urchins.",
+ conf:["pencilurchin"], tip:""},
+{id:"seacucumber", n:"Brown sea cucumber", sci:"Isostichopus fuscus", g:"sea", st:"N", c:["brown"], z:"m", w:["sea"],
+ look:"A fat, warty brown sausage lying on rock or sand.",
+ why:"Fished almost to collapse for the Asian market in the 1990s. Fishermen protesting the limits occupied the Darwin Station. It is now closely regulated.",
+ conf:[], tip:"", r:"Rocky reefs below snorkelling depth; rarely seen by snorkellers today."},
+{id:"octopus", n:"Galápagos reef octopus", sci:"Octopus oculifer", g:"sea", st:"E", c:["brown","red","grey"], z:"s", w:["sea","shore"],
+ look:"An octopus that changes colour and texture to match the rock as you watch.",
+ why:"Hunts crabs at night. In daylight it hides in a hole and is given away by a pile of empty shells at the entrance.",
+ conf:[], tip:"", r:"Reefs and tide pools anywhere, mostly at night; a lucky daytime find."},
+{id:"cushionstar", n:"Panamic cushion star", sci:"Pentaceraster cumingi", g:"sea", st:"N", c:["orange","red","brown"], z:"s", w:["sea"],
+ look:"A thick, five-armed orange-red sea star with blunt knobs, on the sand.",
+ why:"A relative of the chocolate chip sea star.",
+ conf:["chocchip"], tip:"", r:"Sandy bottoms in sheltered bays."},
+{id:"lobster", n:"Spiny lobsters", sci:"Panulirus spp.", g:"sea", st:"N", c:["red","brown","green"], z:"m", w:["sea"],
+ look:"Long antennae waving from a crack in the rock.",
+ why:"Fished in season and protected the rest of the year. The antennae are usually all you see.",
+ conf:["slipperlobster"], tip:"", r:"Rocky reefs, hiding by day."},
+{id:"slipperlobster", n:"Galápagos slipper lobster", sci:"Scyllarides astori", g:"sea", st:"N", c:["brown","orange"], z:"m", w:["sea"],
+ look:"A flattened, armoured lobster with broad plates instead of long antennae.",
+ why:"Comes out at night; by day it clings under ledges.",
+ conf:["lobster"], tip:"", r:"Rocky reefs, at night."},
+/* ---------- insects & centipedes ---------- */
+{id:"carpenterbee", n:"Galápagos carpenter bee", sci:"Xylocopa darwini", g:"bug", st:"E", c:["black","yellow"], z:"s", w:["land","air"],
+ look:"A big bee. Females are glossy black; males are golden-brown.",
+ why:"The only native bee in the islands, and the main pollinator of many native plants. It bores its nest into dead wood.",
+ conf:[], tip:"Black female, golden male: same species."},
+{id:"locust", n:"Large painted locust", sci:"Schistocerca melanocera", g:"bug", st:"E", c:["green","yellow","red","black"], z:"s", w:["land"],
+ look:"A big grasshopper boldly painted in green, yellow, red and black, in the dry zone.",
+ why:"Common in the arid lowlands, and food for lava lizards and hawks.",
+ conf:[], tip:""},
+{id:"sulphur", n:"Galápagos sulphur butterfly", sci:"Phoebis sennae marcellina", g:"bug", st:"e", c:["yellow"], z:"s", w:["air","land"],
+ look:"A fast, bright-yellow butterfly flying past without stopping.",
+ why:"There are only a few native butterflies here. This is the one you will notice.",
+ conf:[], tip:""},
+{id:"centipede", n:"Galápagos giant centipede", sci:"Scolopendra galapagoensis", g:"bug", st:"E", c:["black","red","brown"], z:"m", w:["land"],
+ look:"A centipede up to 30 cm long, dark with reddish legs.",
+ why:"Hunts at night and can take lizards and mice. Its bite is very painful. Another reason to watch where you put your hands.",
+ conf:[], tip:"", r:"Lava and leaf litter on many islands; out at night."},
+{id:"fireant", n:"Little fire ant", sci:"Wasmannia auropunctata", g:"bug", st:"I", c:["orange","brown"], z:"s", w:["land"],
+ look:"A tiny, slow, orange-brown ant with a sting out of all proportion to its size.",
+ why:"Introduced and among the most damaging invaders here. It overwhelms native insects and stings tortoise and bird hatchlings. Eradicated from Marchena after years of work.",
+ conf:[], tip:"", r:"Inhabited islands and around old farmland."},
+{id:"vampirefly", n:"Avian vampire fly", sci:"Philornis downsi", g:"bug", st:"I", c:["grey","black"], z:"s", w:["air","land"],
+ look:"An ordinary-looking fly. You will not knowingly see it.",
+ why:"Introduced, probably in the 1960s. Its larvae live in the nests of Darwin's finches and the vermilion flycatcher and feed on the blood of the chicks. It is the biggest single threat to the finches today.",
+ conf:[], tip:"", r:"Every island with land birds."}
 ];
 
 /* ============================================================
    STATE — localStorage for the small things, IndexedDB for photos.
    Keys start "sbg." so this book can share an origin with the others.
    ============================================================ */
-const K = "sbg.";
+const K = TRIP.store;
 const mem = {};
 const store = {
   get(k){ try{ const v = localStorage.getItem(k); return v===null?mem[k]:v; }catch(e){ return mem[k]; } },
@@ -1054,7 +1443,43 @@ const getJ = (k, d) => { try{ const v = store.get(k); return v ? JSON.parse(v) :
 const setJ = (k, v) => store.set(k, JSON.stringify(v));
 
 const SPX = {}; SPECIES.forEach(s => SPX[s.id] = s);
-const STATUS = {E:"Endemic", e:"Endemic race", N:"Native", M:"Visitor"};
+
+/* ---------- off the list: what the guest logs that the book does not know.
+   Each one becomes a plain species entry on this phone, so the log, the
+   journal and the two-phone merge treat it like any other. ------------- */
+const customMap = () => getJ(K+"custom", {});
+function registerCustom(id, c){
+  if(SPX[id] && !SPX[id].u) return;
+  const s = SPX[id] || {id, u:1, st:"U", c:[], z:"", w:[], conf:[], tip:""};
+  Object.assign(s, {n:c.n, sci:c.sci || "", g:GROUPS[c.g] ? c.g : "other", look:c.note || "",
+    why:"Not in the book: you logged it" + (c.src ? " from " + c.src : "") + ".", r:""});
+  if(!SPX[id]){ SPX[id] = s; SPECIES.push(s); }
+  CATALOGUE = null;
+}
+function loadCustom(){ const m = customMap(); Object.keys(m).forEach(id => registerCustom(id, m[id])); }
+const slug = t => String(t).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
+/* a name the book already knows goes to that entry, not a duplicate */
+function findSpecies(name){
+  const q = slug(name); if(!q) return null;
+  return SPECIES.find(s => slug(s.n) === q || (s.sci && slug(s.sci) === q)) || null;
+}
+function addCustom(name, g, sci, src){
+  name = String(name || "").trim().slice(0, 80); if(!name) return null;
+  const hit = findSpecies(name) || (sci && findSpecies(sci)); if(hit) return hit.id;
+  const id = "x-" + slug(name), m = customMap();
+  if(!m[id]){ m[id] = {n:name, g:GROUPS[g] ? g : "other", sci:String(sci || "").slice(0, 80), src:src || "", t:Date.now()}; setJ(K+"custom", m); }
+  registerCustom(id, m[id]);
+  return id;
+}
+function dropCustom(id){
+  const m = customMap(); if(!m[id]) return;
+  delete m[id]; setJ(K+"custom", m);
+  dropSighting(id);
+  PH.filter(p => p.species === id).forEach(p => { p.species = null; savePhoto(p); });
+  const i = SPECIES.indexOf(SPX[id]); if(i > -1) SPECIES.splice(i, 1);
+  delete SPX[id]; CATALOGUE = null;
+}
+const STATUS = {E:"Endemic", e:"Endemic race", N:"Native", M:"Visitor", I:"Introduced", U:"Your entry"};
 const HOW = {dry:"Dry landing", wet:"Wet landing", panga:"Panga ride", snorkel:"Snorkel", kayak:"Kayak",
              walk:"On foot", coach:"By coach", ship:"From the deck", other:""};
 
@@ -1520,7 +1945,7 @@ function renderWild(){
   acts(d).forEach(a => { const s = siteOf(a); if(s && isLanding(a)) (s.see || []).forEach(id => here[id] = a.s); });
   const hasHere = Object.keys(here).length > 0;
   if(wk.scope == null) wk.scope = hasHere ? "today" : "route";
-  let pool = SPECIES.filter(s => W[s.id]);
+  let pool = wk.scope === "all" ? SPECIES.slice() : SPECIES.filter(s => W[s.id]);
   if(wk.site) pool = pool.filter(s => (SITES[wk.site].see || []).indexOf(s.id) > -1);
   else if(wk.scope === "today" && hasHere) pool = pool.filter(s => here[s.id]);
   if(wk.g) pool = pool.filter(s => s.g === wk.g);
@@ -1540,7 +1965,9 @@ function renderWild(){
     html += '<div class="toggle">At ' + esc(SITES[wk.site].n) + ' · <button class="more" data-wsite="">Show all</button></div>';
   } else {
     html += '<div class="chips" style="margin-top:10px">' + (hasHere ? chip("data-wscope", "today", wk.scope === "today", "Here on " + fmtDate(d.date)) : "") +
-      chip("data-wscope", "route", wk.scope !== "today" || !hasHere, "Whole route") + '</div>';
+      chip("data-wscope", "route", wk.scope === "route" || (wk.scope === "today" && !hasHere), "Whole route") +
+      chip("data-wscope", "all", wk.scope === "all", "All Galápagos") + '</div>';
+    if(wk.scope === "all") html += '<p class="note">Everything in the book, including what lives only on islands this voyage does not visit. Those are marked <span class="off">Not expected on this route</span>.</p>';
   }
   html += '<div class="keyrow"><span class="lab">What is it</span><div class="chips">' + chip("data-wg", "", !wk.g, "All") +
     Object.keys(GROUPS).map(g => chip("data-wg", g, wk.g === g, GROUPS[g])).join("") + '</div></div>';
@@ -1553,6 +1980,7 @@ function renderWild(){
     (wk.c.length || wk.z || wk.w || wk.g ? ' · <button class="more" data-wclear="1">Clear the key</button>' : '') + '</p>';
   html += '<div>' + pool.map(s => spRow(s, W, di, here)).join("") + '</div>';
   if(!pool.length) html += '<p class="note">Nothing in the book matches all of that. Take off a colour — light at sea plays tricks — or photograph it and ask on the Camera tab.</p>';
+  if(wk.q.trim() && !findSpecies(wk.q)) html += addBox(wk.q.trim());
   $("#panel").innerHTML = html;
 }
 function spRow(s, W, di, here){
@@ -1563,10 +1991,33 @@ function spRow(s, W, di, here){
   else {
     const nx = (W[s.id] || []).find(w => w.di >= di) || (W[s.id] || [])[0];
     if(nx) meta = (nx.di >= di ? "Next: " : "Was: ") + "Day " + (nx.di+1) + " · " + esc(SITES[nx.site].n);
+    else if(!s.u) meta = '<span class="off">Not expected on this route</span>' + (s.r ? " · " + esc(s.r) : "");
   }
   return '<div class="sp" data-sp="' + s.id + '"><button class="sp-mark' + (sn ? " on" : "") + '" data-seen="' + s.id + '" aria-label="Seen">' + (sn ? "✓" : "") + '</button>' +
     refImg(s.id, "sp-img") + '<div class="sp-body"><div class="sp-n">' + esc(s.n) + '<span class="st ' + s.st + '">' + STATUS[s.st] + '</span></div>' +
     '<div class="sp-s">' + esc(s.sci) + '</div><div class="sp-m">' + (sn ? esc(meta) : meta) + '</div></div></div>';
+}
+
+/* ---------- logging what the book does not have ---------- */
+function addBox(name){
+  return '<div class="set"><label for="xname">Log it by name — it goes in your log and journal like any other</label>' +
+    '<input class="field" id="xname" placeholder="e.g. Galápagos shark" value="' + esc(name) + '" autocomplete="off">' +
+    '<div style="display:flex;gap:8px;margin-top:8px"><select id="xg">' + Object.keys(GROUPS).map(g => '<option value="' + g + '">' + GROUPS[g] + '</option>').join("") +
+    '<option value="other">Not sure</option></select><button class="btn" data-addx="1">Log it</button></div>' +
+    '<input class="field" id="xnote" placeholder="A note: what you saw, who named it (optional)" style="margin-top:8px" autocomplete="off"></div>';
+}
+function logCustom(){
+  const name = ($("#xname") || {}).value || "", g = ($("#xg") || {}).value || "other", note = (($("#xnote") || {}).value || "").trim();
+  if(!name.trim()){ toast("Give it a name first."); return; }
+  const known = findSpecies(name);
+  const id = known ? known.id : addCustom(name, g, "", "a sighting");
+  if(!id) return;
+  if(note && SPX[id].u){ const m = customMap(); m[id].note = note.slice(0, 400); setJ(K+"custom", m); registerCustom(id, m[id]); }
+  if(isSeen(id)){ const m = seenMap(); m[id].n = (m[id].n || 1) + 1; setJ(K+"seen", m); }
+  else tickNow(id);
+  wk.q = "";
+  toast(SPX[id].n + (known ? " is in the book — logged." : " logged, off the book's list."));
+  render();
 }
 
 /* ---------- the species sheet ---------- */
@@ -1577,15 +2028,22 @@ function openSpecies(id){
   const photos = sn && sn.photos ? sn.photos.map(pid => PH.find(p => p.id === pid)).filter(Boolean) : [];
   let html = '<div class="veil" data-close="1"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="' + esc(s.n) + '"><div class="sheet-in">' +
     '<button class="close" data-close="1" aria-label="Close">×</button>' + refHero(id) +
-    '<div class="t" style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">' + GROUPS[s.g] + ' · ' + STATUS[s.st] + '</div>' +
+    '<div class="t" style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">' + (GROUPS[s.g] || "Not in the book") + ' · ' + STATUS[s.st] + '</div>' +
     '<h2>' + esc(s.n) + '</h2><div class="sp-s" style="font-size:14px">' + esc(s.sci) + '</div>' +
     '<div class="btnrow"><button class="btn' + (sn ? " ghost" : "") + '" data-seen="' + id + '">' + (sn ? "✓ In your log" : "I saw this") + '</button></div>';
   if(sn) html += '<p class="note">First seen ' + (dayOf(sn.day) ? fmtDate(dayOf(sn.day).date) : "") + (sn.site && SITES[sn.site] ? " at " + esc(SITES[sn.site].n) : "") + (sn.n > 1 ? " · logged " + sn.n + " times" : "") + '.</p>';
   if(photos.length) html += '<div class="thumbs">' + photos.map(p => '<img src="' + p.thumb + '" alt="">').join("") + '</div>';
-  html += '<dl class="facts"><dt>How to know it</dt><dd>' + esc(s.look) + '</dd><dt>Why it matters</dt><dd>' + esc(s.why) + '</dd>';
+  html += '<dl class="facts">' + (s.look ? '<dt>' + (s.u ? "Your note" : "How to know it") + '</dt><dd>' + esc(s.look) + '</dd>' : '') + '<dt>' + (s.u ? "About" : "Why it matters") + '</dt><dd>' + esc(s.why) + '</dd>';
   if(s.tip) html += '<dt>Telling it apart</dt><dd>' + esc(s.tip) + '</dd>';
   if(s.conf && s.conf.length) html += '<dt>Easily confused with</dt><dd><div class="chips">' + s.conf.map(c => SPX[c] ? '<button class="chip" data-sp="' + c + '">' + esc(SPX[c].n) + '</button>' : "").join("") + '</div></dd>';
-  html += '<dt>On this route</dt><dd>' + (where ? '<div class="chips">' + where + '</div>' : 'Not expected on this itinerary.') + '</dd></dl>';
+  if(s.u){
+    html += '<dt>On this route</dt><dd>Your own entry — the book has no notes on it. Ask below, or ask your naturalist.</dd></dl>';
+    html += '<div class="btnrow"><button class="btn ghost" data-delcustom="' + id + '">Remove this entry</button></div>';
+  } else {
+    html += '<dt>On this route</dt><dd>' + (where ? '<div class="chips">' + where + '</div>' : '<span class="off">Not expected on this route</span>') + '</dd>';
+    if(s.r) html += '<dt>Where it lives</dt><dd>' + esc(s.r) + '</dd>';
+    html += '</dl>';
+  }
   html += askBox("sp:" + id, "Ask about the " + s.n.toLowerCase());
   html += '</div></div>';
   closeSheet();
@@ -1649,9 +2107,12 @@ let CATALOGUE = null;
 function catalogue(){
   if(CATALOGUE) return CATALOGUE;
   const W = buildWhere();
-  CATALOGUE = SPECIES.map(s => s.id + " | " + s.n + " (" + s.sci + ") | " + GROUPS[s.g] + " | " + STATUS[s.st] +
+  const book = SPECIES.filter(s => !s.u);
+  CATALOGUE = book.filter(s => W[s.id]).map(s => s.id + " | " + s.n + " (" + s.sci + ") | " + GROUPS[s.g] + " | " + STATUS[s.st] +
     " | " + s.look + (s.tip ? " Tell apart: " + s.tip : "") +
-    " | sites: " + (W[s.id] || []).map(w => SITES[w.site].n).filter((v,i,a) => a.indexOf(v) === i).join(", ")).join("\n");
+    " | sites: " + (W[s.id] || []).map(w => SITES[w.site].n).filter((v,i,a) => a.indexOf(v) === i).join(", ")).join("\n") +
+    "\n\nElsewhere in the islands, not expected on this route:\n" +
+    book.filter(s => !W[s.id]).map(s => s.id + " | " + s.n + " (" + s.sci + ") | " + GROUPS[s.g] + " | " + STATUS[s.st] + " | " + (s.r || "")).join("\n");
   return CATALOGUE;
 }
 async function ai(task, body){
@@ -1711,7 +2172,35 @@ const WIKI = {
   pencilurchin:"Eucidaris galapagensis|Eucidaris", chocchip:"Nidorellia armata", opuntia:"Opuntia echios|Opuntia galapageia",
   candelabra:"Jasminocereus|Jasminocereus thouarsii", lavacactus:"Brachycereus|Brachycereus nesioticus",
   palosanto:"Bursera graveolens", scalesia:"Scalesia pedunculata|Scalesia", mangrove:"Rhizophora mangle",
-  tiquilia:"Tiquilia nesiotica|Tiquilia"
+  tiquilia:"Tiquilia nesiotica|Tiquilia",
+  albatross:"Waved albatross", galpetrel:"Galápagos petrel", whitevented:"Elliot's storm petrel|White-vented storm petrel",
+  phalarope:"Red-necked phalarope", hoodmock:"Española mockingbird", scmock:"San Cristóbal mockingbird",
+  espcactus:"Española cactus finch", vampirefinch:"Vampire ground finch", vegfinch:"Vegetarian finch",
+  smalltreefinch:"Small tree finch", largetreefinch:"Large tree finch", mediumtreefinch:"Medium tree finch",
+  mangrovefinch:"Mangrove finch", rail:"Galápagos crake|Galápagos rail", crake:"Paint-billed crake",
+  gallinule:"Common gallinule", cattleegret:"Western cattle egret|Cattle egret", greategret:"Great egret",
+  striatedheron:"Striated heron", barnowl:"Galápagos barn owl|Barn owl", martin:"Galápagos martin",
+  cuckoo:"Dark-billed cuckoo", ani:"Smooth-billed ani", franklinsgull:"Franklin's gull", laughinggull:"Laughing gull",
+  greyplover:"Grey plover", spottedsandpiper:"Spotted sandpiper", osprey:"Osprey", peregrine:"Peregrine falcon",
+  barnswallow:"Barn swallow", teal:"Blue-winged teal",
+  pinkiguana:"Galápagos pink land iguana", santafeiguana:"Conolophus pallidus", saddleback:"Chelonoidis hoodensis|Galápagos tortoise",
+  isabelatortoise:"Chelonoidis vandenburghi|Galápagos tortoise", gecko:"Phyllodactylus", hawksbill:"Hawksbill sea turtle",
+  ridley:"Olive ridley sea turtle", leatherback:"Leatherback sea turtle", seasnake:"Yellow-bellied sea snake",
+  ricerat:"Galápagos rice rat|Aegialomys galapagoensis", fernandinarat:"Nesoryzomys", bat:"Galápagos red bat|Lasiurus brachyotis",
+  bluewhale:"Blue whale", pilotwhale:"Short-finned pilot whale", rissos:"Risso's dolphin", spinner:"Spinner dolphin",
+  striped:"Striped dolphin", falsekiller:"False killer whale", beakedwhale:"Cuvier's beaked whale",
+  goat:"Feral goat|Goat", blackrat:"Black rat", cat:"Feral cat",
+  whaleshark:"Whale shark", galshark:"Galapagos shark", silky:"Silky shark", hornshark:"Galapagos bullhead shark",
+  tigershark:"Tiger shark", manta:"Giant oceanic manta ray", mobula:"Mobula|Devil ray", marbledray:"Round ribbontail ray|Taeniura meyeni",
+  gardeneel:"Heteroconger klausewitzi|Garden eel", hogfish:"Mexican hogfish|Bodianus diplotaenia", creolefish:"Paranthias colonus",
+  salema:"Xenocys jessiae|Black-striped salema", bumphead:"Scarus perrico", damsel:"Microspathodon dorsalis",
+  rainbowwrasse:"Thalassoma lucasanum", scorpionfish:"Spotted scorpionfish|Scorpaena plumieri", trumpetfish:"Aulostomus chinensis|Trumpetfish",
+  moray:"Moray eel", bacalao:"Mycteroperca olfax", fourblenny:"Dialommus fuscus", seahorse:"Pacific seahorse",
+  batfish:"Red-lipped batfish", ghostcrab:"Ocypode gaudichaudii|Ghost crab", hermitcrab:"Coenobita compressus|Hermit crab",
+  greenurchin:"Lytechinus semituberculatus|Lytechinus", seacucumber:"Isostichopus fuscus", octopus:"Octopus oculifer",
+  cushionstar:"Pentaceraster cumingi|Pentaceraster", lobster:"Panulirus penicillatus|Spiny lobster", slipperlobster:"Scyllarides astori|Slipper lobster",
+  carpenterbee:"Xylocopa darwini", locust:"Schistocerca melanocera", sulphur:"Phoebis sennae|Cloudless sulphur",
+  centipede:"Scolopendra galapagoensis", fireant:"Little fire ant|Wasmannia auropunctata", vampirefly:"Philornis downsi"
 };
 const OPEN_LICENCE = /^(cc0|cc[ -]by(-sa)?( |$|-)|public domain|pd)/i;
 const REF = {meta:getJ(K+"refs", {}), url:{}, busy:false};
@@ -1749,7 +2238,8 @@ function finalTitle(q, t){
 }
 async function fetchRefs(force){
   if(REF.busy || navigator.onLine === false) return;
-  const need = SPECIES.filter(s => WIKI[s.id] && !REF.url[s.id]);
+  const W = buildWhere();
+  const need = SPECIES.filter(s => WIKI[s.id] && !REF.url[s.id]).sort((a,b) => (W[b.id]?1:0) - (W[a.id]?1:0));
   if(!need.length) return;
   if(!force && Date.now() - (+(store.get(K+"refs.try") || 0)) < 6*3600e3) return;
   store.set(K+"refs.try", String(Date.now()));
@@ -2064,12 +2554,13 @@ function photoCard(p){
     const vis = (r.seen || []).join("; ") + (r.behaviour && r.behaviour.seen ? (r.seen && r.seen.length ? ". " : "") + r.behaviour.seen : "");
     if(vis || (r.behaviour && r.behaviour.meaning))
       h += '<div class="split"><div><b>Visible</b>' + esc(vis) + '</div><div class="inf"><b>What it may mean</b>' + esc((r.behaviour && r.behaviour.meaning) || "—") + '</div></div>';
-    (r.candidates || []).forEach(c => {
+    (r.candidates || []).forEach((c, n) => {
       const known = SPX[c.id];
       h += '<div class="cand">' + (known ? refImg(c.id, "cand-img") : '') + '<div class="cn">' + (known ? '<button class="more" style="font:inherit;color:inherit;text-transform:none;letter-spacing:0;font-family:var(--display);font-size:21px" data-sp="' + c.id + '">' + esc(known.n) + '</button>' : esc(c.name)) +
         '<span class="conf">' + esc(c.confidence) + '</span></div>' +
         '<p class="x" style="margin:4px 0 0">' + esc(c.why) + (c.against ? ' <i>Against: ' + esc(c.against) + '</i>' : '') + '</p>' +
-        (known && p.species !== c.id ? '<div class="btnrow" style="margin:8px 0 0"><button class="btn' + (p.suggest === c.id ? "" : " ghost") + '" data-confirm="' + p.id + '|' + c.id + '">This is it</button></div>' : '') + '</div>';
+        (known && p.species !== c.id ? '<div class="btnrow" style="margin:8px 0 0"><button class="btn' + (p.suggest === c.id ? "" : " ghost") + '" data-confirm="' + p.id + '|' + c.id + '">This is it</button></div>' : '') +
+        (!known && c.name ? '<div class="btnrow" style="margin:8px 0 0"><button class="btn ghost" data-confirmx="' + p.id + '|' + n + '">Not in the book — log it as this</button></div>' : '') + '</div>';
     });
     if(r.tip) h += '<p class="x" style="margin-top:8px">To settle it: ' + esc(r.tip) + '</p>';
     h += '<div class="btnrow"><button class="btn ghost" data-keyit="' + p.id + '">None of these — key it out</button><button class="btn ghost" data-retry="' + p.id + '">Ask again</button></div>';
@@ -2087,7 +2578,9 @@ function renderLog(){
   const got = route.filter(s => seen[s.id]).length;
   const end = route.filter(s => s.st === "E"), endGot = end.filter(s => seen[s.id]).length;
   const nd = nowDay(), di = nd.state === "before" ? 0 : dayIdx(nd.d.id);
-  let html = '<div class="prog"><b>' + got + '</b><span>of ' + route.length + ' species this route can show you · ' + endGot + ' of ' + end.length + ' endemic</span></div>' +
+  const offGot = Object.keys(seen).filter(id => SPX[id] && !W[id]).length;
+  let html = '<div class="prog"><b>' + got + '</b><span>of ' + route.length + ' species this route can show you · ' + endGot + ' of ' + end.length + ' endemic' +
+    (offGot ? ' · ' + offGot + ' more off the list' : '') + '</span></div>' +
     '<div class="bar"><i style="width:' + (route.length ? got/route.length*100 : 0) + '%"></i></div>';
   const extra = Object.keys(seen).filter(id => SPX[id] && !W[id]);
   const todo = route.filter(s => !seen[s.id]).map(s => ({s, nx:(W[s.id] || []).find(w => w.di >= di)}));
@@ -2113,7 +2606,11 @@ function renderLog(){
       list.sort((a,b) => (seen[b.id]?1:0) - (seen[a.id]?1:0) || a.n.localeCompare(b.n)).map(s => spRow(s, W, di, null)).join("");
   });
   if(gone.length) html += '<p class="note" style="margin-top:12px">' + gone.length + ' species had their only chances earlier in the trip: ' + gone.map(x => esc(x.s.n)).join(", ") + '.</p>';
-  if(extra.length) html += '<p class="note">Also logged, off this route\'s list: ' + extra.map(id => esc(SPX[id].n)).join(", ") + '.</p>';
+  if(extra.length){
+    html += '<h3 style="margin-top:16px;color:var(--ink)">Off this route\'s list · ' + extra.length + '</h3>' +
+      extra.map(id => SPX[id]).sort((a,b) => a.n.localeCompare(b.n)).map(s => spRow(s, W, di, null)).join("");
+  }
+  html += '<h3>Something not in the book?</h3>' + addBox("");
   html += '<h3>Two phones, one trip</h3><p class="note">Each phone keeps its own log. Send yours across — AirDrop is quickest — and the other phone merges it: sightings, notes and thumbnails, nothing overwritten.</p>' +
     '<div class="btnrow"><button class="btn ghost" data-export="1">Send my log</button><button class="btn ghost" data-import="1">Merge a log</button></div>';
   $("#panel").innerHTML = html;
@@ -2168,7 +2665,7 @@ async function writeDay(id){
 async function journalHTML(full){
   const names = store.get(K+"names") || "";
   let h = '<div class="cover"><p style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase">Shore Book · ' + esc(TRIP.ship) + '</p>' +
-    '<h1 style="font-family:var(--display);font-weight:400">Galápagos</h1><p>' + esc(names) + (names ? " · " : "") + fmtDate(TRIP.start) + ' – ' + fmtDate(TRIP.end) + ' 2026</p>' +
+    '<h1 style="font-family:var(--display);font-weight:400">Galápagos</h1><p>' + esc(names) + (names ? " · " : "") + fmtDate(TRIP.start) + ' – ' + fmtDate(TRIP.end) + ' ' + TRIP.end.slice(0, 4) + '</p>' +
     '<p style="color:#666">' + esc(TRIP.line) + ' · ' + Object.keys(seenMap()).length + ' species logged</p></div>';
   for(const d of DAYS){
     const f = dayFacts(d), ph = PH.filter(p => p.day === d.id && p.species).slice(0, 9);
@@ -2215,13 +2712,20 @@ async function saveFile(name, text, mime){
 function exportLog(){
   const days = {};
   DAYS.forEach(d => { days[d.id] = {notes:store.get(K+"notes."+d.id) || "", learned:getJ(K+"learned."+d.id, []), j:getJ(K+"j."+d.id, null)}; });
-  const out = {book:"shorebook-galapagos-2026", v:1, at:Date.now(), names:store.get(K+"names") || "", seen:seenMap(), days,
+  const out = {book:TRIP.id, v:1, at:Date.now(), names:store.get(K+"names") || "", seen:seenMap(), custom:customMap(), days,
     photos:PH.filter(p => p.species).map(p => ({id:p.id, t:p.t, day:p.day, site:p.site, act:p.act, species:p.species, thumb:p.thumb}))};
   saveFile("shore-book-log.json", JSON.stringify(out), "application/json");
 }
 async function importLog(file){
   let j; try{ j = JSON.parse(await file.text()); }catch(e){ toast("That file is not a Shore Book log."); return; }
-  if(!j || j.book !== "shorebook-galapagos-2026"){ toast("That is not a log from this book."); return; }
+  if(!j || j.book !== TRIP.id){ toast("That is not a log from this book."); return; }
+  const cm = customMap();
+  Object.keys(j.custom || {}).forEach(id => {
+    const c = j.custom[id]; if(!/^x-[a-z0-9-]{1,40}$/.test(id) || !c || typeof c.n !== "string" || SPX[id] && !SPX[id].u) return;
+    if(!cm[id]) cm[id] = {n:c.n.slice(0, 80), g:GROUPS[c.g] ? c.g : "other", sci:String(c.sci || "").slice(0, 80), src:"the other phone", note:String(c.note || "").slice(0, 400), t:+c.t || Date.now()};
+    registerCustom(id, cm[id]);
+  });
+  setJ(K+"custom", cm);
   const m = seenMap(); let added = 0;
   Object.keys(j.seen || {}).forEach(id => {
     const s = j.seen[id]; if(!SPX[id]) return;
@@ -2266,13 +2770,11 @@ const KNOW = [
 function renderKnow(){
   let html = '<h3>Park rules</h3><ul class="know">' + KNOW.slice(0,5).map(k => '<li>' + esc(k) + '</li>').join("") + '</ul>';
   html += '<h3>Good to know</h3><ul class="know">' + KNOW.slice(5).map(k => '<li>' + esc(k) + '</li>').join("") + '</ul>';
-  html += '<h3>This route, and the one you are not on</h3>' +
-    '<p class="note">Santa Cruz II runs this Western & Northern loop and a Southern & Eastern one. Here is what that choice means for wildlife.</p>' +
-    '<table class="cmp"><tr><th>You get</th><th>You miss</th></tr>' +
-    '<tr><td>Flightless cormorants and the main penguin waters — only in the west</td><td>The waved albatross, which nests only on Española (April–December)</td></tr>' +
-    '<tr><td>Fernandina: the youngest island, the biggest marine iguana colony</td><td>Española\'s red-and-green marine iguanas and its own mockingbird</td></tr>' +
-    '<tr><td>Genovesa: red-footed boobies, daytime owls, storm petrels in their thousands</td><td>San Cristóbal\'s Punta Pitt, where all three boobies nest side by side</td></tr>' +
-    '<tr><td>Santiago\'s fur seal grottos and Bartolomé\'s summit</td><td>South Plaza\'s land iguanas among red sesuvium</td></tr></table>';
+  if(TRIP.other && TRIP.other.rows.length)
+    html += '<h3>This route, and the one you are not on</h3><p class="note">' + esc(TRIP.other.note) + '</p>' +
+      '<table class="cmp"><tr><th>You get</th><th>You miss</th></tr>' +
+      TRIP.other.rows.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join("") + '</table>' +
+      '<p class="note">Wildlife → All Galápagos shows every species in the book, with where the ones off this route live.</p>';
   html += '<h3>Settings</h3>' +
     '<div class="set"><label for="code">Trip code (switches on photo ID and questions)</label><div style="display:flex;gap:8px"><input class="field" id="code" type="password" autocomplete="off" placeholder="From Aspen Travel Advisors" value="' + esc(store.get(K+"code") || "") + '"><button class="btn" data-savecode="1">Save</button></div></div>' +
     '<div class="set"><label for="clock">The ship keeps</label><select id="clock"><option value="galapagos"' + (shipClock() === "galapagos" ? " selected" : "") + '>Galápagos time (UTC−6)</option><option value="mainland"' + (shipClock() === "mainland" ? " selected" : "") + '>Mainland Ecuador time (UTC−5)</option></select></div>' +
@@ -2522,7 +3024,7 @@ function render(){
 function setTab(t){ tab = t; store.set(K+"tab", t); render(); window.scrollTo({top:Math.min(window.scrollY, $(".tabs").offsetTop), behavior:"instant"}); }
 
 document.addEventListener("click", e => {
-  const el = e.target.closest("[data-tab],[data-day],[data-sp],[data-seen],[data-close],[data-wscope],[data-wg],[data-wc],[data-wz],[data-ww],[data-wclear],[data-wsite],[data-pick],[data-ph],[data-confirm],[data-unconfirm],[data-retry],[data-keyit],[data-delph],[data-pump],[data-ask],[data-readbrief],[data-applybrief],[data-dropbrief],[data-unplan],[data-write],[data-print],[data-jfile],[data-export],[data-import],[data-savecode],[data-storage],[data-wipe],[data-zoom],[data-fit],[data-geo],[data-refs]");
+  const el = e.target.closest("[data-tab],[data-day],[data-sp],[data-seen],[data-close],[data-wscope],[data-wg],[data-wc],[data-wz],[data-ww],[data-wclear],[data-wsite],[data-pick],[data-ph],[data-confirm],[data-confirmx],[data-addx],[data-delcustom],[data-unconfirm],[data-retry],[data-keyit],[data-delph],[data-pump],[data-ask],[data-readbrief],[data-applybrief],[data-dropbrief],[data-unplan],[data-write],[data-print],[data-jfile],[data-export],[data-import],[data-savecode],[data-storage],[data-wipe],[data-zoom],[data-fit],[data-geo],[data-refs]");
   if(!el) return;
   const D = el.dataset;
   if(D.seen != null){ e.stopPropagation(); toggleSeen(D.seen); if($("#sheet")) openSpecies(D.seen); render(); return; }
@@ -2541,6 +3043,13 @@ document.addEventListener("click", e => {
   if(D.pick){ $("#pick").click(); return; }
   if(D.ph){ camSel = camSel === D.ph ? null : D.ph; render(); if(camSel){ const r = $(".result"); if(r) r.scrollIntoView({block:"start", behavior:"smooth"}); } return; }
   if(D.confirm){ const [pid, sid] = D.confirm.split("|"), p = PH.find(x => x.id === pid); if(p){ confirmPhoto(p, sid); render(); } return; }
+  if(D.confirmx){
+    const [pid, n] = D.confirmx.split("|"), p = PH.find(x => x.id === pid), c = p && p.result && (p.result.candidates || [])[+n];
+    if(c){ const id = addCustom(c.name, c.group, "", "a photo"); if(id){ confirmPhoto(p, id); render(); } }
+    return;
+  }
+  if(D.addx){ logCustom(); return; }
+  if(D.delcustom){ if(confirm("Remove " + SPX[D.delcustom].n + " from the book and your log? Its photos stay in the Camera tab.")){ dropCustom(D.delcustom); closeSheet(); render(); } return; }
   if(D.unconfirm){ const p = PH.find(x => x.id === D.unconfirm); if(p && p.species){ dropSighting(p.species, p.id); p.species = null; savePhoto(p); render(); } return; }
   if(D.retry){ const p = PH.find(x => x.id === D.retry); if(p && p.blob){ p.status = "queued"; p.err = ""; savePhoto(p); render(); pump(); } return; }
   if(D.keyit){ const p = PH.find(x => x.id === D.keyit); wk.site = p && SITES[p.site] && p.site !== "quito" ? p.site : ""; if(p) { curDay = p.day; store.set(K+"day", curDay); } setTab("wild"); return; }
@@ -2588,6 +3097,7 @@ document.addEventListener("input", e => {
 document.addEventListener("keydown", e => {
   if(e.key === "Escape") closeSheet();
   if(e.key === "Enter" && e.target.dataset && e.target.dataset.askin){ ask(e.target.dataset.askin, e.target.value.trim()); }
+  if(e.key === "Enter" && (e.target.id === "xname" || e.target.id === "xnote")) logCustom();
 });
 
 async function readBrief(id){
@@ -2634,6 +3144,10 @@ window.addEventListener("resize", () => { if(tab === "chart"){ const h = $("#cha
 setInterval(() => { renderTide(); renderHead(); }, 20000);
 
 (async function boot(){
+  const y = TRIP.start.slice(0, 4);
+  document.title = "Shore Book · " + TRIP.title + " " + y;
+  $("#footTrip").textContent = TRIP.title + " · " + new Date(TRIP.start + "T12:00:00").toLocaleString("en-GB", {month:"long"}) + " " + y;
+  loadCustom();
   if(!curDay || !dayOf(curDay)) curDay = nowDay().d.id;
   /* opening the book on a trip day takes you to that day */
   const nd = nowDay();

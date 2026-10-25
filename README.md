@@ -15,7 +15,8 @@ on, recognises what you photographed, keeps a log of what you have seen, and wri
 | **Day** — each day's landings, wet or dry, what to carry, water temperature, a countdown to the panga | ✓ | |
 | **Before breakfast** — a briefing assembled from the book: what you still have not seen that today can show you, flagged *only here* or *last chance* | ✓ | |
 | **Tonight's briefing** — type or dictate the expedition leader's talk; the book works out what changed for tomorrow and rewrites the day | text is kept | ✓ to read it |
-| **Wildlife** — 77 species for this route, including the whales and dolphins of the Bolívar Channel and the November migrant shorebirds, and a field key: group, colours, size, where. Ranked by what lives where you are standing | ✓ | |
+| **Wildlife** — 166 species: the 108 this route can show (including the Bolívar Channel whales and the November migrant shorebirds) and the rest of the archipelago, marked *Not expected on this route* with where they do live. A field key: group, colours, size, where. Ranked by what lives where you are standing | ✓ | |
+| **Off the list** — log anything the book does not have, by name or from a photo ID; it goes in the log, the journal and the two-phone merge | ✓ | |
 | **Species photos** — one openly licensed photo per species from Wikimedia Commons, credited on each species page | ✓ once saved | first open only |
 | **Camera** — photos are filed under the landing they were taken on, by their own EXIF timestamp (phone or separate camera), and identified when there is signal | filing and queue | ✓ to identify |
 | **Log** — the checklist: what you have, what is left, and the next and last chance to see each one | ✓ | |
@@ -34,6 +35,11 @@ is the honest answer.
 `index.html` holds markup, styles, data and logic. Near the top of the script are `SITES`
 (21 stops, each with the species recorded there — 20 visitor sites and the Bolívar Channel crossing, seen from the deck), `DAYS` (the itinerary) and `SPECIES`.
 Where each species can be seen is worked out from the sites, so the two lists cannot drift apart.
+
+`SPECIES` is the whole archipelago, not this voyage. A species is on the route if a stop in
+`SITES` that `DAYS` visits lists it; everything else shows as *Not expected on this route*, with
+its `r` line saying where in the islands it lives. Anything a guest logs that the book does not
+have is kept on the phone under `sbg.custom` and behaves like a book species.
 
 Photos live in IndexedDB on the phone. Everything else lives in localStorage under `sbg.` keys.
 
@@ -65,7 +71,7 @@ deletes its own `shore-book-galapagos-*` caches. **Bump `CACHE` in `sw.js` whene
 3. On each phone, open the site in Safari, then Share → **Add to Home Screen**. Open the book
    from the icon and enter the trip code.
 4. **Before flying to the islands**, on hotel Wi-Fi in Quito, check Know → Species photos says
-   77 of 77 (or close), and open the Chart and look at each island once so its tiles are kept.
+   all of them (or close), and open the Chart and look at each island once so its tiles are kept.
 
 Without the two variables the book still works. It files photos and queues them, and the
 field key, log and journal all run. Photo ID and questions explain that they are not switched on.
@@ -110,3 +116,18 @@ phone.
 
 Aspen Travel Advisors, Aspen, Colorado. Map tiles © OpenStreetMap contributors.
 Hours, prices and itineraries drift. The book says so, and means it.
+
+## A new itinerary
+
+The book is built to be reused. For another voyage:
+
+1. In `TRIP`, set the dates, ship and line, a new `id` (logs only merge between phones on the
+   same id), a new `store` prefix (so a phone that carried the last trip keeps the logs apart),
+   and the `other` comparison table for Know, or remove it.
+2. Rewrite `DAYS`. Add any stops it needs to `SITES`, each with the species seen there in `see`.
+   Leave unused sites in place; they cost nothing. A passage worth watching from the ship, such
+   as the Bolívar Channel, is a stop with `how:"ship"`.
+3. Leave `SPECIES` alone unless something is missing. The route list, the "Not expected" marks,
+   the log totals, the briefings and the photo-ID catalogue all follow from the sites.
+4. Check `BRING`, `KNOW` and the `screen` films for anything that names this trip, update the
+   README, and bump `CACHE` in `sw.js`.
