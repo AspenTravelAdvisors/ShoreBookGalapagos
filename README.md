@@ -15,7 +15,7 @@ on, recognises what you photographed, keeps a log of what you have seen, and wri
 | **Day** — each day's landings, wet or dry, what to carry, water temperature, a countdown to the panga | ✓ | |
 | **Before breakfast** — a briefing assembled from the book: what you still have not seen that today can show you, flagged *only here* or *last chance* | ✓ | |
 | **Tonight's briefing** — type or dictate the expedition leader's talk; the book works out what changed for tomorrow and rewrites the day | text is kept | ✓ to read it |
-| **Wildlife** — 64 species for this route, and a field key: group, colours, size, where. Ranked by what lives where you are standing | ✓ | |
+| **Wildlife** — 77 species for this route, including the whales and dolphins of the Bolívar Channel and the November migrant shorebirds, and a field key: group, colours, size, where. Ranked by what lives where you are standing | ✓ | |
 | **Species photos** — one openly licensed photo per species from Wikimedia Commons, credited on each species page | ✓ once saved | first open only |
 | **Camera** — photos are filed under the landing they were taken on, by their own EXIF timestamp (phone or separate camera), and identified when there is signal | filing and queue | ✓ to identify |
 | **Log** — the checklist: what you have, what is left, and the next and last chance to see each one | ✓ | |
@@ -32,7 +32,7 @@ is the honest answer.
 ## How it works
 
 `index.html` holds markup, styles, data and logic. Near the top of the script are `SITES`
-(20 visitor sites, each with the species recorded there), `DAYS` (the itinerary) and `SPECIES`.
+(21 stops, each with the species recorded there — 20 visitor sites and the Bolívar Channel crossing, seen from the deck), `DAYS` (the itinerary) and `SPECIES`.
 Where each species can be seen is worked out from the sites, so the two lists cannot drift apart.
 
 Photos live in IndexedDB on the phone. Everything else lives in localStorage under `sbg.` keys.
@@ -65,7 +65,7 @@ deletes its own `shore-book-galapagos-*` caches. **Bump `CACHE` in `sw.js` whene
 3. On each phone, open the site in Safari, then Share → **Add to Home Screen**. Open the book
    from the icon and enter the trip code.
 4. **Before flying to the islands**, on hotel Wi-Fi in Quito, check Know → Species photos says
-   64 of 64 (or close), and open the Chart and look at each island once so its tiles are kept.
+   77 of 77 (or close), and open the Chart and look at each island once so its tiles are kept.
 
 Without the two variables the book still works. It files photos and queues them, and the
 field key, log and journal all run. Photo ID and questions explain that they are not switched on.

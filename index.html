@@ -159,7 +159,7 @@ p{margin:0 0 10px}
 .how{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
   border:1px solid currentColor;border-radius:2px;padding:1px 5px;margin:0 4px 4px 0;color:var(--sea)}
 .how.wet{color:var(--booby)} .how.dry{color:var(--reel)} .how.snorkel,.how.kayak{color:var(--sea)}
-.how.flag{color:var(--rosso)}
+.how.flag{color:var(--rosso)} .how.ship{color:var(--mute)}
 .stop p{font-size:15px}
 .stop .look{font-size:14px;color:var(--ink);border-left:2px solid var(--olio);padding-left:10px;margin:8px 0}
 .stop .x{font-size:13px;color:var(--mute)}
@@ -199,6 +199,7 @@ p{margin:0 0 10px}
   padding:1px 4px;margin-left:6px;vertical-align:2px;border:1px solid var(--rule);color:var(--mute);font-style:normal}
 .st.E{border-color:var(--rosso);color:var(--rosso)}
 .st.e{border-color:var(--reel);color:var(--reel)}
+.st.M{border-color:var(--sea);color:var(--sea)}
 .today-tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sea)}
 
 /* ---------- reference photos ---------- */
@@ -497,7 +498,7 @@ itabaca: {
   d:"A narrow strait lined with mangrove, where the ferry crosses from Baltra to Santa Cruz. Calm, shallow water — a last look before the airport.",
   l:"Whitetip reef sharks resting on the bottom, golden rays in the shallows, pelicans on the mangrove.",
   x:"HX lists it on the last morning. How much of it you see depends on the disembarkation plan: the ship is due alongside at 08:30.",
-  see:["whitetip","goldenray","pelican","mangrove","lavaheron","sealion"]
+  see:["whitetip","goldenray","pelican","mangrove","lavaheron","sealion","blacktip"]
 },
 
 /* ---------------- the west: Isabela & Fernandina ---------------- */
@@ -507,14 +508,21 @@ vicente: {
   l:"Penguins and flightless cormorants on the ledges, and green turtles grazing algae on the rock. Snorkel the cliff wall — if a huge flat disc drifts up from the dark, it is a Mola mola.",
   x:"The coldest water of the trip — around 19–22 °C. Take the wetsuit the ship offers, the thick one if there is a choice. Panga rides here are often rough on the way out.",
   water:"Cold · 19–22 °C",
-  see:["penguin","cormorant","greenturtle","mola","bfbooby","noddy","shearwater","marineiguana","sealion","furseal","bottlenose","kingangel","surgeon","sergeant","eagleray"]
+  see:["penguin","cormorant","greenturtle","mola","bfbooby","noddy","shearwater","marineiguana","sealion","furseal","bottlenose","kingangel","surgeon","sergeant","eagleray","barberfish"]
+},
+bolivar: {
+  n:"Bolívar Channel", isl:"Between Isabela and Fernandina · from the ship", c:"-0.1700,-91.4200", how:"ship", diff:"",
+  d:"The strait between the two youngest big islands, where the Cromwell Current — a cold undercurrent running east along the equator — hits the wall of Isabela and wells up. Cold, green, plankton-thick water, and the best whale water in the islands. There is no landing: the ship sails it between Punta Vicente Roca and Fernandina.",
+  l:"A tall, thin blow, then a long dark back with a small hooked fin: a Bryde's whale. Fast pods of common dolphins coming in to the bow. A sperm whale's blow is low and angled forward.",
+  x:"Nothing is scheduled; the ship repositions over lunch. Take binoculars and a layer to the dining room. When the bridge calls a sighting, go up — whales do not wait for dessert.",
+  see:["brydes","sperm","orca","humpback","commondolphin","bottlenose","mola","shearwater","stormpetrel","noddy","bfbooby","penguin","cormorant"]
 },
 espinoza: {
   n:"Punta Espinoza", isl:"Fernandina", c:"-0.2650,-91.4430", how:"dry", diff:"Moderate · uneven lava",
   d:"Fernandina is the youngest island and one of the most volcanically active places on Earth — it last erupted in 2024. No introduced mammal has ever taken hold here. It is the closest you will get to the Galápagos as it was before anyone arrived.",
   l:"The densest marine iguana colony in the islands, piled like logs on the lava. Flightless cormorants drying their stub wings at the tip. Pāhoehoe — ropy lava — so fresh it looks wet.",
   x:"Step only where the naturalist steps: iguanas lie on the trail and their nests are in the sand. Dry landing on a slippery dock. Hot and shadeless by mid-afternoon.",
-  see:["marineiguana","cormorant","penguin","racer","hawk","sealion","lavaheron","lavalizard","sallylightfoot","mangrove","lavacactus","dove","mockingbird"]
+  see:["marineiguana","cormorant","penguin","racer","hawk","sealion","lavaheron","lavalizard","sallylightfoot","mangrove","lavacactus","dove","mockingbird","turnstone","whimbrel","tattler"]
 },
 
 /* ---------------- Floreana ---------------- */
@@ -523,7 +531,7 @@ postoffice: {
   d:"Whalers in the 1790s left a barrel here so that ships going home could carry letters for each other. It is still in use. You leave an unstamped postcard; you go through the pile and take any you could deliver by hand.",
   l:"Your own home town in the pile. Then the lava tube behind the barrel, and the rusting remains of a 1920s Norwegian fish cannery.",
   x:"Bring a postcard, addressed, no stamp. Wet landing on a sandy beach — sea lions often on it.",
-  see:["sealion","greenturtle","lavaheron","mockingbird","groundfinch","yellowwarbler","sallylightfoot","flamingo"]
+  see:["sealion","greenturtle","lavaheron","mockingbird","groundfinch","yellowwarbler","sallylightfoot","flamingo","turnstone","whimbrel","plover","sanderling"]
 },
 champion: {
   n:"Champion Islet", isl:"off Floreana", c:"-1.2370,-90.3870", how:"snorkel", diff:"Moderate · open water, current",
@@ -531,14 +539,14 @@ champion: {
   l:"The mockingbird, from the water, with binoculars. Then in the water: sea lions that will play, schooling fish, eagle rays, sometimes whitetip sharks along the wall.",
   x:"One of the best snorkels on the route, but in open water with some current — stay with the group and the panga driver.",
   water:"Warm · 22–24 °C",
-  see:["floreanamock","sealion","whitetip","eagleray","kingangel","surgeon","parrotfish","moorish","puffer","sergeant","greenturtle","bfbooby","nazca","swgull","chocchip"]
+  see:["floreanamock","sealion","whitetip","eagleray","kingangel","surgeon","parrotfish","moorish","puffer","sergeant","greenturtle","bfbooby","nazca","swgull","chocchip","barberfish"]
 },
 cormorant: {
   n:"Punta Cormorant", isl:"Floreana · north", c:"-1.2230,-90.4230", how:"wet", diff:"Easy · 1.5 km",
   d:"Two beaches back to back across a narrow neck. You land on sand glittering green with olivine crystals, cross past a brackish lagoon, and come out on Flour Beach, white and fine as the name.",
   l:"Flamingos in the lagoon. On Flour Beach, stingrays in the shallows at the waterline and green turtle tracks up the sand — November is when they start to come ashore.",
   x:"No swimming on Flour Beach — it is a turtle-nesting beach. Shuffle your feet in the shallows at the landing: rays bury themselves in the sand.",
-  see:["flamingo","pintail","stilt","greenturtle","stingray","goldenray","sealion","bfbooby","pelican","lavalizard","groundfinch","yellowwarbler","palosanto"]
+  see:["flamingo","pintail","stilt","greenturtle","stingray","goldenray","sealion","bfbooby","pelican","lavalizard","groundfinch","yellowwarbler","palosanto","turnstone","whimbrel","plover","sanderling"]
 },
 
 /* ---------------- Seymour & Las Bachas ---------------- */
@@ -554,7 +562,7 @@ bachas: {
   d:"A long white beach whose name is a mispronunciation: two Second World War barges were abandoned here, and 'barges' became bachas. Their ribs still stick out of the sand.",
   l:"Turtle tracks up the beach to nests in the dunes, flamingos in the lagoon behind, Sally Lightfoot crabs on every rock. A swim from the beach.",
   x:"Wet landing, then free time on the beach. Stay out of the dunes — that is where the nests are. Soft sand at the waterline can hide rays.",
-  see:["greenturtle","flamingo","stilt","pintail","oystercatcher","sallylightfoot","marineiguana","lavagull","pelican","sealion","goldenray","stingray","mangrove","bfbooby"]
+  see:["greenturtle","flamingo","stilt","pintail","oystercatcher","sallylightfoot","marineiguana","lavagull","pelican","sealion","goldenray","stingray","mangrove","bfbooby","turnstone","whimbrel","plover","sanderling","blacktip"]
 },
 
 /* ---------------- Santiago ---------------- */
@@ -564,14 +572,14 @@ buccaneer: {
   l:"Seabirds on the ledges, fur seals in the shade, and on a snorkel along the cliff: turtles, rays, reef fish, sometimes whitetips.",
   x:"Usually panga ride and snorkel, no landing. Santiago had 80,000 feral goats until 2006 — what is growing back on these slopes is what came back after they were removed.",
   water:"Moderate · 21–23 °C",
-  see:["bfbooby","nazca","noddy","shearwater","furseal","sealion","greenturtle","whitetip","eagleray","kingangel","surgeon","moorish","parrotfish","sergeant","pelican","marineiguana"]
+  see:["bfbooby","nazca","noddy","shearwater","furseal","sealion","greenturtle","whitetip","eagleray","kingangel","surgeon","moorish","parrotfish","sergeant","pelican","marineiguana","barberfish"]
 },
 egas: {
   n:"Puerto Egas", isl:"Santiago · James Bay", c:"-0.2480,-90.8610", how:"wet", diff:"Moderate · 2.5 km on lava",
   d:"Darwin spent nine days on this island in 1835. A century later the Egas family tried to run a salt mine here and failed; the ruins are by the trail. The coast is black lava cut into tide pools, channels and grottos.",
   l:"The fur seal grottos — Galápagos fur seals lying in deep shade in collapsed lava tubes. Marine iguanas grazing the pools at low tide, and the full shorebird set: oystercatchers, herons, turnstones.",
   x:"Wet landing on a black-sand beach, then a walk on uneven lava. Snorkelling from the beach afterwards is often excellent. Check the tide: low tide is better for the pools.",
-  see:["furseal","sealion","marineiguana","sallylightfoot","oystercatcher","lavaheron","ycnheron","gbheron","lavagull","swgull","hawk","dove","flycatcher","mockingbird","racer","lavalizard","noddy","pencilurchin","palosanto","whitetip"]
+  see:["furseal","sealion","marineiguana","sallylightfoot","oystercatcher","lavaheron","ycnheron","gbheron","lavagull","swgull","hawk","dove","flycatcher","mockingbird","racer","lavalizard","noddy","pencilurchin","palosanto","whitetip","turnstone","whimbrel","plover","tattler"]
 },
 
 /* ---------------- Rábida & Bartolomé ---------------- */
@@ -581,7 +589,7 @@ rabida: {
   l:"Sea lions on the red sand, pelicans that have nested in the saltbush behind the beach, and the best snorkelling of the morning off the rocks at the end.",
   x:"Wet landing straight onto the red beach. The snorkel off the eastern point can have good visibility and big schools.",
   water:"Moderate · 22–24 °C",
-  see:["sealion","pelican","flamingo","pintail","lavaheron","mockingbird","groundfinch","yellowwarbler","dove","hawk","palosanto","whitetip","surgeon","parrotfish","kingangel","puffer"]
+  see:["sealion","pelican","flamingo","pintail","lavaheron","mockingbird","groundfinch","yellowwarbler","dove","hawk","palosanto","whitetip","surgeon","parrotfish","kingangel","puffer","saltbush","tattler","turnstone","barberfish"]
 },
 bartolome: {
   n:"Bartolomé", isl:"off Santiago", c:"-0.2830,-90.5500", how:"dry", diff:"Moderate · 370 wooden steps",
@@ -589,7 +597,7 @@ bartolome: {
   l:"Pioneer plants on bare ash — lava cactus, Tiquilia mats — and then, at the base of Pinnacle Rock, the Galápagos penguins that live on the equator.",
   x:"Dry landing, then the steps — steady, not hard, but hot without shade. Go early or late; the light at the top is better too. Snorkel off the beach by the rock afterwards for the penguins.",
   water:"Moderate · 22–24 °C",
-  see:["penguin","sealion","bfbooby","noddy","pelican","lavalizard","sallylightfoot","marineiguana","lavacactus","tiquilia","greenturtle","whitetip","kingangel","surgeon","parrotfish","chocchip"]
+  see:["penguin","sealion","bfbooby","noddy","pelican","lavalizard","sallylightfoot","marineiguana","lavacactus","tiquilia","greenturtle","whitetip","kingangel","surgeon","parrotfish","chocchip","barberfish"]
 },
 
 /* ---------------- Genovesa — north of the equator ---------------- */
@@ -605,7 +613,7 @@ darwinbay: {
   d:"Genovesa is a volcano whose crater wall broke and let the sea in; the ship anchors inside the caldera. A coral-sand beach, a tidal lagoon and a trail through mangrove and saltbush packed with nesting seabirds.",
   l:"Red-footed boobies — the only booby here that nests in trees — in both brown and white forms. Great frigatebirds with their pouches up. Swallow-tailed gulls, the only gull in the world that feeds at night.",
   x:"HX prints Darwin Bay on the morning of 4 December, but the ship docks at Baltra at 08:30 that day and Genovesa is a night's sail away. Expect it the afternoon of the 3rd. The briefing will settle it.",
-  see:["rfbooby","greatfrig","nazca","swgull","ycnheron","lavagull","dove","cactusfinch","groundfinch","mockingbird","sealion","furseal","tropicbird","mangrove","opuntia","whitetip","hammerhead","marineiguana"]
+  see:["rfbooby","greatfrig","nazca","swgull","ycnheron","lavagull","dove","cactusfinch","groundfinch","mockingbird","sealion","furseal","tropicbird","mangrove","opuntia","whitetip","hammerhead","marineiguana","saltbush","tattler","turnstone"]
 }
 };
 
@@ -634,6 +642,8 @@ const DAYS = [
   acts:[
     {s:"vicente", t:"08:00", e:"09:00", how:"panga", w:"Punta Vicente Roca · panga ride", p:1},
     {s:"vicente", t:"09:30", e:"10:30", how:"snorkel", w:"Punta Vicente Roca · snorkel", p:1},
+    {s:"bolivar", t:"11:00", e:"14:30", how:"ship", w:"Bolívar Channel · whales from the deck",
+     note:"Not on the HX programme: it is the passage to Fernandina, over lunch. The best whale odds of the trip."},
     {s:"espinoza", t:"15:00", e:"17:30", how:"dry", w:"Fernandina · Punta Espinoza", p:1}
   ],
   screen:{f:"Planet Earth II — “Islands”", y:"2016", d:"The marine-iguana hatchlings running a gauntlet of racer snakes — the sequence everyone remembers — was filmed on Fernandina. Watch it tonight and you will look at the sand differently tomorrow. Download before you fly."}},
@@ -695,6 +705,7 @@ const BRING = {
   panga:"A dry bag for the camera and a thin rain shell. Panga rides throw spray.",
   coach:"Layers and a rain jacket: the highlands are cooler and often in mist.",
   walk:"Comfortable shoes, sun hat, and something warm for the evening.",
+  ship:"Binoculars and a windproof layer at lunch. When the bridge calls whales, the bow and the top deck are the places to be.",
   every:"Hat, reef-safe sunscreen, sunglasses, a full water bottle. No food goes ashore."
 };
 
@@ -837,6 +848,26 @@ const SPECIES = [
  look:"Like a ground finch with a longer, more pointed beak, usually on or near a prickly pear. Genovesa has its own large cactus finch with a heavier bill.",
  why:"Feeds on opuntia flowers, pollen and seeds — and in doing so pollinates the cactus. On Genovesa it splits the work with the ground finches by beak size.",
  conf:["groundfinch"], tip:"Long pointed beak, on a cactus."},
+{id:"turnstone", n:"Ruddy turnstone", sci:"Arenaria interpres", g:"bird", st:"M", c:["brown","white","black","orange"], z:"s", w:["shore"],
+ look:"A stocky little shorebird with short orange legs and a short wedge bill. In November, mottled brown above with a dark smudgy bib, white below.",
+ why:"A migrant: it breeds in the Arctic tundra and spends the northern winter on beaches as far south as Chile. It does what the name says, flipping stones, weed and shells with its bill to get at what hides underneath.",
+ conf:["plover","tattler"], tip:"Orange legs and a dark bib, busy at the tideline."},
+{id:"whimbrel", n:"Whimbrel", sci:"Numenius phaeopus", g:"bird", st:"M", c:["brown"], z:"m", w:["shore"],
+ look:"A big streaky brown shorebird with a long bill curved down at the tip and a striped crown.",
+ why:"Arrives from Alaska and Canada for the northern winter. It probes the long bill into crab burrows and is easily the largest wader on these beaches. Listen for its rippling seven-note call as it flies off.",
+ conf:[], tip:"The long down-curved bill."},
+{id:"plover", n:"Semipalmated plover", sci:"Charadrius semipalmatus", g:"bird", st:"M", c:["brown","white","black","orange"], z:"s", w:["shore"],
+ look:"A small round shorebird, brown above and white below, with one dark band across the chest and a short bill, orange at the base.",
+ why:"An Arctic breeder that winters on the beaches here. Feeds in short runs — run, stop, peck, run — and the name comes from the small webs between its toes.",
+ conf:["turnstone","sanderling"], tip:"One dark breast band and the stop-start run."},
+{id:"tattler", n:"Wandering tattler", sci:"Tringa incana", g:"bird", st:"M", c:["grey","yellow"], z:"s", w:["shore"],
+ look:"A plain slate-grey shorebird with yellow legs, on wet black lava at the edge of the surf. Bobs its rear end constantly.",
+ why:"Breeds by mountain streams in Alaska, then spreads across the whole Pacific for the winter, on rocky shores from here to New Zealand. It is a 'tattler' for its ringing alarm call, which warns everything else on the shore.",
+ conf:["lavaheron","turnstone"], tip:"Grey, yellow legs, bobbing, on rock not sand."},
+{id:"sanderling", n:"Sanderling", sci:"Calidris alba", g:"bird", st:"M", c:["white","grey","black"], z:"s", w:["shore"],
+ look:"A small, very pale shorebird — pale grey above, white below — with a black bill and legs.",
+ why:"Runs after each wave as it goes out and away from the next as it comes in, picking at the wet sand, like a clockwork toy. Breeds in the high Arctic; one of the longest migrations of any shorebird.",
+ conf:["plover"], tip:"Pale, small, and chasing the waves on sandy beaches."},
 {id:"warblerfinch", n:"Warbler finch", sci:"Certhidea olivacea", g:"bird", st:"E", c:["grey","green","brown"], z:"s", w:["land"],
  look:"A tiny, plain olive-grey bird with a thin pointed beak. Looks like a warbler, flits like a warbler.",
  why:"A Darwin's finch that turned into a warbler. It shows how far one ancestor's descendants spread: from seed-crackers to insect-pickers.",
@@ -882,7 +913,27 @@ const SPECIES = [
 {id:"bottlenose", n:"Bottlenose dolphin", sci:"Tursiops truncatus", g:"mammal", st:"N", c:["grey"], z:"l", w:["sea"],
  look:"Grey dolphin with a short beak and curved dorsal fin, often riding the ship's bow wave.",
  why:"Most often seen from the ship in the west. If the bridge announces dolphins, go to the bow — they come to ride the pressure wave.",
- conf:[], tip:""},
+ conf:["commondolphin"], tip:"Plain grey all over and in groups of tens. A yellow patch on the side means common dolphin."},
+{id:"commondolphin", n:"Common dolphin", sci:"Delphinus delphis", g:"mammal", st:"N", c:["grey","black","white","yellow"], z:"m", w:["sea"],
+ look:"Slimmer and smaller than a bottlenose, dark on the back, with an hourglass pattern on the side: tan-yellow in front, grey behind, crossing under the fin.",
+ why:"Travels in pods of hundreds, sometimes more, the water white with them. They leap clear as they go and will swing in to ride the bow. When seabirds pile into the sea ahead, dolphins are often what is driving the fish up.",
+ conf:["bottlenose"], tip:"The yellow flash on the side, and the sheer numbers."},
+{id:"brydes", n:"Bryde's whale", sci:"Balaenoptera edeni", g:"mammal", st:"N", k:1, c:["grey","black"], z:"l", w:["sea"],
+ look:"A long, slim, dark-grey whale, 12–15 m, with a small hooked dorsal fin set far back. A tall thin blow. Seen close, three ridges run down the top of the head; its close relatives have one.",
+ why:"The whale you are most likely to see here: it lives in these waters all year instead of migrating, feeding on fish and krill where the cold water comes up. It surfaces, blows, arches and is gone, and it can turn up on any passage. The western channel is simply the best odds. Say it 'broo-dess', after the Norwegian whaler who first described it.",
+ conf:["humpback","sperm"], tip:"Small hooked fin far back, no tail shown when it dives: Bryde's. Show the photo to a naturalist — a distant baleen whale is a 'baleen whale' until someone sees the head."},
+{id:"sperm", n:"Sperm whale", sci:"Physeter macrocephalus", g:"mammal", st:"N", k:1, c:["grey","brown","black"], z:"l", w:["sea"],
+ look:"Huge square head, a third of the body. Dark grey-brown wrinkled skin, a low hump instead of a dorsal fin and a knuckled ridge behind it. The blow is low, bushy and angled forward to the left.",
+ why:"The whale the whalers came for: Post Office Bay exists because sperm whaling fleets worked these grounds from the 1790s. Groups of females and young still live in the deep water west of the islands; they dive for squid for up to an hour and then lie at the surface breathing. A rare sighting from a cruise ship, and an unforgettable one.",
+ conf:["brydes"], tip:"The blow, angled forward and to one side. Lifts its broad tail flukes straight up when it dives."},
+{id:"orca", n:"Orca", sci:"Orcinus orca", g:"mammal", st:"N", k:1, c:["black","white"], z:"l", w:["sea"],
+ look:"Black with a white patch behind the eye and a white belly. Males carry a straight dorsal fin up to 1.8 m tall; females and young have a smaller curved one.",
+ why:"Seen in the islands every year but never predictably. Small groups pass through and hunt — sea lions, turtles, fish, sometimes other whales. If the bridge calls orcas, drop everything.",
+ conf:[], tip:"Black and white with a tall fin. Nothing else here looks like it."},
+{id:"humpback", n:"Humpback whale", sci:"Megaptera novaeangliae", g:"mammal", st:"M", c:["black","grey","white"], z:"l", w:["sea"],
+ look:"Big and bulky, black above, with a low stubby dorsal fin on a hump, knobs on the head, and very long pectoral fins that are white underneath. Raises its tail flukes when it dives; their pattern is unique to each whale.",
+ why:"A long shot this late in the year. Humpbacks from the Southern Ocean come up to the Ecuador coast and the islands from about June to October to breed, and most have left by late November. A straggler is possible. If you see one, photograph the underside of the tail: researchers identify individuals by it.",
+ conf:["brydes"], tip:"Shows its tail when it dives, and the long white flippers. A Bryde's does neither."},
 /* ---------- fish & sharks ---------- */
 {id:"whitetip", n:"Whitetip reef shark", sci:"Triaenodon obesus", g:"fish", st:"N", c:["grey","white"], z:"l", w:["sea"],
  look:"Slim grey shark, usually under 1.6 m, with bright white tips on the dorsal and tail fins. Often lying still on the bottom.",
@@ -892,6 +943,10 @@ const SPECIES = [
  look:"The hammer-shaped head is unmistakable.",
  why:"Huge schools gather far north at Darwin and Wolf. Inside Genovesa's caldera an occasional one is seen along the cliffs from the snorkel. Treat it as a bonus, not a plan.",
  conf:["whitetip"], tip:""},
+{id:"blacktip", n:"Blacktip shark", sci:"Carcharhinus limbatus", g:"fish", st:"N", c:["grey","black","white"], z:"m", w:["sea"],
+ look:"A slim grey shark with black tips on the fins, the young ones under a metre long, cruising in very shallow water.",
+ why:"The mangrove lagoons on the north shore of Santa Cruz are nurseries: young blacktips stay in the shallows, safe from bigger sharks, until they are large enough for open water. Harmless to waders.",
+ conf:["whitetip"], tip:"Black tips: blacktip. White tips: whitetip."},
 {id:"goldenray", n:"Golden cownose ray", sci:"Rhinoptera steindachneri", g:"fish", st:"N", c:["yellow","brown"], z:"m", w:["sea"],
  look:"Golden-brown ray with a notched, cow-like head, often in groups in shallow water, wingtips breaking the surface.",
  why:"Schools of them cruise lagoons and channels together. Seen best from a panga or standing still in the shallows.",
@@ -924,6 +979,10 @@ const SPECIES = [
  look:"Disc-shaped fish striped black, white and yellow, with a long trailing dorsal fin and a tubular snout.",
  why:"The fish everyone recognises from Finding Nemo. Usually in pairs or threes.",
  conf:["kingangel"], tip:""},
+{id:"barberfish", n:"Barberfish", sci:"Johnrandallia nigrirostris", g:"fish", st:"N", c:["yellow","black","white"], z:"s", w:["sea"],
+ look:"A small, flat, butterflyfish-shaped fish, pale yellow, with a black mask across the face and a black stripe along the top edge of the back.",
+ why:"A cleaner. It picks parasites off bigger animals — turtles, sea lions, even hammerheads — and fish come to its patch of reef to be serviced. If you see something large hanging still in the water, look for barberfish around it.",
+ conf:["moorish","kingangel"], tip:"Yellow with a black face mask."},
 {id:"puffer", n:"Guineafowl puffer", sci:"Arothron meleagris", g:"fish", st:"N", c:["black","white","yellow","spotted"], z:"s", w:["sea"],
  look:"Round, slow puffer, dark with dense white spots — or the rarer all-yellow golden phase.",
  why:"Inflates with water when threatened. Toxic to eat, slow to swim, unbothered by snorkellers.",
@@ -970,6 +1029,10 @@ const SPECIES = [
  look:"Dense shrubs and trees growing straight out of salt water on stilt roots.",
  why:"Nurseries for young fish, sharks and rays, and nesting trees for pelicans, herons and boobies. The red mangrove's arched roots are the giveaway.",
  conf:[], tip:""},
+{id:"saltbush", n:"Saltbush", sci:"Cryptocarpus pyriformis", g:"plant", st:"N", c:["green"], z:"m", w:["shore","land"],
+ look:"A dense, sprawling, grey-green shrub with small fleshy leaves, forming thickets just behind the beach.",
+ why:"The first cover above the tideline, where it takes salt spray that would kill most plants. Pelicans nest in it on Rábida and boobies and frigatebirds in it on Genovesa — the thickets are a nursery as much as a plant.",
+ conf:["mangrove"], tip:"Behind the beach, not standing in the water."},
 {id:"tiquilia", n:"Tiquilia (grey matplant)", sci:"Tiquilia nesiotica", g:"plant", st:"E", c:["grey","white"], z:"s", w:["land"],
  look:"Low silver-grey mats of hairy leaves on bare ash, like lichen from a distance.",
  why:"Another pioneer, holding loose ash together on Bartolomé so other things can grow. The hairs reflect heat and trap moisture.",
@@ -993,7 +1056,7 @@ const setJ = (k, v) => store.set(k, JSON.stringify(v));
 const SPX = {}; SPECIES.forEach(s => SPX[s.id] = s);
 const STATUS = {E:"Endemic", e:"Endemic race", N:"Native", M:"Visitor"};
 const HOW = {dry:"Dry landing", wet:"Wet landing", panga:"Panga ride", snorkel:"Snorkel", kayak:"Kayak",
-             walk:"On foot", coach:"By coach", other:""};
+             walk:"On foot", coach:"By coach", ship:"From the deck", other:""};
 
 let tab = store.get(K+"tab") || "day";
 let curDay = store.get(K+"day") || null;          /* set properly once the clock is read */
@@ -1179,13 +1242,13 @@ function renderTide(){
     const live = liveAct(d);
     if(live){
       const left = (live.e - t)/6e4;
-      const ship = live.a.how === "coach" || live.a.how === "walk" ? "Back by" : "Back to the panga in";
+      const ship = live.a.how === "coach" || live.a.how === "walk" ? "Back by" : live.a.how === "ship" ? "Ship in the channel for" : "Back to the panga in";
       label = d.tz === -5 ? "Ends in" : ship;
       clock = hhmm(left); warn = left <= 15;
       what = live.a.w;
       fill = Math.min(100, Math.max(0, (t - live.s) / (live.e - live.s) * 100));
-      foot = timeInputs(d, live.a, live.a.how === "coach" ? "Back" : "Panga back");
-      panga(live, left);
+      foot = timeInputs(d, live.a, live.a.how === "coach" ? "Back" : live.a.how === "ship" ? "Ends" : "Panga back");
+      if(live.a.how !== "ship") panga(live, left);
     } else {
       const nx = nextAct(d);
       if(nx){
@@ -1211,7 +1274,7 @@ function renderTide(){
 }
 function timeInputs(d, a, endLabel){
   if(!a.t && !a.e) return "";
-  return '<label>' + (a.how === "snorkel" ? "In the water" : "Ashore") + ' <input type="time" step="300" data-tday="' + d.id + '" data-ti="' + a.i + '" data-tw="t" value="' + esc(a.t || "") + '"></label>' +
+  return '<label>' + (a.how === "snorkel" ? "In the water" : a.how === "ship" ? "On deck" : "Ashore") + ' <input type="time" step="300" data-tday="' + d.id + '" data-ti="' + a.i + '" data-tw="t" value="' + esc(a.t || "") + '"></label>' +
          '<label>' + endLabel + ' <input type="time" step="300" data-tday="' + d.id + '" data-ti="' + a.i + '" data-tw="e" value="' + esc(a.e || "") + '"></label>';
 }
 /* fifteen and five minutes before the panga leaves: a tap and, if asked for, a tone */
@@ -1315,6 +1378,7 @@ function briefing(d, W){
     if(kinds.snorkel) parts.push("a snorkel");
     if(kinds.coach) parts.push("a drive into the highlands");
     if(kinds.walk && ship) parts.push("time in town");
+    if(kinds.ship) parts.push("whale water from the deck");
     if(parts.length){
       const s = parts.length > 1 ? parts.slice(0,-1).join(", ") + " and " + parts[parts.length-1] : parts[0];
       html += '<p>' + esc(s.charAt(0).toUpperCase() + s.slice(1)) + '.</p>';
@@ -1635,7 +1699,11 @@ const WIKI = {
   marineiguana:"Marine iguana", landiguana:"Galápagos land iguana", tortoise:"Galápagos tortoise",
   lavalizard:"Galápagos lava lizard|Microlophus", racer:"Pseudalsophis|Galápagos racer",
   greenturtle:"Green sea turtle", sealion:"Galápagos sea lion", furseal:"Galápagos fur seal",
-  bottlenose:"Common bottlenose dolphin", whitetip:"Whitetip reef shark", hammerhead:"Scalloped hammerhead",
+  bottlenose:"Common bottlenose dolphin", commondolphin:"Common dolphin|Short-beaked common dolphin",
+  brydes:"Bryde's whale", sperm:"Sperm whale", orca:"Orca|Killer whale", humpback:"Humpback whale",
+  turnstone:"Ruddy turnstone", whimbrel:"Whimbrel", plover:"Semipalmated plover", tattler:"Wandering tattler",
+  sanderling:"Sanderling", blacktip:"Blacktip shark", barberfish:"Johnrandallia nigrirostris|Barberfish",
+  saltbush:"Cryptocarpus pyriformis|Cryptocarpus", whitetip:"Whitetip reef shark", hammerhead:"Scalloped hammerhead",
   goldenray:"Rhinoptera steindachneri|Cownose ray", eagleray:"Spotted eagle ray|Aetobatus laticeps",
   stingray:"Diamond stingray", mola:"Ocean sunfish", kingangel:"King angelfish",
   surgeon:"Prionurus laticlavius|Prionurus", parrotfish:"Scarus ghobban", moorish:"Moorish idol",

@@ -139,7 +139,7 @@ Question: ${clip(b.question, 1200)}` });
               replaces: { type: "string", description: "For replace: the site id it replaces. Otherwise empty." },
               start: { type: "string", description: "HH:MM 24h, or empty if not said." },
               end: { type: "string", description: "HH:MM 24h, or empty if not said." },
-              how: { type: "string", enum: ["dry", "wet", "panga", "snorkel", "kayak", "walk", "coach", "other", ""] },
+              how: { type: "string", enum: ["dry", "wet", "panga", "snorkel", "kayak", "walk", "coach", "ship", "other", ""] },
               note: { type: "string", description: "Anything practical said about it: wake-up call, what to bring, difficulty." }
             }
           }
