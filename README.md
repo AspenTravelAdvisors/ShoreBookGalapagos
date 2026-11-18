@@ -22,6 +22,7 @@ on, recognises what you photographed, keeps a log of what you have seen, and wri
 | **Log** — the checklist: what you have, what is left, and the next and last chance to see each one | ✓ | |
 | **Chart** — every visitor site, the route, the equator, and where you are by GPS | ✓ drawn | tiles |
 | **Journal** — notes per day, what the naturalists said, confirmed photos, an AI write-up per day, a PDF at the end | ✓ | ✓ write-up |
+| **Know** — park rules, what HX includes, packing, Baltra papers, the ship, the science apps, a reading list | ✓ | |
 | **Two phones** — send your log by AirDrop, the other phone merges it | ✓ | |
 
 Identification is careful by design. It gives up to three candidates with a confidence for each.
@@ -33,7 +34,7 @@ is the honest answer.
 ## How it works
 
 `index.html` holds markup, styles, data and logic. Near the top of the script are `SITES`
-(21 stops, each with the species recorded there — 20 visitor sites and the Bolívar Channel crossing, seen from the deck), `DAYS` (the itinerary) and `SPECIES`.
+(22 places, each with the species recorded there — the visitor sites, Baroness Cove, the Bolívar Channel crossing seen from the deck, and North Seymour, which this printed voyage does not land on), `DAYS` (the itinerary) and `SPECIES`.
 Where each species can be seen is worked out from the sites, so the two lists cannot drift apart.
 
 `SPECIES` is the whole archipelago, not this voyage. A species is on the route if a stop in
@@ -91,18 +92,36 @@ runs the API function locally as well.
 
 ## Before it travels
 
-The content was written without web access and has not been checked against live sources.
+The itinerary and the practical pages follow HX's pre-departure guide for this voyage
+(*Nine of the Best Isles*, 24 November – 4 December 2026). Government entry rules can still
+move. The guide says so, and the book repeats it.
 
-- **Darwin Bay.** HX prints it on the morning of 4 December, but the ship is due at Baltra at
-  08:30 that day. The book places it on the afternoon of the 3rd and marks it *Unconfirmed*.
-- **Times.** HX printed only the sites and the 14:50 sailing and 08:30 arrival. Every other hour
-  is how this route is normally run and is marked *typical*. Edit times on the phone, or paste
-  the evening briefing.
-- **Puerto Ayora day.** HX lists only "Puerto Ayora". The Darwin Station, highlands and town
-  split is the usual pattern, not a confirmed plan.
-- **Restaurants** in Quito and Puerto Ayora, opening hours, and the park fee ($200 for foreign
-  adults) need checking against live sources.
+- **Darwin Bay** is the afternoon of 3 December, after Prince Philip's Steps, as HX prints it.
+  An earlier draft of this book had flagged that landing as unconfirmed. That flag is withdrawn.
+- **4 December** is a dry landing on the north shore of Santa Cruz, a bus to the wild tortoises,
+  then a direct transfer to Baltra. The flight may be to Quito or to Guayaquil. The book no
+  longer shows an 08:30 alongside or an Itabaca Channel panga as the plan.
+- **30 November** is a morning at anchor and Las Bachas after lunch. North Seymour is not on
+  this programme. The site stays in the book for the wildlife notes.
+- **Floreana** runs north-shore channels and Baroness Cove, then Post Office Bay, and after
+  lunch Champion Islet (small boat or glass-bottom, then a snorkel), then Punta Cormorant.
+- **Times.** HX prints the places and the shape of the day, and the 7–8 hour Quito excursion.
+  It does not print clock times. Hours in the book are how this route is usually run. Edit them
+  on the phone, or paste the evening briefing.
+- **Park fee and Transit Control Card** are included. HX hands you both cards before the Baltra
+  flight. The old line in this book — pay on arrival, foreign adults $200, check which fee is
+  included — contradicted the guide and has been removed. The Transit Control Card is the $20
+  fee guests ask about; it is already paid.
+- **Luggage** on the internal flights is one checked bag of 23 kg and one cabin bag of 8 kg,
+  plus a personal item. An earlier note said cabin bags of 12 kg in total.
+- **Wetsuits** are 3 mm shorties. The book no longer tells you to ask for a thicker one.
+- **Restaurants** in Quito and Puerto Ayora, and their opening hours, still need a live check.
 - **Pins** are good to the landing beach, not the boot.
+
+Know holds the rest of the guide in the book's own voice: what is included, what to pack,
+papers for Baltra, the ship, the science programme and the four citizen-science tools, HX's
+reading list, and the Foundation. It does not copy the guide out, and it does not carry a
+guest's name.
 
 ## Privacy
 

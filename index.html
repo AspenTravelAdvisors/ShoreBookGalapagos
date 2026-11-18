@@ -312,6 +312,7 @@ textarea:focus,.field:focus{outline:none;border-color:var(--sea)}
 .know{list-style:none;padding:0;margin:0}
 .know li{padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px}
 .know li:last-child{border-bottom:0}
+.know a,.card a,.note a{color:var(--sea)}
 .set{display:grid;gap:4px;margin:0 0 14px}
 .set label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .set select{font:inherit;font-size:16px;padding:8px 10px;border:1px solid var(--rule);background:var(--sand);border-radius:2px;color:var(--ink)}
@@ -400,11 +401,12 @@ footer{border-top:1px solid var(--rule);margin-top:30px;padding-top:12px;display
    DATA — the voyage. HX, MS Santa Cruz II, "Nine of the Best Isles",
    Western & Northern route, 24 November – 4 December 2026.
 
-   What HX printed is marked p:1 and is not to be argued with. Everything
-   else — the hour of a landing, wet or dry, how long — is how this route is
-   normally run, and the ship's daily programme overrides it. Every time can
-   be changed on the phone, and the evening briefing can be pasted in to
-   rewrite tomorrow.
+   A stop HX's pre-departure guide prints for this voyage (24 Nov–4 Dec 2026)
+   is marked p:1. The guide names the places and the shape of each day. It does
+   not print clock times, apart from the 7–8 hour Quito excursion, so every
+   hour below is how this route is normally run. The ship's daily programme
+   overrides it. Every time can be changed on the phone, and the evening
+   briefing can be pasted in to rewrite tomorrow.
 
    Coordinates are "lat,lon" and good to the landing beach, not the boot.
    Galápagos keeps UTC−6, an hour behind Quito (UTC−5).
@@ -509,14 +511,14 @@ highlands: {
   n:"Santa Cruz highlands", isl:"Tortoise reserve · El Chato area", c:"-0.6650,-90.4150", how:"coach", diff:"Easy · muddy in garúa",
   d:"Up from the coast the island turns green, wet and cool. Wild giant tortoises graze the pastures here in the season — Santa Cruz has two species, separated in 2015 when DNA showed the eastern animals were their own lineage.",
   l:"Tortoises in the ponds, the lava tunnels, and Scalesia forest — trees that are really giant daisies. Listen for the vermilion flycatcher; it has become rare here.",
-  x:"Rubber boots are usually lent at the farm. It can be 10 °C cooler than the coast and drizzling in November. Layers.",
+  x:"HX comes here twice: from Puerto Ayora on 28 November, and from a north-shore wharf on the last morning before the flight. Rubber boots are usually lent at the farm. It can be 10 °C cooler than the coast and drizzling in late November. Layers.",
   see:["tortoise","scalesia","woodpeckerfinch","warblerfinch","vermilion","flycatcher","groundfinch","yellowwarbler","pintail","mockingbird","cattleegret","ani","vegfinch","smalltreefinch","gallinule","crake","rail","cuckoo","carpenterbee","sulphur"]
 },
 itabaca: {
-  n:"Itabaca Channel", isl:"Between Santa Cruz and Baltra", c:"-0.4830,-90.2780", how:"panga", diff:"Easy", flag:1,
+  n:"Itabaca Channel", isl:"Between Santa Cruz and Baltra", c:"-0.4830,-90.2780", how:"panga", diff:"Easy",
   d:"A narrow strait lined with mangrove, where the ferry crosses from Baltra to Santa Cruz. Calm, shallow water — a last look before the airport.",
   l:"Whitetip reef sharks resting on the bottom, golden rays in the shallows, pelicans on the mangrove.",
-  x:"HX lists it on the last morning. How much of it you see depends on the disembarkation plan: the ship is due alongside at 08:30.",
+  x:"Not a landing on this HX programme. The last morning is the highlands of Santa Cruz, then a direct transfer to Baltra. The channel is only the water you cross toward the airport.",
   see:["whitetip","goldenray","pelican","mangrove","lavaheron","sealion","blacktip"]
 },
 
@@ -545,6 +547,13 @@ espinoza: {
 },
 
 /* ---------------- Floreana ---------------- */
+baroness: {
+  n:"Baroness Cove", isl:"Floreana · north shore", c:"-1.2305,-90.4320", how:"panga", diff:"Easy · from the boat",
+  d:"The channels along Floreana's north shore, seen from the small boats before anyone lands. The cove takes its name from the self-styled baroness who settled here in the 1930s and then disappeared.",
+  l:"The island from the water: cliffs, a green interior, sea lions on the rocks, boobies working the channel.",
+  x:"HX prints this ride first on the Floreana morning, and the wet landing at the post-office barrel afterwards. No one steps ashore here.",
+  see:["sealion","bfbooby","pelican","sallylightfoot","greenturtle","swgull"]
+},
 postoffice: {
   n:"Post Office Bay", isl:"Floreana · north", c:"-1.2380,-90.4440", how:"wet", diff:"Easy",
   d:"Whalers in the 1790s left a barrel here so that ships going home could carry letters for each other. It is still in use. You leave an unstamped postcard; you go through the pile and take any you could deliver by hand.",
@@ -556,7 +565,7 @@ champion: {
   n:"Champion Islet", isl:"off Floreana", c:"-1.2370,-90.3870", how:"snorkel", diff:"Moderate · open water, current",
   d:"A small crater islet that holds one of the rarest birds in the world. The Floreana mockingbird — the one that made Darwin first wonder whether species could change — vanished from Floreana itself in the 1880s, and survives on this rock and one other. No one lands. You look from the panga.",
   l:"The mockingbird, from the water, with binoculars. Then in the water: sea lions that will play, schooling fish, eagle rays, sometimes whitetip sharks along the wall.",
-  x:"One of the best snorkels on the route, but in open water with some current — stay with the group and the panga driver.",
+  x:"HX offers the small boats or the glass-bottom boat, then a snorkel — one of the best on the route, in open water with some current. Stay with the group and the driver. No landing: the mockingbird is watched from the panga.",
   water:"Warm · 22–24 °C",
   see:["floreanamock","sealion","whitetip","eagleray","kingangel","surgeon","parrotfish","moorish","puffer","sergeant","greenturtle","bfbooby","nazca","swgull","chocchip","barberfish","hogfish","creolefish","salema","bumphead","damsel","rainbowwrasse","moray","marbledray","trumpetfish","scorpionfish"]
 },
@@ -571,7 +580,7 @@ cormorant: {
 /* ---------------- Seymour & Las Bachas ---------------- */
 seymour: {
   n:"North Seymour", isl:"off Baltra", c:"-0.3960,-90.2880", how:"dry", diff:"Easy–moderate · 2 km, rocky",
-  d:"A flat slab of seabed lifted out of the sea, low and dry. It holds the largest colony of magnificent frigatebirds in the islands and a great many blue-footed boobies, nesting right beside the trail. The land iguanas here are the ones that saved Baltra's.",
+  d:"A flat slab of seabed lifted out of the sea, low and dry. It holds the largest colony of magnificent frigatebirds in the islands and a great many blue-footed boobies, nesting right beside the trail. The land iguanas here are the ones that saved Baltra's. Not a landing on this voyage: HX keeps the morning of 30 November on the ship and goes to Las Bachas after lunch.",
   l:"Male frigatebirds with their red throat pouches blown up like balloons, sitting in the bushes calling to females overhead. Booby courtship on the path — the strut, the salute, the whistling.",
   x:"Early morning landing on a rock step; it can be slippery with spray. The trail is loose underfoot. The boobies nest on the trail itself, so walk around, not through.",
   see:["magfrig","greatfrig","bfbooby","nazca","swgull","landiguana","marineiguana","sealion","lavalizard","sallylightfoot","palosanto","opuntia","dove","mockingbird","groundfinch"]
@@ -581,15 +590,15 @@ bachas: {
   d:"A long white beach whose name is a mispronunciation: two Second World War barges were abandoned here, and 'barges' became bachas. Their ribs still stick out of the sand.",
   l:"Turtle tracks up the beach to nests in the dunes, flamingos in the lagoon behind, Sally Lightfoot crabs on every rock. A swim from the beach.",
   x:"Wet landing, then free time on the beach. Stay out of the dunes — that is where the nests are. Soft sand at the waterline can hide rays.",
-  see:["greenturtle","flamingo","stilt","pintail","oystercatcher","sallylightfoot","marineiguana","lavagull","pelican","sealion","goldenray","stingray","mangrove","bfbooby","turnstone","whimbrel","plover","sanderling","blacktip","greategret","greyplover","ghostcrab","hermitcrab"]
+  see:["greenturtle","flamingo","stilt","pintail","oystercatcher","sallylightfoot","marineiguana","lavagull","pelican","sealion","magfrig","goldenray","stingray","mangrove","bfbooby","turnstone","whimbrel","plover","sanderling","blacktip","greategret","greyplover","ghostcrab","hermitcrab"]
 },
 
 /* ---------------- Santiago ---------------- */
 buccaneer: {
   n:"Buccaneer Cove", isl:"Santiago · north-west", c:"-0.1680,-90.8250", how:"panga", diff:"Easy · from the water",
-  d:"Pirates careened their ships here in the 1600s and 1700s and filled their holds with tortoises, which survive a year without food or water. Clay jars and anchors have been found on the beach. The cliffs are tuff — compacted ash — worn into shapes the crews named: the Elephant, the Monk.",
+  d:"Pirates careened their ships here in the 1600s and 1700s and filled their holds with tortoises, which survive a year without food or water. Clay jars and anchors have been found on the beach. The cliffs are tuff — compacted ash — worn into the shapes HX still points out from the panga: Elephant Rock and The Bishop.",
   l:"Seabirds on the ledges, fur seals in the shade, and on a snorkel along the cliff: turtles, rays, reef fish, sometimes whitetips.",
-  x:"Usually panga ride and snorkel, no landing. Santiago had 80,000 feral goats until 2006 — what is growing back on these slopes is what came back after they were removed.",
+  x:"Usually a panga ride and a snorkel, no landing. HX points out two tuff shapes from the water: Elephant Rock and The Bishop. Santiago had 80,000 feral goats until 2006 — what is growing back on these slopes is what came back after they were removed.",
   water:"Moderate · 21–23 °C",
   see:["bfbooby","nazca","noddy","shearwater","furseal","sealion","greenturtle","whitetip","eagleray","kingangel","surgeon","moorish","parrotfish","sergeant","pelican","marineiguana","barberfish","hogfish","creolefish","salema","damsel","rainbowwrasse","moray"]
 },
@@ -608,124 +617,144 @@ rabida: {
   l:"Sea lions on the red sand, pelicans that have nested in the saltbush behind the beach, and the best snorkelling of the morning off the rocks at the end.",
   x:"Wet landing straight onto the red beach. The snorkel off the eastern point can have good visibility and big schools.",
   water:"Moderate · 22–24 °C",
-  see:["sealion","pelican","flamingo","pintail","lavaheron","mockingbird","groundfinch","yellowwarbler","dove","hawk","palosanto","whitetip","surgeon","parrotfish","kingangel","puffer","saltbush","tattler","turnstone","barberfish","hogfish","salema","damsel","rainbowwrasse","scorpionfish"]
+  see:["sealion","marineiguana","pelican","flamingo","pintail","lavaheron","mockingbird","groundfinch","yellowwarbler","dove","hawk","palosanto","whitetip","surgeon","parrotfish","kingangel","puffer","saltbush","tattler","turnstone","barberfish","hogfish","salema","damsel","rainbowwrasse","scorpionfish"]
 },
 bartolome: {
   n:"Bartolomé", isl:"off Santiago", c:"-0.2830,-90.5500", how:"dry", diff:"Moderate · 370 wooden steps",
   d:"The view on every Galápagos poster. A boardwalk climbs 114 metres over a moonscape of spatter cones and lava flows to a summit looking down on two crescent beaches and Pinnacle Rock — the eroded remains of a tuff cone.",
   l:"Pioneer plants on bare ash — lava cactus, Tiquilia mats — and then, at the base of Pinnacle Rock, the Galápagos penguins that live on the equator.",
-  x:"Dry landing, then the steps — steady, not hard, but hot without shade. Go early or late; the light at the top is better too. Snorkel off the beach by the rock afterwards for the penguins.",
+  x:"HX offers three ways to spend the afternoon: the summit walk, a swim or snorkel off the beach, or the glass-bottom boat. Penguins rest at the foot of Pinnacle Rock. The steps are steady, not hard, and hot without shade. Late light is kinder.",
   water:"Moderate · 22–24 °C",
   see:["penguin","sealion","bfbooby","noddy","pelican","lavalizard","sallylightfoot","marineiguana","lavacactus","tiquilia","greenturtle","whitetip","kingangel","surgeon","parrotfish","chocchip","barberfish","hogfish","salema","bumphead","damsel","rainbowwrasse","moray"]
 },
 
 /* ---------------- Genovesa — north of the equator ---------------- */
 steps: {
-  n:"Prince Philip's Steps", isl:"Genovesa · El Barranco", c:"0.3120,-89.9530", how:"dry", diff:"Moderate · steep rock steps, then 1.5 km",
-  d:"A rock stairway up the cliff of a drowned volcano, named for the Duke of Edinburgh, who landed here from the royal yacht. On top, a plateau of low palo santo full of nesting boobies, and a field of broken lava where storm petrels nest by the hundred thousand.",
-  l:"Short-eared owls. On Genovesa there are no hawks, so the owls hunt by day — walking among the petrels and taking them at the crevices. Nazca boobies on the cliff edge, red-footed boobies in the trees.",
-  x:"Dry landing straight onto the rock and a steep climb with a rope rail. Both hands free: camera on a strap. Genovesa is north of the equator — the ship crosses the line on the way.",
+  n:"Prince Philip's Steps", isl:"Genovesa · El Barranco", c:"0.3120,-89.9530", how:"dry", diff:"Moderate · 90 ft of steps, then flat",
+  d:"A rock stairway up the cliff of a drowned volcano, named for the Duke of Edinburgh, who landed here from the royal yacht. HX calls the climb steep but short — about 90 feet — and then an easy walk on the plateau. Low palo santo full of nesting boobies, and a field of broken lava where storm petrels nest by the hundred thousand.",
+  l:"Short-eared owls. On Genovesa there are no hawks, so the owls hunt by day — walking among the petrels and taking them at the crevices. Nazca boobies on the cliff edge, red-footed boobies in the trees, great frigatebirds, storm petrels.",
+  x:"Dry landing straight onto the rock, then the steps with a rope rail. Both hands free: camera on a strap. A kayak is the alternative if you skip the climb. Genovesa is north of the equator — the ship crosses the line on the way. No toilet ashore.",
   see:["rfbooby","nazca","greatfrig","stormpetrel","owl","swgull","tropicbird","dove","cactusfinch","groundfinch","mockingbird","lavalizard","palosanto","opuntia","sealion","furseal"]
 },
 darwinbay: {
-  n:"Darwin Bay", isl:"Genovesa", c:"0.3210,-89.9580", how:"wet", diff:"Easy · 1.5 km", flag:1,
+  n:"Darwin Bay", isl:"Genovesa", c:"0.3210,-89.9580", how:"wet", diff:"Easy · beach and a short walk",
   d:"Genovesa is a volcano whose crater wall broke and let the sea in; the ship anchors inside the caldera. A coral-sand beach, a tidal lagoon and a trail through mangrove and saltbush packed with nesting seabirds.",
   l:"Red-footed boobies — the only booby here that nests in trees — in both brown and white forms. Great frigatebirds with their pouches up. Swallow-tailed gulls, the only gull in the world that feeds at night.",
-  x:"HX prints Darwin Bay on the morning of 4 December, but the ship docks at Baltra at 08:30 that day and Genovesa is a night's sail away. Expect it the afternoon of the 3rd. The briefing will settle it.",
+  x:"HX prints Darwin Bay for the afternoon of 3 December, after Prince Philip's Steps. Wet landing, a swim, and the choice of a stroll, a snorkel or a kayak. There is no toilet ashore.",
   see:["rfbooby","greatfrig","nazca","swgull","ycnheron","lavagull","dove","cactusfinch","groundfinch","mockingbird","sealion","furseal","tropicbird","mangrove","opuntia","whitetip","hammerhead","marineiguana","saltbush","tattler","turnstone"]
 }
 };
 
 const DAYS = [
 { id:"d1", date:"2026-11-24", tz:-5, n:"Quito", sub:"Arrive · JW Marriott Quito",
-  dock:{t:"JW Marriott Quito — Av. Francisco de Orellana 1172", d:"HX meets you in the arrivals hall with a sign. Check-in from 15:00, two nights. The hotel will want a card for incidentals even though the room is paid."},
+  dock:{t:"JW Marriott Quito — Av. Francisco de Orellana 1172", d:"HX meets you in the arrivals hall with a sign and drives you to the hotel, about 45–60 minutes. Two nights. The hotel will want a card for incidentals even though the room is paid."},
   acts:[
-    {s:"quito", t:"15:00", e:"", how:"other", w:"Check in · JW Marriott Quito", p:1,
-     note:"Quito is at 2,850 m. Eat lightly, drink water, skip the second pisco sour, and sleep early. Tomorrow is a long day on your feet."}
+    {s:"quito", t:"", e:"", how:"other", w:"Airport transfer · JW Marriott Quito", p:1,
+     note:"The drive is about 45–60 minutes once you have met the sign. Quito is at 2,850 m. A headache, dizziness or nausea on the first evening is the altitude, and it is common. Eat lightly, drink water, skip the second drink, and sleep early. Tomorrow is a long day on your feet. Passport and any medicine stay in your hand luggage."}
   ]},
 { id:"d2", date:"2026-11-25", tz:-5, n:"Quito", sub:"Historic Quito & the Middle of the World",
-  dock:{t:"HX excursion · 7–8 hours · Level 2, moderate", d:"Included. The Old Town on foot, then north to the equator monument. Sun at this altitude and latitude burns in twenty minutes, even under cloud."},
+  dock:{t:"HX excursion · 7–8 hours · Level 2, moderate", d:"Included. The Old Town on foot, a tasting of Ecuadorian cacao, then north to the equator monument. Sun at this altitude burns in twenty minutes, even under cloud."},
   acts:[
     {s:"quito", t:"08:30", e:"16:30", how:"walk", w:"Historic Quito & Middle of the World", p:1,
-     note:"Start time comes from the HX desk at the hotel. Comfortable shoes — the Old Town is all cobbles and hills."}
+     note:"HX: cobbled Old Town, then about 16 miles north to the Middle of the World, one foot in each hemisphere. The hotel desk sets the start; the day runs 7–8 hours. Comfortable shoes. Olga Fisch's store and museum is a 20-minute walk from the hotel (Monday–Friday, 09:30–18:00, (022) 2563-085) and would mean giving up this included tour."}
   ]},
-{ id:"d3", date:"2026-11-26", tz:-6, n:"Baltra · Cerro Dragón", sub:"Fly to the islands · sail at 14:50",
-  dock:{t:"HX charter Quito → Baltra · ship sails 14:50", d:"Embarkation details and the flight time come in the Welcome Letter at the hotel the night before. Galápagos is an hour behind Quito — change your watch on the plane."},
+{ id:"d3", date:"2026-11-26", tz:-6, n:"Baltra · Cerro Dragón", sub:"Fly to the islands · afternoon sailing",
+  dock:{t:"HX charter Quito → Baltra · afternoon landing at Cerro Dragón", d:"The flight time is given at the hotel, not in this book. Galápagos is an hour behind Quito — change your watch on the plane. Bags are inspected for anything that could carry a seed or an insect."},
   acts:[
-    {s:"baltra", t:"", e:"", how:"other", w:"Charter flight · Quito → Baltra", p:1, note:"One checked bag each, 23 kg. Cabin bags 12 kg in total. Your bags are inspected for seeds and fruit on arrival."},
-    {s:"baltra", t:"", e:"14:50", how:"other", w:"Board MS Santa Cruz II · ship departs", p:1, note:"Safety drill before sailing. Collect your wetsuit and snorkel kit when they call your deck."},
-    {s:"dragon", t:"16:00", e:"18:00", how:"dry", w:"Cerro Dragón", p:1}
+    {s:"baltra", t:"", e:"", how:"other", w:"Charter flight · Quito → Baltra", p:1, note:"HX luggage on the internal flight: one checked bag, 23 kg and 158 cm linear, one cabin bag, 8 kg and 55×35×25 cm, plus a personal item up to 45×35×20 cm. Show the biosecurity e-declaration email at Baltra. Keep the Transit Control Card they gave you."},
+    {s:"baltra", t:"", e:"", how:"other", w:"Board MS Santa Cruz II", p:1, note:"Boarding time comes from HX at the hotel. Safety drill before sailing. The 3 mm shortie, mask, snorkel and fins are issued on the first day. On hotel Wi-Fi, before you lose it: eBird, iNaturalist, NASA Globe Observer, and an account on Happywhale."},
+    {s:"dragon", t:"16:00", e:"18:00", how:"dry", w:"Cerro Dragón", p:1, note:"HX prints the landing for the afternoon, along the north shore of Santa Cruz, and not the hour. A brackish lagoon first — shorebirds and, with luck, American flamingos — then the hill, a view to the western islands, and the land iguanas."}
   ]},
 { id:"d4", date:"2026-11-27", tz:-6, n:"Isabela & Fernandina", sub:"The young west",
   dock:{t:"The coldest water and the youngest lava of the trip", d:"Overnight the ship rounds the north of Isabela. The morning is in the water; the afternoon is on Fernandina, which has never had an introduced mammal."},
   acts:[
-    {s:"vicente", t:"08:00", e:"09:00", how:"panga", w:"Punta Vicente Roca · panga ride", p:1},
-    {s:"vicente", t:"09:30", e:"10:30", how:"snorkel", w:"Punta Vicente Roca · snorkel", p:1},
+    {s:"vicente", t:"08:00", e:"09:00", how:"panga", w:"Punta Vicente Roca · panga ride", p:1,
+     note:"No landing. HX uses the ride for the collapsed cliff, and for flightless cormorants, Galápagos penguins and boobies on the rock."},
+    {s:"vicente", t:"09:30", e:"10:30", how:"snorkel", w:"Punta Vicente Roca · snorkel", p:1,
+     note:"Weather permitting, as HX puts it. Green turtles, fur seals and, sometimes, an ocean sunfish along the wall. This is the cold water. The suit they lend is a 3 mm shortie."},
     {s:"bolivar", t:"11:00", e:"14:30", how:"ship", w:"Bolívar Channel · whales from the deck",
      note:"Not on the HX programme: it is the passage to Fernandina, over lunch. The best whale odds of the trip."},
-    {s:"espinoza", t:"15:00", e:"17:30", how:"dry", w:"Fernandina · Punta Espinoza", p:1}
+    {s:"espinoza", t:"15:00", e:"17:30", how:"dry", w:"Fernandina · Punta Espinoza", p:1,
+     note:"HX names the island rather than the beach. The landing is Punta Espinoza: marine iguanas in numbers, sea lions, Sally Lightfoot crabs, hawks and penguins."}
   ],
   screen:{f:"Planet Earth II — “Islands”", y:"2016", d:"The marine-iguana hatchlings running a gauntlet of racer snakes — the sequence everyone remembers — was filmed on Fernandina. Watch it tonight and you will look at the sand differently tomorrow. Download before you fly."}},
-{ id:"d5", date:"2026-11-28", tz:-6, n:"Puerto Ayora", sub:"Santa Cruz · tortoises and the town",
-  dock:{t:"Alongside the town by panga · the only day with shops", d:"The tortoise centre in the morning, the highlands for wild tortoises, then free time in town. All aboard is set by the ship."},
+{ id:"d5", date:"2026-11-28", tz:-6, n:"Puerto Ayora", sub:"Santa Cruz · the station and the tortoises",
+  dock:{t:"Darwin Station, then lunch with the tortoises", d:"HX lands you in Puerto Ayora for the Charles Darwin Research Station, then the highlands. The other activity is mountain biking or a sugar plantation. Hours come from the briefing. This is the day with shops."},
   acts:[
-    {s:"cdrs", t:"08:00", e:"10:00", how:"dry", w:"Darwin Station & tortoise centre", p:1},
-    {s:"highlands", t:"10:30", e:"13:30", how:"coach", w:"Highlands · wild tortoises"},
-    {s:"ayora", t:"14:00", e:"17:30", how:"walk", w:"Puerto Ayora · free time"}
+    {s:"cdrs", t:"08:00", e:"10:00", how:"dry", w:"Darwin Station & breeding centre", p:1,
+     note:"HX: recently hatched giant tortoises, Darwin's finches, and a forest of prickly pear. The breeding centre is the Fausto Llerena corrals beside the station."},
+    {s:"highlands", t:"10:30", e:"13:30", how:"coach", w:"Highlands · wild tortoises", p:1,
+     note:"Lunch where the tortoises graze and wallow. Santa Cruz holds two species. HX's other activity this day is mountain biking or a visit to a sugar plantation — the Expedition Team will say which is running."},
+    {s:"ayora", t:"14:30", e:"17:00", how:"walk", w:"Puerto Ayora",
+     note:"Not a separate HX excursion: the town is where the pangas land. Fish market, coffee and cash if the afternoon activity ends with time in hand. Small notes. All-aboard is the ship's, and the last panga will not wait."}
   ]},
-{ id:"d6", date:"2026-11-29", tz:-6, n:"Floreana", sub:"Letters, mockingbirds and Flour Beach",
-  dock:{t:"Floreana: the island with a history", d:"The first island to be settled, Darwin's 'Charles Island', and the scene of an unsolved 1930s disappearance. Two wet landings and the best snorkel of the week."},
+{ id:"d6", date:"2026-11-29", tz:-6, n:"Floreana", sub:"The barrel, Champion, then the olivine beach",
+  dock:{t:"Floreana: the island with a history", d:"HX's order: a boat along the north shore and Baroness Cove, a landing at the post-office barrel, and after lunch Champion Islet, then Punta Cormorant. Hours are the usual run of that shape."},
   acts:[
-    {s:"postoffice", t:"07:30", e:"09:00", how:"wet", w:"Post Office Bay", p:1},
-    {s:"champion", t:"09:45", e:"11:30", how:"snorkel", w:"Champion Islet · panga & snorkel", p:1},
-    {s:"cormorant", t:"15:30", e:"17:30", how:"wet", w:"Punta Cormorant", p:1}
+    {s:"baroness", t:"07:30", e:"08:15", how:"panga", w:"North shore & Baroness Cove", p:1},
+    {s:"postoffice", t:"08:15", e:"09:30", how:"wet", w:"Post Office Bay", p:1,
+     note:"The barrel has carried unstamped letters for two centuries. Bring one you would like a stranger to post, and take one you can deliver by hand."},
+    {s:"champion", t:"14:00", e:"15:30", how:"snorkel", w:"Champion Islet · boat & snorkel", p:1,
+     note:"After lunch, as HX prints it. Small boats or the glass-bottom boat, then a snorkel in one of the best spots in the islands. No landing — the Floreana mockingbird is watched from the water."},
+    {s:"cormorant", t:"16:00", e:"17:30", how:"wet", w:"Punta Cormorant", p:1,
+     note:"Wet landing on the green olivine sand, then the walk to the lagoon. American flamingos and white-cheeked pintails are the usual birds. No swimming on Flour Beach: turtles nest there."}
   ],
   screen:{f:"The Galápagos Affair: Satan Came to Eden", y:"2013", d:"A documentary built from the settlers' own film and letters: a German doctor, a family, a self-styled baroness and her lovers on Floreana in the 1930s — and the people who vanished. Ron Howard dramatised it as Eden (2024), shot in Australia, not here. Watch the documentary first; the island itself tells you how hard the life was."}},
-{ id:"d7", date:"2026-11-30", tz:-6, n:"Seymour · Las Bachas", sub:"Frigatebirds, then a beach",
-  dock:{t:"Back in the centre of the islands", d:"North Seymour early, while the birds are active and before the heat. Las Bachas in the afternoon is the easiest beach time of the trip."},
+{ id:"d7", date:"2026-11-30", tz:-6, n:"Baltra · Las Bachas", sub:"A morning on board, then the beach",
+  dock:{t:"At anchor off Baltra · Las Bachas after lunch", d:"HX prints this as a pause after four days ashore: library, gym, the two hot tubs. The landing is Las Bachas, on the north shore of Santa Cruz, in the afternoon. North Seymour is not on this programme."},
   acts:[
-    {s:"seymour", t:"07:00", e:"09:30", how:"dry", w:"North Seymour", p:1},
-    {s:"bachas", t:"15:00", e:"17:30", how:"wet", w:"Las Bachas · beach & swim", p:1}
+    {s:"baltra", t:"", e:"", how:"other", w:"Morning on board, at anchor", p:1,
+     note:"Nothing is required of you. The Science Corner, a lecture, or the deck. The afternoon landing is the one to be ready for: wet, and a swim."},
+    {s:"bachas", t:"15:00", e:"17:30", how:"wet", w:"Las Bachas · beach & swim", p:1,
+     note:"HX: a white beach, flamingos, and sea turtles. Swim or snorkel, then the briefing for tomorrow. The hour is the usual one, not a printed one."}
   ]},
 { id:"d8", date:"2026-12-01", tz:-6, n:"Santiago", sub:"Buccaneers, fur seals and Darwin's island",
-  dock:{t:"Santiago — James Island", d:"Darwin camped here for nine days. The morning is from the water under the cliffs; the afternoon is the black lava coast and the fur seal grottos."},
+  dock:{t:"Santiago — James Island", d:"Darwin camped here for nine days. The morning is from the water under the cliffs; the afternoon is Puerto Egas, the fur seals, and a swim."},
   acts:[
-    {s:"buccaneer", t:"08:00", e:"10:30", how:"panga", w:"Buccaneer Cove · panga & snorkel", p:1},
-    {s:"egas", t:"15:00", e:"17:45", how:"wet", w:"Puerto Egas · James Bay", p:1}
+    {s:"buccaneer", t:"08:00", e:"10:30", how:"panga", w:"Buccaneer Cove · panga & snorkel", p:1,
+     note:"HX: the cliffs, the seabirds and the sea lions from the water, plus Elephant Rock and The Bishop. Snorkel if the sea allows. Usually no landing."},
+    {s:"egas", t:"15:00", e:"17:45", how:"wet", w:"Puerto Egas · James Bay", p:1,
+     note:"The fur-seal grottos and the shorebirds on the walk, or stay in the water — HX notes the turtles along this rocky shore."}
   ]},
 { id:"d9", date:"2026-12-02", tz:-6, n:"Rábida · Bartolomé", sub:"The red beach and the postcard view",
-  dock:{t:"The two most photographed landscapes on the route", d:"Rábida in the morning. Bartolomé's summit is usually timed for the softer late light."},
+  dock:{t:"The two most photographed landscapes on the route", d:"Rábida in the morning: the red beach and a ride along the coast. Bartolomé in the afternoon, under Pinnacle Rock. The summit is usually timed for the softer late light."},
   acts:[
-    {s:"rabida", t:"07:30", e:"10:30", how:"wet", w:"Rábida · landing & snorkel", p:1},
-    {s:"bartolome", t:"15:00", e:"16:30", how:"dry", w:"Bartolomé · the summit", p:1},
-    {s:"bartolome", t:"16:30", e:"18:00", how:"snorkel", w:"Bartolomé · beach & snorkel"}
+    {s:"rabida", t:"07:30", e:"10:30", how:"wet", w:"Rábida · beach, panga & snorkel", p:1,
+     note:"HX: the red beach, a small-boat ride, and sea lions, marine iguanas, mockingbirds, yellow warblers and Darwin's finches. Swim if you like."},
+    {s:"bartolome", t:"15:00", e:"16:30", how:"dry", w:"Bartolomé · the summit", p:1,
+     note:"The boardwalk to the view of Pinnacle Rock. HX also offers the glass-bottom boat if you would rather not climb."},
+    {s:"bartolome", t:"16:30", e:"18:00", how:"snorkel", w:"Bartolomé · beach & snorkel",
+     note:"From the golden beach at the foot of the rock. Penguins haul out here. The hour is the usual sequence, not a printed one."}
   ],
   screen:{f:"Master and Commander: The Far Side of the World", y:"2003", d:"The first major feature film allowed to shoot in the islands; the Galápagos scenes are in the last third, when the naturalist ship's surgeon finally gets ashore. Ask the naturalists which landings it used — the book will not guess."}},
 { id:"d10", date:"2026-12-03", tz:-6, n:"Genovesa", sub:"North of the equator · the bird island",
-  dock:{t:"Across the line overnight", d:"Genovesa sits a third of a degree north of the equator. The ship anchors inside the flooded caldera of Darwin Bay. If Darwin Bay is this afternoon, it is your last landing."},
+  dock:{t:"Across the line overnight", d:"Genovesa sits a third of a degree north of the equator. HX prints Prince Philip's Steps in the morning and Darwin Bay in the afternoon. The ship anchors inside the flooded caldera. The last landing of the cruise is the tortoises tomorrow, not this beach."},
   acts:[
-    {s:"steps", t:"07:00", e:"09:30", how:"dry", w:"Prince Philip's Steps", p:1},
-    {s:"darwinbay", t:"15:00", e:"17:30", how:"wet", w:"Darwin Bay", flag:"HX prints this on 4 Dec — see the note"}
+    {s:"steps", t:"07:00", e:"09:30", how:"dry", w:"Prince Philip's Steps", p:1,
+     note:"HX: a steep climb of about 90 feet, then an easy walk. Nazca and red-footed boobies, great frigatebirds, storm petrels. A kayak instead, if you prefer not to climb. The hour is the usual one."},
+    {s:"darwinbay", t:"15:00", e:"17:30", how:"wet", w:"Darwin Bay", p:1,
+     note:"HX prints this for the afternoon: a swim off the beach, then a stroll among the nesting birds, or more time in the water — snorkel or kayak."}
   ]},
-{ id:"d11", date:"2026-12-04", tz:-6, n:"Baltra · Quito", sub:"Disembark 08:30 · fly to Quito",
-  dock:{t:"Ship alongside at Baltra 08:30 · HX charter to Quito", d:"Bags out the night before. Disembarkation details come from the Expedition Coordinator on board."},
+{ id:"d11", date:"2026-12-04", tz:-6, n:"Highlands · Baltra", sub:"Wild tortoises, then the flight",
+  dock:{t:"North shore of Santa Cruz · then Baltra airport", d:"HX's last morning is a dry landing at a wharf and a bus into the highlands for giant tortoises in the wild. After that, a direct transfer to Baltra. The charter may go to Quito or to Guayaquil — confirm which before you book anything onward. Bags out the night before. The flight time comes from the Expedition Team on board."},
   acts:[
-    {s:"itabaca", t:"06:45", e:"07:45", how:"panga", w:"Itabaca Channel", p:1, flag:"Depends on the disembarkation plan"},
-    {s:"baltra", t:"", e:"08:30", how:"other", w:"Ship arrives · Seymour dock, Baltra", p:1},
-    {s:"baltra", t:"", e:"", how:"other", w:"Charter flight · Baltra → Quito", p:1}
+    {s:"highlands", t:"06:30", e:"09:00", how:"coach", w:"North shore · wild tortoises", p:1,
+     note:"Dry landing at a passenger wharf, then the bus. The reserve holds two species of giant tortoise, in forest of Scalesia — a tree-sized daisy — with orchids and bromeliads. HX prints the visit, not the clock. This hour only leaves time to reach the airport."},
+    {s:"baltra", t:"", e:"", how:"other", w:"Baltra airport · charter onward", p:1,
+     note:"Straight from the tortoises to the airport. Have the Transit Control Card in your hand: you present it when you leave the islands. Same luggage limits as the flight in. Onward connections are your own to check against the time the Expedition Team posts."}
   ]}
 ];
 
 /* What to carry, by how you get ashore. The day's list is the union. */
 const BRING = {
-  wet:"Water shoes or sandals with a back strap — you step off the panga into the surf, about knee-deep. Shorts, not trousers.",
-  dry:"Shoes with grip and a closed toe. Landing rocks are wet with spray and the lava is sharp as glass.",
-  snorkel:"Wetsuit, mask and fins from the ship. A rash vest under the wetsuit stops it chafing.",
-  panga:"A dry bag for the camera and a thin rain shell. Panga rides throw spray.",
-  coach:"Layers and a rain jacket: the highlands are cooler and often in mist.",
-  walk:"Comfortable shoes, sun hat, and something warm for the evening.",
-  ship:"Binoculars and a windproof layer at lunch. When the bridge calls whales, the bow and the top deck are the places to be.",
-  every:"Hat, reef-safe sunscreen, sunglasses, a full water bottle. No food goes ashore."
+  wet:"Water shoes with a back strap — you step off the panga into the surf, about knee-deep. Shorts. Change shoes on the sand; there is no bench.",
+  dry:"Shoes with grip and a closed toe. The landing rocks are wet and the lava is sharp.",
+  snorkel:"A 3 mm shortie, mask, snorkel, fins and a safety jacket, lent by HX. A rash vest underneath. Your own mask if the lenses are prescription.",
+  panga:"A dry bag. The ship's rucksack is not waterproof, and a panga throws spray.",
+  coach:"Layers and a light rain jacket: the highlands are cooler and often in mist.",
+  walk:"Comfortable flat shoes, a sun hat, and something warm for the evening.",
+  ship:"Binoculars and a windproof layer. When the bridge calls whales, the bow is the place to be.",
+  every:"Hat, reef-safe sunscreen (no oxybenzone or octinoxate), sunglasses, a full bottle. No food goes ashore."
 };
 
 /* ============================================================
@@ -1867,6 +1896,12 @@ function renderDay(){
   });
   html += '</ol>';
 
+  if(d.id === "d1"){
+    html += '<h3>Before you fly to the ship</h3><p class="note">HX\'s pre-departure guide, cut down to what you will use. If they send a change, the change wins.</p><div class="btnrow">' +
+      '<button class="btn ghost" data-prep="pack">Pack</button><button class="btn ghost" data-prep="papers">Papers</button>' +
+      '<button class="btn ghost" data-prep="fare">Included</button><button class="btn ghost" data-prep="ship">The ship</button></div>';
+  }
+
   /* the two days ashore get the old Shore Book treatment */
   list.map(a => SITES[a.s]).filter((s, i, arr) => s && arr.indexOf(s) === i).forEach(st => {
     if(st.walk && d.id === "d2"){
@@ -2754,27 +2789,157 @@ async function importLog(file){
    ============================================================ */
 const KNOW = [
   "Two metres from every animal, always — even when the sea lion comes to you. Back away; do not reach out.",
-  "Stay on the marked trail and with your naturalist. Every visitor site is in the National Park and no one goes ashore without a licensed guide.",
+  "Stay on the marked trail and with your naturalist. Every visitor site is in the National Park and no one goes ashore without a licensed guide. Groups are capped at 16 guests per guide.",
   "No flash, ever. No drones without a permit. No selfie sticks pushed at wildlife.",
   "Nothing goes ashore to eat, and nothing comes back: no shells, sand, rock, feathers or bones. Check your shoes and bag for seeds before each landing — the islands are kept separate on purpose.",
-  "Do not swim on turtle-nesting beaches when told not to, and do not stand on coral or rock under water.",
+  "Do not swim on turtle-nesting beaches when told not to, and do not stand on coral or rock under water. There is no toilet on a park island. You return to the ship.",
   "Galápagos is on UTC−6, an hour behind Quito. The ship announces which clock it keeps; set it under Settings below and every time in this book follows.",
-  "US dollars are the currency of Ecuador. Small notes; a $100 bill is hard to break anywhere outside a bank.",
-  "The National Park entry fee and the transit control card are paid on arrival or through HX. Check your HX documents for which is included — the park fee for foreign adults is $200.",
-  "The water in the west — Fernandina, Isabela — is the coldest on the route, from the Cromwell upwelling. That is why the penguins are there. Take the thicker wetsuit.",
+  "US dollars are the currency. On the ship you settle a cruise account by card and do not need cash. Ashore, small notes: many shops refuse cards or add a fee, and a $100 bill is hard to break.",
+  "HX includes the Galápagos National Park entrance fee and the Transit Control Card, and hands you both before the flight to Baltra. There is no separate tax to enter Ecuador. The card is the $20 fee people ask about; you do not pay it at the airport. Show it again when you leave the islands.",
+  "The cold water is in the west, Fernandina and Isabela, where the Cromwell Current comes up. That is why the penguins are there. HX lends a 3 mm shortie, not a choice of thicker suits. A rash vest underneath earns its place.",
   "Seasickness: the long crossings are at night. If you take something, take it before dinner, not when you feel it.",
-  "The equator sun is vertical at noon. Reef-safe sunscreen, a hat with a brim, and a long-sleeved rash vest for snorkelling will do more than anything in a bottle.",
-  "Tap water is not for drinking in Quito or the islands. The ship's water is.",
-  "Hours, prices and itineraries drift. The book says so, and means it."
+  "The equator sun is vertical at noon. Reef-safe sunscreen — no oxybenzone, no octinoxate — a hat with a brim, and a long-sleeved rash vest will do more than anything in a bottle.",
+  "Tap water is not for drinking in Quito or the islands. The ship's water is. HX also gives you a bottle to refill.",
+  "Every landing on the cruise is included. You sign up on board, and some activities have a briefing you must attend. The evening talk in this book is where tomorrow's plan actually gets set.",
+  "Hours in this book, except the 7–8 hour Quito day, are how the route usually runs. HX did not print the clock. The briefing wins."
 ];
-function renderKnow(){
-  let html = '<h3>Park rules</h3><ul class="know">' + KNOW.slice(0,5).map(k => '<li>' + esc(k) + '</li>').join("") + '</ul>';
-  html += '<h3>Good to know</h3><ul class="know">' + KNOW.slice(5).map(k => '<li>' + esc(k) + '</li>').join("") + '</ul>';
-  if(TRIP.other && TRIP.other.rows.length)
-    html += '<h3>This route, and the one you are not on</h3><p class="note">' + esc(TRIP.other.note) + '</p>' +
+const BOOKS = [
+  {t:"A Lifetime in Galápagos", a:"Tui De Roy", d:"Fifty years of photographs by someone who grew up in the islands. HX suggests it for the wildlife, including the underwater work."},
+  {t:"The Voyage of the Beagle", a:"Charles Darwin", d:"His own journal of the 1831–36 voyage. The Galápagos pages are short, and they are why these islands are famous. An abridged edition is the one that fits a cabin."},
+  {t:"Galápagos: A Natural History", a:"Michael H. Jackson", d:"Volcanoes, wildlife, and how a five-week visit in 1835 became the theory. HX's pick for the longer story."},
+  {t:"Galápagos: The Islands That Changed the World", a:"Paul D. Stewart", d:"Thirteen main islands, the currents that feed them, and why marine iguanas, blue-footed boobies and giant tortoises could evolve here."},
+  {t:"Wildlife of the Galápagos", a:"Julian Fitter, Daniel Fitter & David Hosking", d:"The paper field guide: 350-odd species and the climate and geology in the front. The backup to this book when you want a page in your hand on the panga."}
+];
+function knowUl(items){ return '<ul class="know">' + items.map(k => '<li>' + esc(k) + '</li>').join("") + '</ul>'; }
+function knowUlHtml(items){ return '<ul class="know">' + items.map(k => '<li>' + k + '</li>').join("") + '</ul>'; }
+function telLi(place, num){
+  return esc(place) + ' · <a href="tel:' + num.replace(/[^\d+]/g, "") + '">' + esc(num) + '</a>';
+}
+const PREP_TABS = [["rules","Rules"],["pack","Pack"],["fare","Included"],["papers","Papers"],["ship","Ship"],["science","Science"],["books","Books"],["route","Route"]];
+function prepBody(id){
+  if(id === "pack") return '<h3>Clothes</h3>' + knowUl([
+      "Casual the whole way, including dinner. HX sets no dress code. Dress up if you like; nothing requires it.",
+      "Light clothes you can layer and rinse. Shorts, trousers, and T-shirts, ideally with a UV filter. Swimwear.",
+      "A light fleece. This voyage starts in the cool season, and late-November evenings can still want one.",
+      "A light rain jacket or poncho. From December the showers are short and hard, often in the afternoon, and they do not cancel the landing.",
+      "Gym clothes only if you mean to use the fitness room."
+    ]) + '<h3>Shoes</h3>' + knowUl([
+      "Wet shoes with a heel strap, for stepping off the panga into the surf.",
+      "Walking shoes with grip. HX suggests a medium hiking boot for rocky trails, not a heavy mountain boot. Most walks are one to two miles, with little climbing.",
+      "Flat sandals for the ship. After a wet landing you change shoes sitting on the beach or the lava. There is no bench."
+    ]) + '<h3>In the bag</h3>' + knowUl([
+      "A brimmed hat, polarised sunglasses, and lip balm with SPF.",
+      "Reef-safe sunscreen you have already tried. HX asks you to avoid oxybenzone and octinoxate. The shop in Quito and the shop on the ship both sell some; the choice is wider at home.",
+      "Insect repellent, ideally DEET-free. HX says bring it from home, particularly December to May. This voyage crosses into December.",
+      "A dry bag, binoculars on a strap, and a sealed case if the camera is not already waterproof. The rucksack HX gives you is not waterproof.",
+      "A US two-prong adapter. Cabin outlets are 110V of that shape. Bathroom outlets on the ship are 220V.",
+      "Small US-dollar notes for shore. Not for the ship.",
+      "Your own mask if you need prescription lenses, and for a child. HX stocks standard adult sizes.",
+      "Every prescribed medicine, for the whole trip, in hand luggage. The doctor on board does not supply it. Ordinary headache tablets earn their place in Quito."
+    ]) + '<h3>Already on the ship</h3>' + knowUl([
+      "Shower gel, shampoo, conditioner, soap and a hair dryer, unless you are particular.",
+      "A 3 mm shortie wetsuit, mask, snorkel, fins, a safety jacket and walking poles, lent for the voyage. Kit is issued on day one; sizes can be swapped later.",
+      "One drawstring rucksack per person, one refillable bottle, and one copy per cabin of HX's book on the Big 15 animals.",
+      "Your own alcohol. Hand any bottle to the crew at embarkation. They return it on the last day. Wine, beer, spirits and soft drinks are already included."
+    ]) + '<h3>What the two seasons feel like</h3><p class="note">The islands do not do four seasons. HX describes a warm one, December to May, and a cool dry one, June to November. This voyage sits on the join, and HX\'s own figures are not identical in every chapter of the guide. Pack for both.</p>' + knowUl([
+      "Cool season, through November: days about 20–27 °C, nights about 16–21 °C. Rain, when it comes, is garúa — a mist.",
+      "Warm season, from December: days about 26–32 °C, nights about 21–24 °C. Sunshine, and brief heavy showers.",
+      "The sea in the west stays cold in either season. That is a wetsuit fact, not a packing-for-Quito fact."
+    ]);
+  if(id === "fare") return '<p class="lede">HX calls the expedition all-inclusive. This is what that means on this voyage, and what it does not.</p><h3>At the table and the bar</h3>' + knowUl([
+      "Breakfast, lunch and dinner.",
+      "Soft drinks, wine, beer and spirits through the day and evening. A few premium labels are extra. There is a bar.",
+      "Water, tea and coffee, and a bottle to refill. The ship's drinking water is safe.",
+      "Tell HX about diets and allergies before you sail. The galley will try. It cannot invent an ingredient it does not have.",
+      "Do not bring your own alcohol on board to drink. The all-inclusive bar is the point."
+    ]) + '<h3>Ashore and in the programme</h3>' + knowUl([
+      "Escorted wet and dry landings in the small boats, and the onboard talks.",
+      "Loan of the activity kit: shortie wetsuit, snorkel gear, walking poles, the rucksack, the bottle.",
+      "The science programme, the lectures, and the Science Corner. See Science.",
+      "The Quito day — Old Town, cacao, the Middle of the World — is included. It is 7–8 hours, level 2, moderate.",
+      "Every activity on the cruise itself is included. You do not pay per landing. You do register on board, and a few activities have a briefing you have to attend or you do not go.",
+      "Kayaking, a glass-bottom boat and a coastal ride sit beside the snorkel on several days. HX says snorkelling is never the only thing on offer at a stop.",
+      "A Machu Picchu extension, if you added one, is guided. This book does not cover it, and most of the guide's extra programmes do not apply unless you booked them."
+    ]) + '<h3>The practical things</h3>' + knowUl([
+      "Wi-Fi throughout the ship. It thins out once you are offshore. Do your downloads in Quito.",
+      "Two hot tubs, a fitness room, and self-service laundry at no charge. HX's packing notes say an eco-friendly detergent is provided; the FAQ also says you can buy soap on board if you want your own.",
+      "The park entrance fee and the Transit Control Card.",
+      "An airport meet in Quito, the drive to the JW Marriott (about 45–60 minutes), and the charter flights between Quito and Baltra that belong to this programme. If HX booked your flights, the transfers to the ship are included and the times are on their itinerary — a second ticket packet is not sent.",
+      "Tipping is not expected, and no service charge is added. If you want to, Reception can put a sum on your account, or there is a box at the desk. It is split among the crew after the voyage, not the officers and not the expedition team. Do not tip individuals on the ship."
+    ]) + '<h3>Afterwards</h3>' + knowUl([
+      "The onboard photographer's selection is emailed after the voyage. It is not a full set of every frame."
+    ]) + '<h3>The Foundation, and booking another trip</h3>' + knowUl([
+      "HX says its Foundation, started in 2015, gave €590,000 to 86 projects in 2024 — wildlife, plastic, and communities along the routes. HX pays the running costs, so a donation goes to the projects.",
+      "Green Stay: hang the tag and skip a cabin clean. HX's figure is 8.3 litres of water and about 48 ml of detergent saved, and €0.50 to the Foundation, per night.",
+      "HX Explorers is a free membership with member pricing on a future voyage. If you book the next one on board, ask them to assign it to Aspen Travel Advisors. The onboard savings can still apply, and your advisor keeps the booking."
+    ]);
+  if(id === "papers") return '<h3>Passport</h3>' + knowUl([
+      "Bring it, whatever your nationality. HX wants it valid for six months after the trip. A photocopy speeds hotel check-in. Keep the passport and your medicine in hand luggage.",
+      "You may be asked for proof of a flight out. Visas, if your passport needs them, are yours to arrange. Entry rules move: check your own government's advice before you fly.",
+      "HX also asks every traveller to submit its Ship Manifest Information Form, for immigration and the tickets. If the passport changes after that, tell them."
+    ]) + '<h3>Before the Baltra flight</h3>' + knowUlHtml([
+      "The Galápagos Biosecurity Agency wants a sworn e-declaration in the 48 hours before you reach the islands, and no later than two hours before the flight to Baltra. You do it once, in Quito. Food, other goods, and any recent contact with animals all go on the form.",
+      'The form is at <a href="https://declaracion.abgalapagos.gob.ec/declaracion" target="_blank" rel="noopener">declaracion.abgalapagos.gob.ec</a>. The HX desk in the JW Marriott will help. Keep the confirmation email — on the phone or printed — for the agents at Baltra.',
+      "HX gives you the Transit Control Card and the park entrance card before that flight. You do not buy them at the airport. You hand the Transit Control Card over when you leave the islands."
+    ]) + '<h3>Health, insurance, altitude</h3>' + knowUl([
+      "HX says no vaccination is required specifically for the Galápagos. A travel clinic should still talk you through Ecuador. Yellow fever, hepatitis A and B, and typhoid are the ones that come up, and some onward countries want proof.",
+      "Medical and travel insurance are not required to enter. HX urges both. A serious case in the islands can mean evacuation to the mainland, and that is expensive. The ship has one doctor and handles the smaller things; it does not stock your prescriptions.",
+      "Quito is at 2,850 m. Drink water from the moment you land. A headache, dizziness or nausea on the first day is ordinary. Bring something mild for it, and ask your own doctor if you want altitude medicine.",
+      "HX runs a pre-departure webinar. The invitation comes from them; this book does not have the link."
+    ]) + '<h3>Flights and bags</h3>' + knowUl([
+      "The flight down to Baltra is posted at the hotel. The flight back is posted on the ship. It may be to Quito or to Guayaquil. Do not book a same-day international connection until HX has told you how early you can be on the ground.",
+      "Internal-flight luggage, per HX: one checked bag of 23 kg, no more than 158 cm linear; one cabin bag of 8 kg, 55×35×25 cm; one personal item up to 45×35×20 cm.",
+      "Bags are inspected on the way into the islands. Fruit, seeds and anything that looks like soil do not fly."
+    ]) + '<h3>If something goes wrong on the way</h3><p class="note">HX prints a 24-hour helpline for the journey to and from the ship. In Quito they meet you in arrivals, with a sign, and drive you to the hotel. They ask to be told if a plan has to change.</p>' + knowUlHtml([
+      telLi("US & Canada", "+1 866 312 6791"),
+      telLi("Toll-free when you are in the US", "+1 833 367 5017"),
+      telLi("UK and Australia", "+44 204 586 7869"),
+      telLi("France", "+33 1 84 88 02 21"),
+      telLi("Germany", "+49 40 87405667"),
+      telLi("Norway", "+47 37 71 54 61"),
+      telLi("Switzerland", "+41 800 100 158")
+    ]);
+  if(id === "ship") return '<p class="lede">MS Santa Cruz II. What HX tells you about living on board: power, laundry, the doctor, the boats.</p><h3>The cabin and the ship</h3>' + knowUl([
+      "Air conditioning in the cabins and the public rooms, with a thermostat in the cabin.",
+      "Outlets in the cabin are US-style, two prongs, 110V. Bathroom outlets are 220V. Bring the adapter that fits the cabin, and do not assume the bathroom socket will run a 110V charger.",
+      "Hair dryer in the cabin. The bed depends on the cabin you booked; this book will not guess the width.",
+      "Wi-Fi is included and reaches the whole ship. Treat it as a message service, not a streaming service, once you leave the central islands.",
+      "Laundry machines are free for every guest. Detergent is provided, and soap is also for sale if you prefer your own.",
+      "Two hot tubs and a fitness room. The shop sells clothes, books, souvenirs and the thing you forgot.",
+      "One doctor, in a medical centre sized for the ordinary illnesses and injuries of a ship. Anything serious is a conversation about evacuation. Bring your own prescriptions."
+    ]) + '<h3>The days</h3>' + knowUl([
+      "Evenings are lectures, the Science Corner, wildlife on deck, and the bar and restaurant. There is a welcome for people travelling alone, usually on the first or second night, and the dining room can seat solo travellers together.",
+      "The small boats are inflatable, motorised, and they land where there is no pier. HX says each one carries up to 20, and a group ashore is at most 16 with a guide. People travelling together can ask to share a group if they are 16 or fewer.",
+      "HX's own test of the boats: if you can get in and out of a chair without help, you can do most of this voyage. Walks are generally one to two miles, rocky, not steep. You choose. The naturalists will say when a landing is the harder kind — Prince Philip's Steps is the one with a real climb, and it is short.",
+      "HX says that in 24 years a landing has been cancelled for sea state once. Weather still moves the day. That is what the briefing box on each page is for.",
+      "Local rules about wildlife are real, and they are explained on the spot. The short version is already under Rules."
+    ]);
+  if(id === "science") return '<p class="lede">HX runs a science programme on board: lectures, a lab corner, and a few projects you can join with a phone.</p><h3>On the ship</h3>' + knowUl([
+      "The Science Corner is the hub: marine biology, geology, the human history, and whatever the team is sampling that day. You can watch, and you can help.",
+      "Citizen-science work on the voyage means collecting observations, not a private research cruise. The expedition team leads it.",
+      "HX names Dr Verena Meraldi as its chief scientist — it calls her the first in that role on any cruise line — and Dr Emily Baxter as head of guest learning. You will meet the naturalists and visiting scientists who are actually on this sailing, not a fixed cast.",
+      "This book's Log is your species checklist. HX does not hand one out. They suggest building one with your guide in an open science session, and logging birds in eBird as well."
+    ]) + '<h3>Download these before the Wi-Fi thins out</h3>' + knowUl([
+      "eBird — bird lists that go to research and conservation. The one HX most wants on your phone.",
+      "iNaturalist — a photo and a name, for anything alive, shared with the global project.",
+      "NASA Globe Observer — cloud, mosquito and habitat observations that get set against satellite data.",
+      "Happywhale has no app. Open an account on the website before you sail. Whale photographs from the Bolívar Channel can be uploaded there; their software matches the animal and adds it to the migration record."
+    ]);
+  if(id === "books") return '<p class="note">HX\'s reading list for this expedition, in their order, shortened to why you might actually pack it.</p>' +
+    BOOKS.map(b => '<article class="card"><div class="t">' + esc(b.a) + '</div><h4>' + esc(b.t) + '</h4><p>' + esc(b.d) + '</p></article>').join("");
+  if(id === "route" && TRIP.other && TRIP.other.rows.length)
+    return '<h3>This route, and the one you are not on</h3><p class="note">' + esc(TRIP.other.note) + '</p>' +
       '<table class="cmp"><tr><th>You get</th><th>You miss</th></tr>' +
       TRIP.other.rows.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>').join("") + '</table>' +
-      '<p class="note">Wildlife → All Galápagos shows every species in the book, with where the ones off this route live.</p>';
+      '<p class="note">Wildlife → All Galápagos shows every species in the book, with where the ones off this route live. North Seymour is the famous frigatebird island and it is not a landing on this printed voyage: the morning of 30 November is spent on the ship.</p>';
+  return '<h3>Park rules</h3>' + knowUl(KNOW.slice(0, 5)) + '<h3>Good to know</h3>' + knowUl(KNOW.slice(5));
+}
+function renderKnow(){
+  const prep = PREP_TABS.some(t => t[0] === store.get(K+"prep")) ? store.get(K+"prep") : "rules";
+  let html = '<p class="note">From HX\'s pre-departure guide for Nine of the Best Isles, 24 November – 4 December 2026, cut to what you will use. If HX sends a change, the change wins.</p>';
+  html += '<div class="chips" role="tablist" aria-label="Practicalities">' + PREP_TABS.map(t =>
+    '<button class="chip' + (prep === t[0] ? " on" : "") + '" data-prep="' + t[0] + '" aria-pressed="' + (prep === t[0]) + '">' + t[1] + '</button>').join("") + '</div>';
+  html += prepBody(prep);
   html += '<h3>Settings</h3>' +
     '<div class="set"><label for="code">Trip code (switches on photo ID and questions)</label><div style="display:flex;gap:8px"><input class="field" id="code" type="password" autocomplete="off" placeholder="From Aspen Travel Advisors" value="' + esc(store.get(K+"code") || "") + '"><button class="btn" data-savecode="1">Save</button></div></div>' +
     '<div class="set"><label for="clock">The ship keeps</label><select id="clock"><option value="galapagos"' + (shipClock() === "galapagos" ? " selected" : "") + '>Galápagos time (UTC−6)</option><option value="mainland"' + (shipClock() === "mainland" ? " selected" : "") + '>Mainland Ecuador time (UTC−5)</option></select></div>' +
@@ -3024,11 +3189,12 @@ function render(){
 function setTab(t){ tab = t; store.set(K+"tab", t); render(); window.scrollTo({top:Math.min(window.scrollY, $(".tabs").offsetTop), behavior:"instant"}); }
 
 document.addEventListener("click", e => {
-  const el = e.target.closest("[data-tab],[data-day],[data-sp],[data-seen],[data-close],[data-wscope],[data-wg],[data-wc],[data-wz],[data-ww],[data-wclear],[data-wsite],[data-pick],[data-ph],[data-confirm],[data-confirmx],[data-addx],[data-delcustom],[data-unconfirm],[data-retry],[data-keyit],[data-delph],[data-pump],[data-ask],[data-readbrief],[data-applybrief],[data-dropbrief],[data-unplan],[data-write],[data-print],[data-jfile],[data-export],[data-import],[data-savecode],[data-storage],[data-wipe],[data-zoom],[data-fit],[data-geo],[data-refs]");
+  const el = e.target.closest("[data-tab],[data-day],[data-sp],[data-seen],[data-close],[data-wscope],[data-wg],[data-wc],[data-wz],[data-ww],[data-wclear],[data-wsite],[data-pick],[data-ph],[data-confirm],[data-confirmx],[data-addx],[data-delcustom],[data-unconfirm],[data-retry],[data-keyit],[data-delph],[data-pump],[data-ask],[data-readbrief],[data-applybrief],[data-dropbrief],[data-unplan],[data-write],[data-print],[data-jfile],[data-export],[data-import],[data-savecode],[data-storage],[data-wipe],[data-zoom],[data-fit],[data-geo],[data-refs],[data-prep]");
   if(!el) return;
   const D = el.dataset;
   if(D.seen != null){ e.stopPropagation(); toggleSeen(D.seen); if($("#sheet")) openSpecies(D.seen); render(); return; }
   if(D.close != null && !D.day){ closeSheet(); return; }
+  if(D.prep){ store.set(K+"prep", D.prep); if(tab !== "know") setTab("know"); else { render(); const tabsEl = $(".tabs"); if(tabsEl) window.scrollTo({top:tabsEl.offsetTop, behavior:"instant"}); } return; }
   if(D.tab){ setTab(D.tab); return; }
   if(D.day){ closeSheet(); curDay = D.day; store.set(K+"day", curDay); wk.scope = null; wk.site = "";
              if(D.totab){ tab = D.totab; store.set(K+"tab", tab); } else if(tab === "chart") chart.fitted = null; render(); return; }
