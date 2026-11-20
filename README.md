@@ -76,8 +76,8 @@ deletes its own `shore-book-galapagos-*` caches. **Bump `CACHE` in `sw.js` whene
 Without the two variables the book still works. It files photos and queues them, and the
 field key, log and journal all run. Photo ID and questions explain that they are not switched on.
 
-Rough cost: one identification is a ~1568 px photo plus the cached catalogue at high effort,
-about five to ten US cents on Opus 5.5. A keen photographer might identify 150–300 photos on
+Rough cost: one identification is a ~1568 px photo plus the cached catalogue at medium effort,
+about three to five US cents on Opus 5.5. A keen photographer might identify 150–300 photos on
 the trip.
 
 ## Local development

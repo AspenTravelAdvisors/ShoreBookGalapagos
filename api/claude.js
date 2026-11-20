@@ -39,7 +39,7 @@ The species catalogue below is the book's own list, with ids: first the species 
 
 const TASKS = {
   identify: {
-    effort: "high",
+    effort: "medium",   /* about half the cost of "high"; the prompt already asks for "cannot tell" over a guess */
     max_tokens: 6000,
     schema: {
       type: "object",
